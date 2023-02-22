@@ -1,4 +1,4 @@
-package dev.tillmann.Caylus.Buildings;
+package dev.tillmann.Model.Buildings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import dev.tillmann.Caylus.Player;
 
-public class GuildsBridge extends Building {
+public class GuildsBridge extends StartingBuilding {
     private List<Player> passedPlayers = new ArrayList<>();
 
     @Override

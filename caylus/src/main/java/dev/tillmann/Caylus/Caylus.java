@@ -2,7 +2,7 @@ package dev.tillmann.Caylus;
 
 import java.util.List;
 
-import dev.tillmann.Caylus.Buildings.Building;
+import dev.tillmann.Model.Buildings.Building;
 
 public class Caylus {
     private Map map;

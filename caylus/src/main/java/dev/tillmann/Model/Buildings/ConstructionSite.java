@@ -1,4 +1,4 @@
-package dev.tillmann.Caylus.Buildings;
+package dev.tillmann.Model.Buildings;
 
 public class ConstructionSite extends Building {
     @Override
