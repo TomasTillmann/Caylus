@@ -1,22 +1,32 @@
 package dev.tillmann.Model.Buildings;
 
 import dev.tillmann.Caylus.*;
+import dev.tillmann.Model.Map;
+import dev.tillmann.Model.Player;
 import dev.tillmann.Model.Resources;
 
 public class Carpenter extends StartingBuilding {
-    @Override
-    public void activate(Map map) {
-        for(Player player : plannedPlayers) {
-            CLI.WoodenBuildingToBuild response = CLI.getWoodenBuildingToBuild(player);
-            WoodenBuilding building = response.woodenBuilding;
-            building.owner = player;
-            map.road().build(building);
-            player.updateResources(building.resourcesCost(), );
-        }
+    private Map map;
+
+    public Carpenter(Map map) {
+        this.map = map;
     }
 
     @Override
-    public Resources resourcesCost() {
-        return Resources.Free().WithWorkers(1);
+    protected void activatePlayer(Player player) {
+        player.spend(resourcesCost());
+
+        CLI.WoodenBuildingToBuildResponse response = CLI.getWoodenBuildingToBuild(player);
+        WoodenBuilding building = response.woodenBuilding;
+
+        building.owner = player;
+        map.road().build(building);
+
+        player.spend(building.resourcesCost());
+        building.immidiateReward(player);
+    }
+
+    private Resources resourcesCost() {
+        return Resources.empty().addWorkers(workersCost());
     }
 }

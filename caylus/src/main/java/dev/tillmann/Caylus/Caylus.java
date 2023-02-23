@@ -2,6 +2,8 @@ package dev.tillmann.Caylus;
 
 import java.util.List;
 
+import dev.tillmann.Model.Map;
+import dev.tillmann.Model.Player;
 import dev.tillmann.Model.Buildings.Building;
 
 public class Caylus {
@@ -35,9 +37,14 @@ public class Caylus {
     }
 
     private void activation() {
+        // before provost
         for(int i = 0; i < map.road().provost(); ++i) {
-            Building building = map.road().building(i);
-            building.activate();
+            map.road().building(i).activate();
+        }
+
+        // after provost
+        for(int i = map.road().provost(); i < map.road().size(); ++i) {
+            map.road().building(i).spendWorkers();
         }
     }
 

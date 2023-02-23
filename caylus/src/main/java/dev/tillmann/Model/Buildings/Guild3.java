@@ -1,20 +1,18 @@
 package dev.tillmann.Model.Buildings;
 
+import dev.tillmann.Caylus.CLI;
 import dev.tillmann.Model.Player;
 import dev.tillmann.Model.Resources;
 
-public class Quarry extends YellowFlagBuilding {
+public class Guild3 extends YellowFlagBuilding {
     @Override
     protected void activatePlayer(Player player) {
-        player.spend(resourcesCost());
+        CLI.ResourcesResponse response = CLI.spendOneResource(player);
         player.gain(resourcesGain());
-    }
-
-    private Resources resourcesCost() {
-        return Resources.empty().addWorkers(workersCost());
+        player.spend(response.resources.addWorkers(1));
     }
 
     private Resources resourcesGain() {
-        return Resources.empty().addStone(1);
+        return Resources.empty().addWorkers(3);
     }
 }

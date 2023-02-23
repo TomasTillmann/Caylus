@@ -1,14 +1,14 @@
-package dev.tillmann.Caylus;
+package dev.tillmann.Model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import dev.tillmann.Caylus.Config;
 import dev.tillmann.Model.Buildings.*;
 
 public class Road {
     private int provostPosition;
     private Building[] buildings;
     private int lastBuildingPosition;
+
+    public int size() { return buildings.length; }
 
     public Road(Config config, ConstructionSite constructionSite, GuildsBridge guildsBridge) {
         buildings = new Building[config.roadSize];
@@ -19,7 +19,7 @@ public class Road {
     }
 
     public int provost() { return provostPosition; }
-    void setProvostPosition(int provost) { this.provostPosition = provost; }
+    public void setProvost(int provost) { this.provostPosition = provost; }
 
     public Building building(int i) {
         if(i < 0 || i >= buildings.length) {

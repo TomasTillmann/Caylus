@@ -1,6 +1,6 @@
-package dev.tillmann.Caylus;
+package dev.tillmann.Model;
 
-import dev.tillmann.Model.Camp;
+import dev.tillmann.Caylus.Config;
 import dev.tillmann.Model.Buildings.ConstructionSite;
 import dev.tillmann.Model.Buildings.GuildsBridge;
 
