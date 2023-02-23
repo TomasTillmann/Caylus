@@ -2,13 +2,13 @@ package dev.tillmann.Model;
 
 import dev.tillmann.Caylus.Config;
 import dev.tillmann.Model.Buildings.ConstructionSite;
-import dev.tillmann.Model.Buildings.GuildsBridge;
+import dev.tillmann.Model.Buildings.Starting.GuildsBridge;
 
 public class Map {
 
     public Map(Config config) {
         constructionSite = new ConstructionSite();
-        guildsBridge = new GuildsBridge();
+        guildsBridge = new GuildsBridge(this);
         camp = new Camp();
 
         road = new Road(config, constructionSite, guildsBridge);

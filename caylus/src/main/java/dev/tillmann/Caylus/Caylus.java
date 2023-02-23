@@ -4,7 +4,6 @@ import java.util.List;
 
 import dev.tillmann.Model.Map;
 import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Buildings.Building;
 
 public class Caylus {
     private Map map;
@@ -13,7 +12,7 @@ public class Caylus {
 
     public Caylus(Config config) {
         this.config = config;
-        players = CLI.getPlayers();
+        players = CLI.getPlayers().value;
         map = new Map(config);
     }
 

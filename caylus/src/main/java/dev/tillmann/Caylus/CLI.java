@@ -5,9 +5,10 @@ import java.util.List;
 import dev.tillmann.Model.Player;
 import dev.tillmann.Model.Resources;
 import dev.tillmann.Model.Buildings.Building;
-import dev.tillmann.Model.Buildings.CoveredMarket;
-import dev.tillmann.Model.Buildings.WoodenBuilding;
-import dev.tillmann.Model.Buildings.YellowFlagBuilding;
+import dev.tillmann.Model.Buildings.Stone.StoneBuilding;
+import dev.tillmann.Model.Buildings.Wooden.CoveredMarket;
+import dev.tillmann.Model.Buildings.Wooden.WoodenBuilding;
+import dev.tillmann.Model.Buildings.YellowFlag.YellowFlagBuilding;
 
 public class CLI {
     public class PlayersResponse {
@@ -21,6 +22,10 @@ public class CLI {
 
     public class WoodenBuildingToBuildResponse {
         public WoodenBuilding woodenBuilding;
+    }
+
+    public class StoneBuildingToBuildResponse {
+        public StoneBuilding stoneBuilding;
     }
 
     public class FavorResponse {
@@ -37,6 +42,10 @@ public class CLI {
 
     public class ResourcesResponse {
         public Resources resources;
+    }
+
+    public class OptionResponse {
+        public int option;
     }
 
     public static PlayersResponse getPlayers() {
@@ -63,15 +72,35 @@ public class CLI {
         throw new UnsupportedOperationException();
     }
 
-    public static ResourcesResponse getOneResourceGain(Player player) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static ResourcesResponse spendOneResource(Player player) {
+    public static ResourcesResponse getOneResource() {
         throw new UnsupportedOperationException();
     }
 
     public static ResourcesResponse getWoodenBuildingResources(CoveredMarket coveredMarket) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static StoneBuildingToBuildResponse getStoneBuildingToBuild(Player player) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static CLI.OptionResponse getTailorResponse(Player player) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static CLI.OptionResponse getFoundryOption() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static CLI.OptionResponse getAlchemistOption() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static CLI.OptionResponse getChurchOption() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static OptionResponse getJewelerOption() {
         throw new UnsupportedOperationException();
     }
 }

@@ -57,7 +57,7 @@ public final class Resources {
         return this;
     }
 
-    public Resources withGold(int count) {
+    public Resources addGold(int count) {
         gold += count;
         return this;
     }

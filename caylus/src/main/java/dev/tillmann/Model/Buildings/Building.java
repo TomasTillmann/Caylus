@@ -8,7 +8,7 @@ import dev.tillmann.Model.Resources;
 public abstract class Building {
     protected List<Player> plannedPlayers = new ArrayList<>();
     protected java.util.Map<Player, Integer> playerToWorkers = new java.util.HashMap<>();
-    protected Player owner;
+    public Player owner;
 
     protected abstract void activatePlayer(Player player);
 

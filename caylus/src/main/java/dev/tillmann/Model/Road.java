@@ -2,6 +2,7 @@ package dev.tillmann.Model;
 
 import dev.tillmann.Caylus.Config;
 import dev.tillmann.Model.Buildings.*;
+import dev.tillmann.Model.Buildings.Starting.GuildsBridge;
 
 public class Road {
     private int provostPosition;
