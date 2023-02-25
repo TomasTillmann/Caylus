@@ -2,6 +2,7 @@ package dev.tillmann.Caylus;
 
 import java.util.List;
 
+import dev.tillmann.Model.BuildingsProvider;
 import dev.tillmann.Model.Map;
 import dev.tillmann.Model.Player;
 
@@ -14,15 +15,21 @@ public class Caylus {
         this.config = config;
         players = CLI.getPlayers().value;
         map = new Map(config);
+        BuildingsProvider.setMap(map);
     }
 
     public void start() {
+        setup();
+
         for(int round = 1; round <= config.rounds; ++round) {
             planning();
             activation();
             delivery();
             stewardship();
         }
+    }
+
+    private void setup() {
     }
 
     //todo: interface for state manipulation

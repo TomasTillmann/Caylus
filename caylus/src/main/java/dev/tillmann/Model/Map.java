@@ -5,15 +5,6 @@ import dev.tillmann.Model.Buildings.ConstructionSite;
 import dev.tillmann.Model.Buildings.Starting.GuildsBridge;
 
 public class Map {
-
-    public Map(Config config) {
-        constructionSite = new ConstructionSite();
-        guildsBridge = new GuildsBridge(this);
-        camp = new Camp();
-
-        road = new Road(config, constructionSite, guildsBridge);
-    }
-
     private ConstructionSite constructionSite;
     public ConstructionSite constructionSite() { return constructionSite; }
 
@@ -25,4 +16,18 @@ public class Map {
 
     private Road road;
     public Road road() { return road; }
+
+    public Map(Config config) {
+        constructionSite = new ConstructionSite();
+        guildsBridge = new GuildsBridge(this);
+        camp = new Camp();
+
+        road = new Road(constructionSite, guildsBridge);
+
+        setup();
+    }
+
+    private void setup() {
+
+    }
 }
