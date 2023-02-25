@@ -13,6 +13,6 @@ public class Market extends YellowFlagBuilding {
     }
 
     private Resources resourcesCost() {
-        return Resources.empty().addWorkers(1).addWorkers(workersCost());
+        return Resources.empty().addWorkers(1);
     }
 }

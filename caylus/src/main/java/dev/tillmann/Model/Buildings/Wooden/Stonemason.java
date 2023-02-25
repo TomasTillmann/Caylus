@@ -1,15 +1,15 @@
 package dev.tillmann.Model.Buildings.Wooden;
 
 import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Map;
+import dev.tillmann.Model.Board;
 import dev.tillmann.Model.Player;
 import dev.tillmann.Model.Resources;
 import dev.tillmann.Model.Buildings.Stone.StoneBuilding;
 
 public class Stonemason extends WoodenBuilding {
-    private Map map;
+    private Board map;
 
-    public Stonemason(Map map) {
+    public Stonemason(Board map) {
         this.map = map;
     }
 

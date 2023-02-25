@@ -5,11 +5,16 @@ import dev.tillmann.Caylus.*;
 public class Player {
     public Info info;
 
-    public void plan(Map map) {
+    public void plan(Board map) {
         CLI.PlayerPlanResponse response = CLI.getPlayerPlan(this);
 
         if(response.passed) {
             map.guildsBridge().passed(this);
+            return;
+        }
+
+        if(response.constructionSite) {
+            map.constructionSite().plan(this);
             return;
         }
 

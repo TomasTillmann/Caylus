@@ -1,6 +1,8 @@
 package dev.tillmann.Model;
 
 public final class Resources {
+    private static Camp camp;
+
     private int food;
     public int food() { return food; }
 
@@ -63,7 +65,7 @@ public final class Resources {
     }
 
     public Resources addWorkers(int count) {
-        workers += count;
+        workers += camp.getWorkers(count);
         return this;
     }
 
@@ -89,5 +91,9 @@ public final class Resources {
         newResources.workers -= resources.workers;
 
         return newResources;
+    }
+
+    public static void provideCamp(Camp camp) {
+        Resources.camp = camp;
     }
 }

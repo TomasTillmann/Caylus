@@ -17,8 +17,6 @@ public abstract class BuildableBuilding extends Building {
 
     @Override
     public void activatePlayer(Player player) {
-        player.spend(Resources.empty().addWorkers(workersCost()));
-
         switch(side) {
             case Construction: {
                 constructionActivate(player);

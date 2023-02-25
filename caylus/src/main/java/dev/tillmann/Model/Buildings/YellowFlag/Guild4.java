@@ -16,6 +16,6 @@ public class Guild4 extends YellowFlagBuilding {
     }
 
     private Resources resourcesCost() {
-        return Resources.empty().addStone(1).addWorkers(workersCost());
+        return Resources.empty().addStone(1);
     }
 }

@@ -11,6 +11,6 @@ public class Fairground extends StartingBuilding {
     }
 
     private Resources resourcesCost() {
-        return Resources.empty().addWood(1).addWorkers(workersCost());
+        return Resources.empty().addWood(1);
     }
 }

@@ -2,6 +2,7 @@ package dev.tillmann.Caylus;
 
 import java.util.List;
 
+import dev.tillmann.Model.GameCharacter;
 import dev.tillmann.Model.Player;
 import dev.tillmann.Model.Resources;
 import dev.tillmann.Model.Buildings.Building;
@@ -18,6 +19,7 @@ public class CLI {
     public class PlayerPlanResponse {
         public boolean passed;
         public Building building;
+        public boolean constructionSite;
     }
 
     public class WoodenBuildingToBuildResponse {
@@ -46,6 +48,14 @@ public class CLI {
 
     public class OptionResponse {
         public int option;
+    }
+
+    public class CharacterResponse {
+        public GameCharacter character;
+    }
+
+    public class ConstructionSiteResponse {
+        public List<Resources> bundles;
     }
 
     public static PlayersResponse getPlayers() {
@@ -84,23 +94,31 @@ public class CLI {
         throw new UnsupportedOperationException();
     }
 
-    public static CLI.OptionResponse getTailorResponse(Player player) {
+    public static OptionResponse getTailorResponse(Player player) {
         throw new UnsupportedOperationException();
     }
 
-    public static CLI.OptionResponse getFoundryOption() {
+    public static OptionResponse getFoundryOption() {
         throw new UnsupportedOperationException();
     }
 
-    public static CLI.OptionResponse getAlchemistOption() {
+    public static OptionResponse getAlchemistOption() {
         throw new UnsupportedOperationException();
     }
 
-    public static CLI.OptionResponse getChurchOption() {
+    public static OptionResponse getChurchOption() {
         throw new UnsupportedOperationException();
     }
 
     public static OptionResponse getJewelerOption() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static CharacterResponse chooseCharacter(Player player, List<GameCharacter> characters) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static ConstructionSiteResponse getConstructionSiteResponse(Player player) {
         throw new UnsupportedOperationException();
     }
 }

@@ -15,6 +15,6 @@ public class Lawyer extends StartingBuilding {
     }
 
     private Resources resourcesCost() {
-        return Resources.empty().addFabric(1).addWorkers(workersCost());
+        return Resources.empty().addFabric(1);
     }
 }

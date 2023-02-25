@@ -11,6 +11,7 @@ public abstract class Building {
     public Player owner;
 
     protected abstract void activatePlayer(Player player);
+    protected void additionalPlan(Player player) { }
 
     public int workersCost() {
         return 1;
@@ -22,20 +23,29 @@ public abstract class Building {
         }
     }
 
-    public void spendWorkers() {
+    public final int spendWorkers() {
+        int workers = 0;
         for(Player player : playerToWorkers.keySet()) {
             player.spend(Resources.empty().addWorkers(playerToWorkers.get(player)));
+            workers += playerToWorkers.get(player);
         }
+
+        return workers;
     }
 
     public final void plan(Player player) {
         plannedPlayers.add(player);
+
+        // workers cost required for planning
         if(playerToWorkers.containsKey(player)) {
-            playerToWorkers.put(player, workersCost());
-        }
-        else {
             playerToWorkers.put(player, playerToWorkers.get(player) + workersCost());
         }
+        else {
+            playerToWorkers.put(player, workersCost());
+        }
+        //
+
+        additionalPlan(player);
     }
 
     public final void toResidence(Player owner) {
