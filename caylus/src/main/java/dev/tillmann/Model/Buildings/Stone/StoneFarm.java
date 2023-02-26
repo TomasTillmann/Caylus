@@ -17,8 +17,8 @@ public class StoneFarm extends StoneBuilding {
     public void constructionActivate(Player player) {
         player.gain(Resources.empty().addFood(2).addFabric(1));
 
-        if(player != owner) {
-            owner.gain(Resources.empty().addFood(1));
+        if(player != owner()) {
+            owner().gain(Resources.empty().addFood(1));
         }
     }
 

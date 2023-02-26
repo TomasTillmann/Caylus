@@ -1,20 +1,41 @@
 package dev.tillmann.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dev.tillmann.Caylus.*;
+import dev.tillmann.Model.Buildings.Building;
 
 public class Player {
-    public Info info;
+    private GameState gameState;
+    private Board board;
 
-    public void plan(Board map) {
+    public Info info;
+    
+    private List<Building> ownedBuildings = new ArrayList<>();
+    public List<Building> ownedBuildings() { return ownedBuildings; }
+
+    private List<Residence> ownedResidences = new ArrayList<>();
+    public List<Residence> ownedResidences() { return ownedResidences; }
+
+    private List<Monument> ownedMonuments = new ArrayList<>();
+    public List<Monument> ownedMonuments() { return ownedMonuments; }
+
+    private List<GameCharacter> characters = new ArrayList<>();
+    public List<GameCharacter> characters() { return characters; }
+
+    public void plan(Board board, GameState gameState) {
+        this.gameState = gameState;
+
         CLI.PlayerPlanResponse response = CLI.getPlayerPlan(this);
 
         if(response.passed) {
-            map.guildsBridge().passed(this);
+            board.guildsBridge().passed(this);
             return;
         }
 
         if(response.constructionSite) {
-            map.constructionSite().plan(this);
+            board.constructionSite().plan(this);
             return;
         }
 
@@ -34,12 +55,23 @@ public class Player {
     }
 
     public void getFavor() {
-        CLI.FavorResponse response = CLI.getFavor(this);
-        //todo: ...
+        { CLI.FavorResponse response = CLI.getFavor(this, gameState.round, board.constructionSite());
+
+        if(response.stealCharacter) {
+            characters().add(response.character);
+            response.playerStolenFrom.characters().remove(response.character);
+            return;
+        }
+
+        response.building.benefit(this); }
+
+        if(board.remainingCharacters().size() != 0) {
+            CLI.CharacterResponse response = CLI.chooseCharacter(this, board.remainingCharacters());
+            characters().add(board.drawCharacter(response.character));
+        }
     }
 
     public void awardPrestigePoints(int points) {
         info.prestigePoints += points;
     }
-
 }

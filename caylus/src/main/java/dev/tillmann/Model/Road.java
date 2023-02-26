@@ -3,18 +3,26 @@ package dev.tillmann.Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import dev.tillmann.Caylus.CLI;
 import dev.tillmann.Model.Buildings.*;
 import dev.tillmann.Model.Buildings.Starting.*;
 import dev.tillmann.Model.Buildings.Wooden.Stonemason;
-import dev.tillmann.Model.Buildings.YellowFlag.*;
 
 public class Road {
     private int provostPosition;
     private Building[] buildings;
-    private int lastBuildingPosition;
+    private int lastBuildingPosition = WOODEN_BUILDING_POSITION;
 
-    private static final int ROAD_SIZE = 29;
+    private List<Residence> residences = new ArrayList<>();
+    public List<Residence> residences() { return Collections.unmodifiableList(residences); }
+
+    private List<Monument> monuments = new ArrayList<>();
+    public List<Monument> monuments() { return Collections.unmodifiableList(monuments); }
+
+
+    public static final int ROAD_SIZE = 29;
     public static final int START = 0;
     public static final int CONSTRUCTION_SITE_POS = ROAD_SIZE - 1;
     public static final int GUILDS_BRIDGE_POS = 4;
@@ -28,8 +36,6 @@ public class Road {
     public static final int YELLOW_FLAG_BUILDINGS_END = 13;
     public static final int WOODEN_BUILDING_POSITION = 13;
     public static final int STONE_BUILDING_POSITION = 18;
-
-    public int size() { return buildings.length; }
 
     public int provost() { return provostPosition; }
     public void setProvost(int provost) { this.provostPosition = provost; }
@@ -67,8 +73,15 @@ public class Road {
     }
 
     public void build(Building building) {
-        updateLastBuildingPosition();
+        // update last building position
+        lastBuildingPosition += lastBuildingPosition == STONE_BUILDING_POSITION - 1 ? 2 : 1;
+        //
+
         buildings[lastBuildingPosition] = building;
+    }
+
+    public void updateProvostAfterRound() {
+        provostPosition = lastBuildingPosition + 1;
     }
 
     private void setupStartingBuildings() {
@@ -77,10 +90,6 @@ public class Road {
         buildings[CARPENTER_POSITION] = BuildingsProvider.getStarting(b -> b instanceof Fairground).get(0);
         buildings[TOLL_POSITION] = BuildingsProvider.getStarting(b -> b instanceof Fairground).get(0);
         buildings[GUILDS_BRIDGE_POSITION] = BuildingsProvider.getStarting(b -> b instanceof Fairground).get(0);
-    }
-
-    private void updateLastBuildingPosition() {
-        throw new UnsupportedOperationException();
     }
 
     private void setupYellowFlagBuildings() {
@@ -100,5 +109,43 @@ public class Road {
 
     private void setupStoneBuilding() {
         buildings[STONE_BUILDING_POSITION] = BuildingsProvider.getStone(1).get(0);
+    }
+
+    public void yellowFlagToResidences() {
+        YellowFlagBuilding building; 
+        Residence residence;
+
+        for(int i = Road.YELLOW_FLAG_BUILDINGS_START; i < Road.YELLOW_FLAG_BUILDINGS_END; ++i) {
+            building = (YellowFlagBuilding)buildings[i];
+            if(building.hasOwner()) {
+                residence = building.toResidence();
+
+                residences.add(residence);
+                building.owner().ownedResidences().add(residence);
+
+                buildings[i] = null;
+            }
+        }
+    }
+
+    public void residencesToMonuments() {
+        CLI.ToMonumentsResponse response = CLI.getResidencesToMonuments();
+        Map<Residence, Monument> residenceToMonument = response.residenceToMonument;
+        Residence residence;
+        Monument monument;
+
+        for(int i = 0; i < residences.size(); ++i) {
+            residence = residences.get(i);
+
+            if(residenceToMonument.containsKey(residence)) {
+                monument = residence.toMonument(residenceToMonument.get(residence));
+
+                monuments.add(monument);
+                residence.owner().ownedMonuments().add(monument);
+
+                residences.remove(i);
+                i--;
+            }
+        }
     }
 }

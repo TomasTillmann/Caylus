@@ -1,15 +1,19 @@
 package dev.tillmann.Caylus;
 
 import java.util.List;
+import java.util.Map;
 
 import dev.tillmann.Model.GameCharacter;
+import dev.tillmann.Model.Monument;
 import dev.tillmann.Model.Player;
+import dev.tillmann.Model.Residence;
 import dev.tillmann.Model.Resources;
 import dev.tillmann.Model.Buildings.Building;
+import dev.tillmann.Model.Buildings.ConstructionSite;
+import dev.tillmann.Model.Buildings.YellowFlagBuilding;
 import dev.tillmann.Model.Buildings.Stone.StoneBuilding;
 import dev.tillmann.Model.Buildings.Wooden.CoveredMarket;
 import dev.tillmann.Model.Buildings.Wooden.WoodenBuilding;
-import dev.tillmann.Model.Buildings.YellowFlag.YellowFlagBuilding;
 
 public class CLI {
     public class PlayersResponse {
@@ -31,6 +35,10 @@ public class CLI {
     }
 
     public class FavorResponse {
+        public boolean stealCharacter;
+        public GameCharacter character;
+        public Player playerStolenFrom;
+        public Building building;
     }
 
     public class BuildingToOwnResponse {
@@ -58,6 +66,10 @@ public class CLI {
         public List<Resources> bundles;
     }
 
+    public class ToMonumentsResponse {
+        public Map<Residence, Monument> residenceToMonument;
+    }
+
     public static PlayersResponse getPlayers() {
         throw new UnsupportedOperationException();
     }
@@ -70,7 +82,7 @@ public class CLI {
         throw new UnsupportedOperationException();
     }
 
-    public static CLI.FavorResponse getFavor(Player player) {
+    public static CLI.FavorResponse getFavor(Player player, int round, ConstructionSite constructionSite) {
         throw new UnsupportedOperationException();
     }
 
@@ -119,6 +131,14 @@ public class CLI {
     }
 
     public static ConstructionSiteResponse getConstructionSiteResponse(Player player) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static CLI.ToMonumentsResponse getResidencesToMonuments() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void showResults(List<Player> players) {
         throw new UnsupportedOperationException();
     }
 }

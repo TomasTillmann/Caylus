@@ -1,10 +1,10 @@
-package dev.tillmann.Model.Buildings.YellowFlag;
+package dev.tillmann.Model.Buildings.Starting;
 
 import dev.tillmann.Caylus.CLI;
 import dev.tillmann.Model.Player;
 import dev.tillmann.Model.Resources;
 
-public class Market extends YellowFlagBuilding {
+public class Market extends StartingBuilding {
     @Override
     protected void activatePlayer(Player player) {
         player.spend(resourcesCost());

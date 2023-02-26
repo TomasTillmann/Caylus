@@ -17,7 +17,7 @@ public class Carpenter extends StartingBuilding {
         CLI.WoodenBuildingToBuildResponse response = CLI.getWoodenBuildingToBuild(player);
         WoodenBuilding building = response.woodenBuilding;
 
-        building.owner = player;
+        building.setOwner(player);
         map.road().build(building);
 
         player.spend(building.toBuildCost());

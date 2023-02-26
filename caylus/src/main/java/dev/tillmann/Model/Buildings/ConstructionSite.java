@@ -54,6 +54,8 @@ public class ConstructionSite {
         }
 
         bestPlayer.getFavor();
+        
+        // reset for next round
         plannedPlayers.clear();
     }
 

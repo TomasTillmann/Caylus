@@ -37,6 +37,8 @@ public class Caylus {
             delivery();
             stewardship();
         }
+
+        end();
     }
 
     private void initPlayers(List<GameCharacter> characters) {
@@ -89,8 +91,8 @@ public class Caylus {
         }
 
         // after provost
-        buildings = board.road().buildings(board.road().provost(), board.road().size());
-        for(int i = board.road().provost(); i < board.road().size(); ++i) {
+        buildings = board.road().buildings(board.road().provost(), Road.ROAD_SIZE);
+        for(int i = board.road().provost(); i < Road.ROAD_SIZE; ++i) {
             workers += board.road().building(i).spendWorkers();
         }
 
@@ -103,8 +105,36 @@ public class Caylus {
     }
 
     private void stewardship() {
+        board.road().yellowFlagToResidences();
+        board.road().residencesToMonuments();
+        recruitment();
+        board.road().updateProvostAfterRound();
+    }
+
+    private void recruitment() {
         for(Player player : players) {
-            player.stewardship();
+            player.gain(Resources.empty().addWorkers(board.camp().recruitmentWorkersCount));
+            player.gain(Resources.empty().addWorkers(player.ownedResidences().size()));
+
+            if(player.ownedMonuments().stream().anyMatch(b -> b instanceof Garden)) {
+                player.gain(Resources.empty().addWorkers(2));
+            }
+
+            if(player.ownedMonuments().stream().anyMatch(b -> b instanceof Granary)) {
+                player.gain(Resources.empty().addFood(1));
+            }
+
+            if(player.ownedMonuments().stream().anyMatch(b -> b instanceof Factory)) {
+                player.gain(Resources.empty().addFabric(1));
+            }
         }
+    }
+
+    private void end() {
+        for(Player player : players) {
+            player.awardPrestigePoints(player.info.resources.gold() * 2);
+        }
+
+        CLI.showResults(players);
     }
 }

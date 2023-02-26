@@ -8,19 +8,17 @@ import dev.tillmann.Model.Resources;
 public abstract class Building {
     protected List<Player> plannedPlayers = new ArrayList<>();
     protected java.util.Map<Player, Integer> playerToWorkers = new java.util.HashMap<>();
-    public Player owner;
 
-    protected abstract void activatePlayer(Player player);
-    protected void additionalPlan(Player player) { }
+    private Player owner;
+    public final Player owner() { return owner; }
 
-    public int workersCost() {
-        return 1;
+    public final void setOwner(Player player) {
+        owner = player;
+        player.ownedBuildings().add(this);
     }
 
-    public void activate() {
-        for(Player player : plannedPlayers) {
-            activatePlayer(player);
-        }
+    public final boolean hasOwner() {
+        return owner == null ? false : true;
     }
 
     public final int spendWorkers() {
@@ -44,11 +42,21 @@ public abstract class Building {
             playerToWorkers.put(player, workersCost());
         }
         //
-
-        additionalPlan(player);
     }
 
-    public final void toResidence(Player owner) {
-        this.owner = owner;
+    public final void benefit(Player player) {
+        activatePlayer(player);
+    }
+
+    protected abstract void activatePlayer(Player player);
+
+    public int workersCost() {
+        return 1;
+    }
+
+    public void activate() {
+        for(Player player : plannedPlayers) {
+            activatePlayer(player);
+        }
     }
 }

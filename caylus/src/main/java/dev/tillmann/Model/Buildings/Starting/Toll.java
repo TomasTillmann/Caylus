@@ -1,11 +1,10 @@
-package dev.tillmann.Model.Buildings.YellowFlag;
+package dev.tillmann.Model.Buildings.Starting;
 
 import dev.tillmann.Caylus.CLI;
 import dev.tillmann.Model.Board;
 import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
 
-public class Toll extends YellowFlagBuilding {
+public class Toll extends StartingBuilding {
     Board map;
 
     public Toll(Board map) {

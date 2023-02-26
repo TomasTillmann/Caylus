@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import dev.tillmann.Model.Buildings.Building;
+import dev.tillmann.Model.Buildings.YellowFlagBuilding;
 import dev.tillmann.Model.Buildings.Starting.*;
 import dev.tillmann.Model.Buildings.Stone.*;
 import dev.tillmann.Model.Buildings.Wooden.*;
-import dev.tillmann.Model.Buildings.YellowFlag.*;
 
 public class BuildingsProvider {
     private static Board map;
@@ -31,12 +31,13 @@ public class BuildingsProvider {
         //
 
         // set yellowFlag
-        startingBuildings.add(new Farm());
-        startingBuildings.add(new Guild3());
-        startingBuildings.add(new Guild4());
-        startingBuildings.add(new Market());
-        startingBuildings.add(new Quarry());
-        startingBuildings.add(new Sawmill());
+        yellowFlagBuildings.add(new YellowFlagBuilding(new Farm()));
+        yellowFlagBuildings.add(new YellowFlagBuilding(new Guild3()));
+        yellowFlagBuildings.add(new YellowFlagBuilding(new Carpenter(map)));
+        yellowFlagBuildings.add(new YellowFlagBuilding(new Guild4()));
+        yellowFlagBuildings.add(new YellowFlagBuilding(new Market()));
+        yellowFlagBuildings.add(new YellowFlagBuilding(new Quarry()));
+        yellowFlagBuildings.add(new YellowFlagBuilding(new Sawmill()));
         //
 
         // set wooden

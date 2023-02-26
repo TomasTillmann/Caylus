@@ -18,8 +18,8 @@ public class StoneQuarry extends StoneBuilding {
     public void constructionActivate(Player player) {
         player.gain(Resources.empty().addStone(2).addFabric(1));
 
-        if(player != owner) {
-            owner.gain(Resources.empty().addStone(1));
+        if(player != owner()) {
+            owner().gain(Resources.empty().addStone(1));
         }
     }
 
