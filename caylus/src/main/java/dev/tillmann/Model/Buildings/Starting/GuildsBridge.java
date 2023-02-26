@@ -41,19 +41,13 @@ public class GuildsBridge extends StartingBuilding {
 
     @Override
     public void activate() {
-        // there are no still planning players on guilds bridge
-        // each round all players move the provost, in the order of passing
+        // on guilds bridge, no players are ever planned, but it still has to be activated -> inherited field plannedPlayers is completely ignored
 
         for(Player player : passedPlayers) {
             activatePlayer(player);
         }
 
-        // reset the bridge for next round
-        for(Player player : allPlayers) {
-            stillPlanningPlayers.add(player);
-        }
-        passedPlayers.clear();
-        //
+        reset();
     }
 
     @Override
@@ -61,6 +55,15 @@ public class GuildsBridge extends StartingBuilding {
         CLI.ProvostPositionResponse response = CLI.getProvostPosition(player);
         map.road().setProvost(response.provostNewPosition);
         player.spend(resourcesCost(response.provostDifference));
+    }
+
+    @Override
+    protected void additionalReset() {
+        for(Player player : allPlayers) {
+            stillPlanningPlayers.add(player);
+        }
+
+        passedPlayers.clear();
     }
 
     private Resources resourcesCost(int provostDifference) {

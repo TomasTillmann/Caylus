@@ -48,6 +48,15 @@ public abstract class Building {
         activatePlayer(player);
     }
 
+    protected final void reset() {
+        playerToWorkers.clear();
+        plannedPlayers.clear();
+
+        additionalReset();
+    }
+
+    protected void additionalReset() { }
+
     protected abstract void activatePlayer(Player player);
 
     public int workersCost() {
@@ -58,5 +67,7 @@ public abstract class Building {
         for(Player player : plannedPlayers) {
             activatePlayer(player);
         }
+
+        reset();
     }
 }

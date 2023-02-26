@@ -11,7 +11,7 @@ import dev.tillmann.Model.Buildings.Starting.StartingBuilding;
 import dev.tillmann.Model.Buildings.Stone.StoneBuilding;
 import dev.tillmann.Model.Buildings.Wooden.WoodenBuilding;
 
-public class ConstructionSite {
+public final class ConstructionSite {
     private StartingBuilding first;
     public StartingBuilding first() { return first; }
 
@@ -54,12 +54,14 @@ public class ConstructionSite {
         }
 
         bestPlayer.getFavor();
-        
-        // reset for next round
-        plannedPlayers.clear();
+        reset();
     }
 
     public void plan(Player player) {
         plannedPlayers.add(player);
+    }
+
+    private void reset() {
+        plannedPlayers.clear();
     }
 }

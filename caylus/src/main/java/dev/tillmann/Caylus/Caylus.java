@@ -5,14 +5,17 @@ import java.util.List;
 
 import dev.tillmann.Model.BuildingsProvider;
 import dev.tillmann.Model.GameCharacter;
+import dev.tillmann.Model.GameState;
 import dev.tillmann.Model.Board;
 import dev.tillmann.Model.Player;
 import dev.tillmann.Model.Resources;
 import dev.tillmann.Model.Road;
 import dev.tillmann.Model.Buildings.Building;
+import dev.tillmann.Model.Buildings.Monuments.*;
 
 public class Caylus {
     private Board board;
+    private GameState gameState;
     private List<Player> players;
     private Config config;
 
@@ -20,18 +23,25 @@ public class Caylus {
         this.config = config;
 
         players = CLI.getPlayers().value;
+        
         List<GameCharacter> characters = CharactersProvider.getRandom(players.size() + 3);
-        Collections.shuffle(players);
-        initPlayers(characters);
 
-        board = new Board(config, players, characters);
+        List<GameCharacter> remainingCharacters = initPlayers(characters);
+
+        board = new Board(config, players, remainingCharacters);
+        gameState = new GameState();
+
+        for(Player player : players) {
+            player.setBoard(board);
+            player.setGameState(gameState);
+        }
 
         BuildingsProvider.provideBoard(board);
         Resources.provideCamp(board.camp());
     }
 
     public void start() {
-        for(int round = 1; round <= config.rounds; ++round) {
+        for(gameState.round = 1; gameState.round <= config.rounds; ++gameState.round) {
             planning();
             activation();
             delivery();
@@ -41,7 +51,8 @@ public class Caylus {
         end();
     }
 
-    private void initPlayers(List<GameCharacter> characters) {
+    private List<GameCharacter> initPlayers(List<GameCharacter> characters) {
+        Collections.shuffle(players);
         int workersPerPlayer;
         
         // calculate resources
@@ -58,23 +69,26 @@ public class Caylus {
         // add resources
         Resources startingResources = Resources.empty().addWorkers(workersPerPlayer).addWood(2).addFood(1).addStone(1);
         for(Player player : players) {
-            player.info.resources.add(startingResources);
+            player.gain(startingResources);
         }
          
         // choose characters
         for (int i = players.size() - 1; i >= 0; --i) {
             Player player = players.get(i);
             CLI.CharacterResponse response = CLI.chooseCharacter(player, characters);
-            player.info.characters.add(response.character);
 
+            player.characters().add(response.character);
             characters.remove(response.character);
         }
+
+        // remaining characters
+        return characters;
     }
 
     private void planning() {
         while(board.guildsBridge().stillPlanningPlayers().size() != 0) {
             for(Player player : board.guildsBridge().stillPlanningPlayers()) {
-                player.plan(board);
+                player.plan();
             }
         }
     }
@@ -92,11 +106,11 @@ public class Caylus {
 
         // after provost
         buildings = board.road().buildings(board.road().provost(), Road.ROAD_SIZE);
-        for(int i = board.road().provost(); i < Road.ROAD_SIZE; ++i) {
-            workers += board.road().building(i).spendWorkers();
+        for(Building building : buildings) {
+            workers += building.spendWorkers();
         }
 
-        // return workers to camp
+        // return spent workers back to camp
         board.camp().addWorkers(workers);
     }
 
@@ -132,7 +146,7 @@ public class Caylus {
 
     private void end() {
         for(Player player : players) {
-            player.awardPrestigePoints(player.info.resources.gold() * 2);
+            player.awardPrestigePoints(player.resources().gold() * 2);
         }
 
         CLI.showResults(players);

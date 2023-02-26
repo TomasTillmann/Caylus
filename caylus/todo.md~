@@ -6,3 +6,4 @@
 * characters dodelat
 * lepsi API pro game state
 	* umet pracovat s gameState - napr. vracet stavy nebo jej libovolne menit
+* presun charactersProvider do model

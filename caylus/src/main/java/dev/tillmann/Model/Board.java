@@ -1,5 +1,6 @@
 package dev.tillmann.Model;
 
+import java.util.Collections;
 import java.util.List;
 
 import dev.tillmann.Caylus.Config;
@@ -19,20 +20,20 @@ public class Board {
     private Road road;
     public Road road() { return road; }
 
-    private List<GameCharacter> characters;
-    public List<GameCharacter> remainingCharacters() { return characters; }
+    private List<GameCharacter> remainingCharacters;
+    public List<GameCharacter> remainingCharacters() { return Collections.unmodifiableList(remainingCharacters); }
 
     public GameCharacter drawCharacter(GameCharacter character) {
-        if(!characters.contains(character)) {
+        if(!remainingCharacters.contains(character)) {
             throw new IllegalArgumentException();
         }
 
-        characters.remove(character);
+        remainingCharacters.remove(character);
         return character;
     }
 
-    public Board(Config config, List<Player> players, List<GameCharacter> characters) {
-        this.characters = characters;
+    public Board(Config config, List<Player> players, List<GameCharacter> remainingCharacters) {
+        this.remainingCharacters = remainingCharacters;
         constructionSite = new ConstructionSite();
         guildsBridge = new GuildsBridge(this, players);
         camp = new Camp(players.size());

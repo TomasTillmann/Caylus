@@ -8,9 +8,15 @@ import dev.tillmann.Model.Buildings.Building;
 
 public class Player {
     private GameState gameState;
-    private Board board;
+    public void setGameState(GameState gameState) { this.gameState = gameState; }
 
-    public Info info;
+    private Board board;
+    public void setBoard(Board board) { this.board = board; }
+
+    public int prestigePoints;
+
+    private Resources resources;
+    public Resources resources() { return resources; }
     
     private List<Building> ownedBuildings = new ArrayList<>();
     public List<Building> ownedBuildings() { return ownedBuildings; }
@@ -24,9 +30,7 @@ public class Player {
     private List<GameCharacter> characters = new ArrayList<>();
     public List<GameCharacter> characters() { return characters; }
 
-    public void plan(Board board, GameState gameState) {
-        this.gameState = gameState;
-
+    public void plan() {
         CLI.PlayerPlanResponse response = CLI.getPlayerPlan(this);
 
         if(response.passed) {
@@ -47,11 +51,11 @@ public class Player {
     }
 
     public void spend(Resources resources) {
-        info.resources = info.resources.sub(resources);
+        resources = resources.sub(resources);
     }
 
     public void gain(Resources resources) {
-        info.resources = info.resources.add(resources);
+        resources = resources.add(resources);
     }
 
     public void getFavor() {
@@ -72,6 +76,6 @@ public class Player {
     }
 
     public void awardPrestigePoints(int points) {
-        info.prestigePoints += points;
+        prestigePoints += points;
     }
 }

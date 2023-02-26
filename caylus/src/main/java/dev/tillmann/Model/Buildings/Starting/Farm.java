@@ -6,7 +6,7 @@ import dev.tillmann.Model.Resources;
 public class Farm extends StartingBuilding {
     @Override
     protected void activatePlayer(Player player) {
-        player.info.resources = player.info.resources.add(resourcesGain());
+        player.gain(resourcesGain());
     }
 
     private Resources resourcesGain() {
