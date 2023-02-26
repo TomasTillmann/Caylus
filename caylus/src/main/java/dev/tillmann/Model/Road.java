@@ -129,19 +129,20 @@ public class Road {
     }
 
     public void residencesToMonuments() {
-        CLI.ToMonumentsResponse response = CLI.getResidencesToMonuments();
-        Map<Residence, Monument> residenceToMonument = response.residenceToMonument;
         Residence residence;
         Monument monument;
 
         for(int i = 0; i < residences.size(); ++i) {
             residence = residences.get(i);
+            CLI.ToMonumentsResponse response = CLI.toMonument(residence);
 
-            if(residenceToMonument.containsKey(residence)) {
-                monument = residence.toMonument(residenceToMonument.get(residence));
+            if(response.monument != null) {
+                monument = residence.toMonument(response.monument);
 
                 monuments.add(monument);
                 residence.owner().ownedMonuments().add(monument);
+
+                monument.build();
 
                 residences.remove(i);
                 i--;

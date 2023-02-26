@@ -67,7 +67,7 @@ public class CLI {
     }
 
     public class ToMonumentsResponse {
-        public Map<Residence, Monument> residenceToMonument;
+        public Monument monument;
     }
 
     public static PlayersResponse getPlayers() {
@@ -134,7 +134,7 @@ public class CLI {
         throw new UnsupportedOperationException();
     }
 
-    public static CLI.ToMonumentsResponse getResidencesToMonuments() {
+    public static ToMonumentsResponse toMonument(Residence residence) {
         throw new UnsupportedOperationException();
     }
 

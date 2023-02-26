@@ -1,12 +1,12 @@
 package dev.tillmann.Model;
 
-public class Monument {
+public abstract class Monument {
     private Residence residence;
+    public void setResidence(Residence residence) { this.residence = residence; }
 
-    public Monument(Residence residence) {
-        this.residence = residence;
-    }
+    public abstract void build();
 
-    public void setResidence(Residence residence2) {
+    public final Player owner() {
+        return residence.owner();
     }
 }
