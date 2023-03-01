@@ -7,7 +7,7 @@ import dev.tillmann.caylus.cli.CLI;
 import dev.tillmann.model.buildings.Building;
 import dev.tillmann.model.characters.GameCharacter;
 
-public class Player {
+public class Player implements Visualizable {
     private GameState gameState;
     public void setGameState(GameState gameState) { this.gameState = gameState; }
 
@@ -35,6 +35,35 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String visualize() {
+        String visualization = "";
+        visualization += "Name: " + name + "\n";
+
+        visualization += "Characters: \n";
+        for(GameCharacter character : characters()) {
+            visualization += character; 
+        }
+        visualization += "\n";
+
+        visualization += "Owned residences: \n";
+        for(Residence residence : ownedResidences()) {
+            visualization += residence;
+        }
+        visualization += "\n";
+
+        visualization += "Owned monuments: \n";
+        for(Monument monument : ownedMonuments()) {
+            visualization += monument;
+        }
+        visualization += "\n";
+
+        visualization += "Resources: \n";
+        visualization += resources().visualize();
+
+        return visualization;
     }
 
     public void plan() {
@@ -76,8 +105,8 @@ public class Player {
 
         response.building.benefit(this); }
 
-        if(board.remainingCharacters().size() != 0) {
-            CLI.CharacterResponse response = CLI.instance().chooseCharacter(this, board.remainingCharacters());
+        if(board.onBoardCharacters().size() != 0) {
+            CLI.CharacterResponse response = CLI.instance().chooseCharacter(this, board.onBoardCharacters());
             characters().add(board.drawCharacter(response.character));
         }
     }

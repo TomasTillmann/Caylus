@@ -1,5 +1,6 @@
 package dev.tillmann.caylus;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,12 +22,15 @@ public class Caylus {
         this.config = config;
 
         players = CLI.instance().getPlayers().value;
+
+        Camp camp = new Camp(players.size());
         
-        List<GameCharacter> characters = CharactersProvider.getRandomCharacters(ch -> true, players.size() + 3);
+        List<GameCharacter> characters = CharactersPile.getRandomCharacters(ch -> true, players.size() + 3);
 
         List<GameCharacter> remainingCharacters = initPlayers(characters);
 
-        board = new Board(config, players, remainingCharacters);
+        board = new Board(config, players, remainingCharacters, camp);
+
         gameState = new GameState();
 
         for(Player player : players) {
@@ -34,8 +38,7 @@ public class Caylus {
             player.setGameState(gameState);
         }
 
-        BuildingsProvider.provideBoard(board);
-        Resources.provideCamp(board.camp());
+        CLI.instance().providePlayers(players);
     }
 
     public void start() {
@@ -84,8 +87,11 @@ public class Caylus {
     }
 
     private void planning() {
+        List<Player> stillPlanningPlayers;
         while(board.guildsBridge().stillPlanningPlayers().size() != 0) {
-            for(Player player : board.guildsBridge().stillPlanningPlayers()) {
+            stillPlanningPlayers = new ArrayList<>(board.guildsBridge().stillPlanningPlayers());
+
+            for(Player player : stillPlanningPlayers) {
                 player.plan();
             }
         }
@@ -93,23 +99,20 @@ public class Caylus {
 
     private void activation() {
         int workers = 0;
-        List<Building> buildings;
 
         // before provost
-        buildings = board.road().buildings(Road.START, board.road().provost());
-        for(Building building : buildings) {
+        for(Building building : board.road().buildings(Road.START, board.road().provost())) {
             building.activate();
             workers += building.spendWorkers();
         }
 
         // after provost
-        buildings = board.road().buildings(board.road().provost(), Road.ROAD_SIZE);
-        for(Building building : buildings) {
+        for(Building building : board.road().buildings(board.road().provost(), Road.ROAD_SIZE)) {
             workers += building.spendWorkers();
         }
 
         // return spent workers back to camp
-        board.camp().addWorkers(workers);
+        board.camp().returnWorkers(workers);
     }
 
     private void delivery() {

@@ -7,8 +7,9 @@ import java.util.function.Predicate;
 
 import dev.tillmann.model.characters.*;
 
-public class CharactersProvider {
-    private static List<GameCharacter> characters;
+public class CharactersPile {
+    private static List<GameCharacter> characters = new ArrayList<>();
+    private static List<GameCharacter> charactersOut = new ArrayList<>();
 
     static {
         characters.add(new EarlyRiser());
@@ -31,9 +32,22 @@ public class CharactersProvider {
     public static List<GameCharacter> getRandomCharacters(Predicate<GameCharacter> predicate, int howMany) {
         if(howMany < 0) { throw new UnsupportedOperationException(); }
 
-        List<GameCharacter> result = new ArrayList<>(characters).stream().filter(ch -> predicate.test(ch)).toList();
+        List<GameCharacter> result = new ArrayList<>(characters.stream().filter(ch -> predicate.test(ch)).toList());
         Collections.shuffle(result);
+        result = result.subList(0, Math.min(howMany, result.size()));
 
-        return result.subList(0, Math.min(howMany, result.size()));
+        for(GameCharacter character : result) {
+            characters.remove(character);
+            charactersOut.add(character);
+        }
+
+        return result;
+    }
+
+    public static void returnCharacters(List<GameCharacter> charactersToReturn) {
+        for(GameCharacter character : charactersToReturn) {
+            characters.add(character);
+            charactersOut.remove(character);
+        }
     }
 }

@@ -9,7 +9,7 @@ public class Guild3 extends StartingBuilding {
     protected void activatePlayer(Player player) {
         CLI.ResourcesResponse response = CLI.instance().getOneResource();
         player.gain(resourcesGain());
-        player.spend(response.resources.addWorkers(1));
+        player.spend(response.resources);
     }
 
     private Resources resourcesGain() {

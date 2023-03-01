@@ -7,19 +7,17 @@ public class Camp {
 
     private int remainingWorkers = WORKERS_TOTAL;
     public int remainingWorkers() { return remainingWorkers; }
-    public void addWorkers(int workers) { remainingWorkers += workers; }
+    public void returnWorkers(int workers) { remainingWorkers += workers; }
 
 
     public Camp(int playersCount) {
         recruitmentWorkersCount = playersCount == 5 ? 2 : 3;
+        Resources.provideCamp(this);
     }
 
     public int getWorkers(int count) {
-        if(count < 0 || count > remainingWorkers) {
-            throw new UnsupportedOperationException();
-        }
-
-        remainingWorkers -= count;
+        if(remainingWorkers < count) { throw new UnsupportedOperationException(); }
+        remainingWorkers = remainingWorkers - count;
         return count;
     }
 }

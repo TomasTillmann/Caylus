@@ -5,10 +5,11 @@ import java.util.List;
 
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
+import dev.tillmann.model.Visualizable;
 
-public abstract class Building {
-    protected List<Player> plannedPlayers = new ArrayList<>();
-    protected java.util.Map<Player, Integer> playerToWorkers = new java.util.HashMap<>();
+public abstract class Building implements Visualizable {
+    private List<Player> plannedPlayers = new ArrayList<>();
+    public List<Player> plannedPlayers() { return plannedPlayers; }
 
     private Player owner;
     public final Player owner() { return owner; }
@@ -18,31 +19,43 @@ public abstract class Building {
         player.ownedBuildings().add(this);
     }
 
+    @Override
+    public String visualize() {
+        String visualization = "";
+        visualization += "Name: " + this.getClass() + "\n";
+
+        if(hasOwner()) {
+           visualization += "Owner: " + owner().visualize() + "\n";
+        }
+
+        if(plannedPlayers().size() != 0) {
+            visualization += "\n";
+            visualization += "Planned:";
+        }
+
+        for(Player player : plannedPlayers()) {
+            visualization += player.visualize() + "\n";
+        }
+
+        return visualization;
+    }
+
     public final boolean hasOwner() {
         return owner == null ? false : true;
     }
 
     public final int spendWorkers() {
         int workers = 0;
-        for(Player player : playerToWorkers.keySet()) {
-            player.spend(Resources.empty().addWorkers(playerToWorkers.get(player)));
-            workers += playerToWorkers.get(player);
+        for(Player player : plannedPlayers()) {
+            player.spend(Resources.empty().addWorkers(workersCost()));
+            workers += workersCost(); 
         }
 
         return workers;
     }
 
     public final void plan(Player player) {
-        plannedPlayers.add(player);
-
-        // workers cost required for planning
-        if(playerToWorkers.containsKey(player)) {
-            playerToWorkers.put(player, playerToWorkers.get(player) + workersCost());
-        }
-        else {
-            playerToWorkers.put(player, workersCost());
-        }
-        //
+        plannedPlayers().add(player);
     }
 
     public final void benefit(Player player) {
@@ -50,8 +63,7 @@ public abstract class Building {
     }
 
     protected final void reset() {
-        playerToWorkers.clear();
-        plannedPlayers.clear();
+        plannedPlayers().clear();
 
         additionalReset();
     }
@@ -65,7 +77,7 @@ public abstract class Building {
     }
 
     public void activate() {
-        for(Player player : plannedPlayers) {
+        for(Player player : plannedPlayers()) {
             activatePlayer(player);
         }
 

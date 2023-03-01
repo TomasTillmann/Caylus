@@ -7,8 +7,9 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.tillmann.model.BuildingsProvider;
-import dev.tillmann.model.CharactersProvider;
+import dev.tillmann.model.Board;
+import dev.tillmann.model.BuildingsPile;
+import dev.tillmann.model.CharactersPile;
 import dev.tillmann.model.Monument;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Residence;
@@ -29,6 +30,12 @@ public final class CLI {
 
     private static CLI instance = new CLI();
     public static CLI instance() { return instance; }
+
+    private Board board;
+    public void provideBoard(Board board) { this.board = board; }
+
+    private List<Player> players;
+    public void providePlayers(List<Player> players) { this.players = players; }
     
     private CLI() { }
 
@@ -84,6 +91,60 @@ public final class CLI {
 
     public class MonumentResponse {
         public Monument monument;
+    }
+
+    private String flag(Building building) {
+        if(building instanceof WoodenBuilding) {
+            return "Wooden";
+        }
+
+        if(building instanceof StoneBuilding) {
+            return "Stone";
+        }
+
+        if(building instanceof YellowFlagBuilding) {
+            return "Yellow";
+        }
+
+        throw new IllegalArgumentException("Building has some different flag.");
+    }
+
+    private void showState() {
+        out.println("Players:");
+        for(Player player : players) {
+            out.println(player.visualize());
+        }
+        out.println();
+
+        out.println("Remaining resources:");
+        out.println("Wood: " + Resources.remainingWood());
+        out.println("Food: " + Resources.remainingFood());
+        out.println("Fabric: " + Resources.remainingFabric());
+        out.println("Stone: " + Resources.remainingStone());
+        out.println("Gold: " + Resources.remainingGold());
+        out.println("Workers: " + Resources.remainingWorkers());
+        out.println();
+
+        out.println("Road:");
+        for(Building building : board.road().buildings(b -> true)) {
+            out.println(building.visualize());
+            // todo: print some info what does this building do, not to, also have the name saved up, dont do it via getClass() reflection
+        }
+        out.println();
+
+        out.println(board.constructionSite().visualize());
+
+        out.println("Characters:");
+        for(GameCharacter character : board.onBoardCharacters()) {
+            out.println(character.visualize());
+        }
+        out.println();
+
+        out.println("Remaining buildings: ");
+        for(Building building : BuildingsPile.remainingBuildings()) {
+            out.println(building.visualize());
+        }
+        out.println();
     }
 
     private void shutdown() {
@@ -152,15 +213,26 @@ public final class CLI {
         //
     }
 
+    private int call = 1;
     public CLI.PlayerPlanResponse getPlayerPlan(Player player) {
         PlayerPlanResponse response = new PlayerPlanResponse();
-        response.building = BuildingsProvider.getRandomBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
-        return response;
+        if (call < 4) {
+            response.building = board.road().building(6); 
+            call += 1;
+            return response;
+        }
+
+        if(call == 4) {
+            response.passed = true;
+            return response;
+        }
+
+        throw new UnsupportedOperationException("Shouldn't happend");
     }
 
     public WoodenBuildingResponse getWoodenBuildingToBuild(Player player) {
         WoodenBuildingResponse response = new WoodenBuildingResponse();
-        response.woodenBuilding = (WoodenBuilding)BuildingsProvider.getRandomBuildings(b -> b instanceof WoodenBuilding, 1).get(0);
+        response.woodenBuilding = (WoodenBuilding)BuildingsPile.getBuildings(b -> b instanceof WoodenBuilding).get(0);
         return response;
     }
 
@@ -172,16 +244,18 @@ public final class CLI {
 
     public BuildingToOwnResponse getBuildingToOwn(Player player) {
         BuildingToOwnResponse response = new BuildingToOwnResponse();
-        response.building = (YellowFlagBuilding)BuildingsProvider.getRandomBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
+        response.building = (YellowFlagBuilding)board.road().buildings(b -> b instanceof YellowFlagBuilding).get(0);
         return response;
     }
 
     public CLI.ProvostPositionResponse getProvostPosition(Player player, Road road) {
         ProvostPositionResponse response = new ProvostPositionResponse();
         response.provostNewPosition = road.provost() - 1;
+        response.provostDifference = 1;
         return response;
     }
 
+    // todo: exclude gold and workers - change name than - only allow wood, stone, fabric, food
     public ResourcesResponse getOneResource() {
         ResourcesResponse response = new ResourcesResponse();
         response.resources = Resources.empty().addFabric(1);
@@ -196,7 +270,7 @@ public final class CLI {
 
     public StoneBuildingResponse getStoneBuildingToBuild(Player player) {
         StoneBuildingResponse response = new StoneBuildingResponse();
-        response.stoneBuilding = (StoneBuilding)BuildingsProvider.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0); 
+        response.stoneBuilding = (StoneBuilding)board.road().buildings(b -> b instanceof StoneBuilding).get(0); 
         return response;
     }
 
@@ -232,7 +306,7 @@ public final class CLI {
 
     public CharacterResponse chooseCharacter(Player player, List<GameCharacter> characters) {
         CharacterResponse response = new CharacterResponse();
-        response.character = CharactersProvider.getRandomCharacters(ch -> true, 1).get(0);
+        response.character = CharactersPile.getRandomCharacters(ch -> true, 1).get(0);
         return response;
     }
 

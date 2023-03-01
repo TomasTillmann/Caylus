@@ -11,28 +11,36 @@ import dev.tillmann.model.buildings.starting.*;
 import dev.tillmann.model.buildings.stone.*;
 import dev.tillmann.model.buildings.wooden.*;
 
-public class BuildingsProvider {
-    private static Board map;
-    public static void provideBoard(Board map) {
-        BuildingsProvider.map = map;
+public class BuildingsPile {
+    private static Board board;
+    public static void provideBoard(Board board) {
+        BuildingsPile.board = board;
+    }
+
+    public static void provideBuilding(Building building) {
+        buildings.add(building);
     }
 
     private static List<Building> buildings = new ArrayList<>();
+    public static List<Building> remainingBuildings() { return Collections.unmodifiableList(buildings); }
+
     private static List<Building> buildingsOut = new ArrayList<>();
 
     static {
         // set starting
-        buildings.add(new Carpenter(map));
-        buildings.add(new Toll(map));
+        buildings.add(new Carpenter(board));
+        buildings.add(new Toll(board));
         buildings.add(new Fairground());
         buildings.add(new Lawyer());
         //
 
         // set yellowFlag
         buildings.add(new YellowFlagBuilding(new Farm()));
+        buildings.add(new YellowFlagBuilding(new Farm()));
         buildings.add(new YellowFlagBuilding(new Guild3()));
-        buildings.add(new YellowFlagBuilding(new Carpenter(map)));
+        buildings.add(new YellowFlagBuilding(new Carpenter(board)));
         buildings.add(new YellowFlagBuilding(new Guild4()));
+        buildings.add(new YellowFlagBuilding(new Market()));
         buildings.add(new YellowFlagBuilding(new Market()));
         buildings.add(new YellowFlagBuilding(new Quarry()));
         buildings.add(new YellowFlagBuilding(new Sawmill()));
@@ -42,7 +50,7 @@ public class BuildingsProvider {
         buildings.add(new CoveredMarket());
         buildings.add(new Manor());
         buildings.add(new SpinningMill());
-        buildings.add(new Stonemason(map));
+        buildings.add(new Stonemason(board));
         buildings.add(new Tailor());
         buildings.add(new WoodenFarm());
         buildings.add(new WoodenMarket());
@@ -70,7 +78,7 @@ public class BuildingsProvider {
     public static List<Building> getRandomBuildings(Predicate<Building> predicate, int howMany) {
         if(howMany < 0) { throw new UnsupportedOperationException(); }
 
-        List<Building> result = new ArrayList<Building>(buildings).stream().filter(b -> predicate.test(b)).toList();
+        List<Building> result = new ArrayList<Building>(buildings.stream().filter(b -> predicate.test(b)).toList());
         Collections.shuffle(result);
         result = result.subList(0, Math.min(result.size(), howMany));
 
@@ -82,8 +90,8 @@ public class BuildingsProvider {
         return result;
     }
 
-    public static void returnBuildings(List<Building> buildings) {
-        for(Building building : buildings) {
+    public static void returnBuildings(List<Building> buildingsToReturn) {
+        for(Building building : buildingsToReturn) {
             buildings.add(building);
             buildingsOut.remove(building);
         }

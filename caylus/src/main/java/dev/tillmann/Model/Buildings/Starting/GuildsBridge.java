@@ -6,6 +6,7 @@ import java.util.List;
 
 import dev.tillmann.caylus.cli.CLI;
 import dev.tillmann.model.Board;
+import dev.tillmann.model.BuildingsPile;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
 
@@ -24,6 +25,8 @@ public class GuildsBridge extends StartingBuilding {
         this.map = map;
         allPlayers = players;
         stillPlanningPlayers = new ArrayList<>(allPlayers);
+
+        BuildingsPile.provideBuilding(this);
     }
 
     public void passed(Player player) {

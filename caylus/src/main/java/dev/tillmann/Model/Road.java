@@ -3,6 +3,8 @@ package dev.tillmann.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import dev.tillmann.caylus.cli.CLI;
 import dev.tillmann.model.buildings.*;
@@ -73,6 +75,10 @@ public class Road {
         return buildings;
     }
 
+    public List<Building> buildings(Predicate<Building> predicate) {
+        return Stream.of(buildings).filter(b -> predicate.test(b)).toList();
+    }
+
     public void build(Building building) {
         // update last building position
         lastBuildingPosition += lastBuildingPosition == STONE_BUILDING_POSITION - 1 ? 2 : 1;
@@ -86,15 +92,15 @@ public class Road {
     }
 
     private void setupStartingBuildings() {
-        buildings[FAIRGROUND_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Fairground, 1).get(0);
-        buildings[LAWYER_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Lawyer, 1).get(0);
-        buildings[CARPENTER_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Fairground, 1).get(0);
-        buildings[TOLL_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Fairground, 1).get(0);
-        buildings[GUILDS_BRIDGE_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Fairground, 1).get(0);
+        buildings[FAIRGROUND_POSITION] = BuildingsPile.getRandomBuildings(b -> b instanceof Fairground, 1).get(0);
+        buildings[LAWYER_POSITION] = BuildingsPile.getRandomBuildings(b -> b instanceof Lawyer, 1).get(0);
+        buildings[CARPENTER_POSITION] = BuildingsPile.getRandomBuildings(b -> b instanceof Carpenter, 1).get(0);
+        buildings[TOLL_POSITION] = BuildingsPile.getRandomBuildings(b -> b instanceof Toll, 1).get(0);
+        buildings[GUILDS_BRIDGE_POSITION] = BuildingsPile.getRandomBuildings(b -> b instanceof GuildsBridge, 1).get(0);
     }
 
     private void setupYellowFlagBuildings() {
-        List<Building> startingBuildings = BuildingsProvider.getBuildings(b -> b instanceof YellowFlagBuilding);
+        List<Building> startingBuildings = BuildingsPile.getBuildings(b -> b instanceof YellowFlagBuilding);
         assert startingBuildings.size() == YELLOW_FLAG_BUILDINGS_END - YELLOW_FLAG_BUILDINGS_START;
 
         Collections.shuffle(startingBuildings);
@@ -105,11 +111,11 @@ public class Road {
     }
 
     private void setupWoodenBuilding() {
-        buildings[WOODEN_BUILDING_POSITION] = BuildingsProvider.getRandomBuildings(b -> (b instanceof WoodenBuilding) && !(b instanceof Stonemason), 1).get(0);
+        buildings[WOODEN_BUILDING_POSITION] = BuildingsPile.getRandomBuildings(b -> (b instanceof WoodenBuilding) && !(b instanceof Stonemason), 1).get(0);
     }
 
     private void setupStoneBuilding() {
-        buildings[STONE_BUILDING_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0);
+        buildings[STONE_BUILDING_POSITION] = BuildingsPile.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0);
     }
 
     public void yellowFlagToResidences() {

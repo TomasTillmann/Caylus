@@ -1,5 +1,7 @@
 package dev.tillmann.model.buildings;
 
+import java.util.List;
+
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Residence;
 import dev.tillmann.model.buildings.starting.StartingBuilding;
@@ -16,6 +18,9 @@ public class YellowFlagBuilding extends StartingBuilding {
     protected void activatePlayer(Player player) {
         building.activatePlayer(player);
     }
+
+    @Override
+    public List<Player> plannedPlayers() { return building.plannedPlayers(); }
 
     @Override
     public int workersCost() {

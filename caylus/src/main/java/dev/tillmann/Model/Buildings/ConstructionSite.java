@@ -1,16 +1,18 @@
 package dev.tillmann.model.buildings;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import dev.tillmann.caylus.cli.CLI;
-import dev.tillmann.model.BuildingsProvider;
+import dev.tillmann.model.BuildingsPile;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
+import dev.tillmann.model.Visualizable;
 import dev.tillmann.model.buildings.stone.StoneBuilding;
 import dev.tillmann.model.buildings.wooden.WoodenBuilding;
 
-public final class ConstructionSite {
+public final class ConstructionSite implements Visualizable {
     private Building first;
     public Building first() { return first; }
 
@@ -21,11 +23,27 @@ public final class ConstructionSite {
     public Building third() { return third; }
 
     private List<Player> plannedPlayers = new ArrayList<>();
+    public List<Player> plannedPlayers() { return Collections.unmodifiableList(plannedPlayers); }
 
     public ConstructionSite() {
-        first = BuildingsProvider.getRandomBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
-        second = BuildingsProvider.getRandomBuildings(b -> b instanceof WoodenBuilding, 1).get(0);
-        third = BuildingsProvider.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0);
+        first = BuildingsPile.getRandomBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
+        second = BuildingsPile.getRandomBuildings(b -> b instanceof WoodenBuilding, 1).get(0);
+        third = BuildingsPile.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0);
+    }
+
+    @Override
+    public String visualize() {
+        String visualization = "";
+        visualization += "First: " + first().visualize() + "\n";
+        visualization += "Second: " + second().visualize() + "\n";
+        visualization += "Third: " + third().visualize() + "\n";
+
+        visualization += "Planned players: \n";
+        for(Player player : plannedPlayers()) {
+            visualization += player.name + "\n";
+        }
+
+        return visualization;
     }
 
     public void deliver() {
