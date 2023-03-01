@@ -9,6 +9,7 @@ import dev.tillmann.model.buildings.Building;
 import dev.tillmann.model.buildings.monuments.Factory;
 import dev.tillmann.model.buildings.monuments.Garden;
 import dev.tillmann.model.buildings.monuments.Granary;
+import dev.tillmann.model.characters.GameCharacter;
 
 public class Caylus {
     private Board board;
@@ -21,7 +22,7 @@ public class Caylus {
 
         players = CLI.instance().getPlayers().value;
         
-        List<GameCharacter> characters = CharactersProvider.getRandom(players.size() + 3);
+        List<GameCharacter> characters = CharactersProvider.getRandomCharacters(ch -> true, players.size() + 3);
 
         List<GameCharacter> remainingCharacters = initPlayers(characters);
 

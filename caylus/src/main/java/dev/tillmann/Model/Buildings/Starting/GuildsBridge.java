@@ -52,7 +52,7 @@ public class GuildsBridge extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
-        CLI.ProvostPositionResponse response = CLI.instance().getProvostPosition(player);
+        CLI.ProvostPositionResponse response = CLI.instance().getProvostPosition(player, map.road());
         map.road().setProvost(response.provostNewPosition);
         player.spend(resourcesCost(response.provostDifference));
     }

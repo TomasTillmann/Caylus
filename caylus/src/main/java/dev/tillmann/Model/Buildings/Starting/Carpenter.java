@@ -14,7 +14,7 @@ public class Carpenter extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
-        CLI.WoodenBuildingToBuildResponse response = CLI.instance().getWoodenBuildingToBuild(player);
+        CLI.WoodenBuildingResponse response = CLI.instance().getWoodenBuildingToBuild(player);
         WoodenBuilding building = response.woodenBuilding;
 
         building.setOwner(player);

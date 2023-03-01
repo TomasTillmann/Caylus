@@ -64,10 +64,10 @@ public class BuildingsProvider {
     }
 
     public static List<Building> getBuildings(Predicate<Building> predicate) {
-        return getBuildings(predicate, buildings.size());
+        return getRandomBuildings(predicate, buildings.size());
     }
 
-    public static List<Building> getBuildings(Predicate<Building> predicate, int howMany) {
+    public static List<Building> getRandomBuildings(Predicate<Building> predicate, int howMany) {
         if(howMany < 0) { throw new UnsupportedOperationException(); }
 
         List<Building> result = new ArrayList<Building>(buildings).stream().filter(b -> predicate.test(b)).toList();

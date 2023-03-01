@@ -26,13 +26,13 @@ public class Stonemason extends WoodenBuilding {
 
     @Override
     public void constructionActivate(Player player) {
-        CLI.StoneBuildingToBuildResponse response = CLI.instance().getStoneBuildingToBuild(player);
+        CLI.StoneBuildingResponse response = CLI.instance().getStoneBuildingToBuild(player);
         activate(player, response.stoneBuilding.toBuildCost(), response.stoneBuilding);
     }
 
     @Override
     public void setupActivate(Player player) {
-        CLI.StoneBuildingToBuildResponse response = CLI.instance().getStoneBuildingToBuild(player);
+        CLI.StoneBuildingResponse response = CLI.instance().getStoneBuildingToBuild(player);
         activate(player, setupSideToBuildCost(response.stoneBuilding), response.stoneBuilding);
     }
 

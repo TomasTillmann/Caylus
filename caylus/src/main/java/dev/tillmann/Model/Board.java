@@ -6,6 +6,7 @@ import java.util.List;
 import dev.tillmann.caylus.Config;
 import dev.tillmann.model.buildings.ConstructionSite;
 import dev.tillmann.model.buildings.starting.GuildsBridge;
+import dev.tillmann.model.characters.GameCharacter;
 
 public class Board {
     private ConstructionSite constructionSite;

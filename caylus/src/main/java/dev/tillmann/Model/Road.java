@@ -86,11 +86,11 @@ public class Road {
     }
 
     private void setupStartingBuildings() {
-        buildings[FAIRGROUND_POSITION] = BuildingsProvider.getBuildings(b -> b instanceof Fairground, 1).get(0);
-        buildings[LAWYER_POSITION] = BuildingsProvider.getBuildings(b -> b instanceof Lawyer, 1).get(0);
-        buildings[CARPENTER_POSITION] = BuildingsProvider.getBuildings(b -> b instanceof Fairground, 1).get(0);
-        buildings[TOLL_POSITION] = BuildingsProvider.getBuildings(b -> b instanceof Fairground, 1).get(0);
-        buildings[GUILDS_BRIDGE_POSITION] = BuildingsProvider.getBuildings(b -> b instanceof Fairground, 1).get(0);
+        buildings[FAIRGROUND_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Fairground, 1).get(0);
+        buildings[LAWYER_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Lawyer, 1).get(0);
+        buildings[CARPENTER_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Fairground, 1).get(0);
+        buildings[TOLL_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Fairground, 1).get(0);
+        buildings[GUILDS_BRIDGE_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof Fairground, 1).get(0);
     }
 
     private void setupYellowFlagBuildings() {
@@ -105,11 +105,11 @@ public class Road {
     }
 
     private void setupWoodenBuilding() {
-        buildings[WOODEN_BUILDING_POSITION] = BuildingsProvider.getBuildings(b -> (b instanceof WoodenBuilding) && !(b instanceof Stonemason), 1).get(0);
+        buildings[WOODEN_BUILDING_POSITION] = BuildingsProvider.getRandomBuildings(b -> (b instanceof WoodenBuilding) && !(b instanceof Stonemason), 1).get(0);
     }
 
     private void setupStoneBuilding() {
-        buildings[STONE_BUILDING_POSITION] = BuildingsProvider.getBuildings(b -> b instanceof StoneBuilding, 1).get(0);
+        buildings[STONE_BUILDING_POSITION] = BuildingsProvider.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0);
     }
 
     public void yellowFlagToResidences() {
@@ -135,7 +135,7 @@ public class Road {
 
         for(int i = 0; i < residences.size(); ++i) {
             residence = residences.get(i);
-            CLI.ToMonumentsResponse response = CLI.instance().toMonument(residence);
+            CLI.MonumentResponse response = CLI.instance().toMonument(residence);
 
             if(response.monument != null) {
                 monument = residence.toMonument(response.monument);

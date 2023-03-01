@@ -23,9 +23,9 @@ public final class ConstructionSite {
     private List<Player> plannedPlayers = new ArrayList<>();
 
     public ConstructionSite() {
-        first = BuildingsProvider.getBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
-        second = BuildingsProvider.getBuildings(b -> b instanceof WoodenBuilding, 1).get(0);
-        third = BuildingsProvider.getBuildings(b -> b instanceof StoneBuilding, 1).get(0);
+        first = BuildingsProvider.getRandomBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
+        second = BuildingsProvider.getRandomBuildings(b -> b instanceof WoodenBuilding, 1).get(0);
+        third = BuildingsProvider.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0);
     }
 
     public void deliver() {

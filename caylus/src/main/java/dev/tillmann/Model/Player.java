@@ -5,6 +5,7 @@ import java.util.List;
 
 import dev.tillmann.caylus.cli.CLI;
 import dev.tillmann.model.buildings.Building;
+import dev.tillmann.model.characters.GameCharacter;
 
 public class Player {
     private GameState gameState;

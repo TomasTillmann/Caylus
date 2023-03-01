@@ -8,17 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.tillmann.model.BuildingsProvider;
-import dev.tillmann.model.GameCharacter;
+import dev.tillmann.model.CharactersProvider;
 import dev.tillmann.model.Monument;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Residence;
 import dev.tillmann.model.Resources;
+import dev.tillmann.model.Road;
 import dev.tillmann.model.buildings.Building;
 import dev.tillmann.model.buildings.ConstructionSite;
 import dev.tillmann.model.buildings.YellowFlagBuilding;
+import dev.tillmann.model.buildings.monuments.Mansion;
 import dev.tillmann.model.buildings.stone.StoneBuilding;
 import dev.tillmann.model.buildings.wooden.CoveredMarket;
 import dev.tillmann.model.buildings.wooden.WoodenBuilding;
+import dev.tillmann.model.characters.GameCharacter;
 
 public final class CLI {
     private static PrintStream out = System.out;
@@ -39,11 +42,11 @@ public final class CLI {
         public boolean constructionSite;
     }
 
-    public class WoodenBuildingToBuildResponse {
+    public class WoodenBuildingResponse {
         public WoodenBuilding woodenBuilding;
     }
 
-    public class StoneBuildingToBuildResponse {
+    public class StoneBuildingResponse {
         public StoneBuilding stoneBuilding;
     }
 
@@ -79,7 +82,7 @@ public final class CLI {
         public List<Resources> bundles;
     }
 
-    public class ToMonumentsResponse {
+    public class MonumentResponse {
         public Monument monument;
     }
 
@@ -151,67 +154,99 @@ public final class CLI {
 
     public CLI.PlayerPlanResponse getPlayerPlan(Player player) {
         PlayerPlanResponse response = new PlayerPlanResponse();
-        response.building = BuildingsProvider.getBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
+        response.building = BuildingsProvider.getRandomBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
+        return response;
     }
 
-    public WoodenBuildingToBuildResponse getWoodenBuildingToBuild(Player player) {
-        throw new UnsupportedOperationException();
+    public WoodenBuildingResponse getWoodenBuildingToBuild(Player player) {
+        WoodenBuildingResponse response = new WoodenBuildingResponse();
+        response.woodenBuilding = (WoodenBuilding)BuildingsProvider.getRandomBuildings(b -> b instanceof WoodenBuilding, 1).get(0);
+        return response;
     }
 
     public CLI.FavorResponse getFavor(Player player, int round, ConstructionSite constructionSite) {
-        throw new UnsupportedOperationException();
+        FavorResponse response = new FavorResponse();
+        response.stealCharacter = false;
+        return response;
     }
 
     public BuildingToOwnResponse getBuildingToOwn(Player player) {
-        throw new UnsupportedOperationException();
+        BuildingToOwnResponse response = new BuildingToOwnResponse();
+        response.building = (YellowFlagBuilding)BuildingsProvider.getRandomBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
+        return response;
     }
 
-    public CLI.ProvostPositionResponse getProvostPosition(Player player) {
-        throw new UnsupportedOperationException();
+    public CLI.ProvostPositionResponse getProvostPosition(Player player, Road road) {
+        ProvostPositionResponse response = new ProvostPositionResponse();
+        response.provostNewPosition = road.provost() - 1;
+        return response;
     }
 
     public ResourcesResponse getOneResource() {
-        throw new UnsupportedOperationException();
+        ResourcesResponse response = new ResourcesResponse();
+        response.resources = Resources.empty().addFabric(1);
+        return response;
     }
 
     public ResourcesResponse getWoodenBuildingResources(CoveredMarket coveredMarket) {
-        throw new UnsupportedOperationException();
+        ResourcesResponse response = new ResourcesResponse();
+        response.resources = Resources.empty().addWood(2);
+        return response;
     }
 
-    public StoneBuildingToBuildResponse getStoneBuildingToBuild(Player player) {
-        throw new UnsupportedOperationException();
+    public StoneBuildingResponse getStoneBuildingToBuild(Player player) {
+        StoneBuildingResponse response = new StoneBuildingResponse();
+        response.stoneBuilding = (StoneBuilding)BuildingsProvider.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0); 
+        return response;
     }
 
     public OptionResponse getTailorResponse(Player player) {
-        throw new UnsupportedOperationException();
+        OptionResponse response = new OptionResponse();
+        response.option = 2;
+        return response;
     }
 
     public OptionResponse getFoundryOption() {
-        throw new UnsupportedOperationException();
+        OptionResponse response = new OptionResponse();
+        response.option = 2;
+        return response;
     }
 
     public OptionResponse getAlchemistOption() {
-        throw new UnsupportedOperationException();
+        OptionResponse response = new OptionResponse();
+        response.option = 2;
+        return response;
     }
 
     public OptionResponse getChurchOption() {
-        throw new UnsupportedOperationException();
+        OptionResponse response = new OptionResponse();
+        response.option = 2;
+        return response;
     }
 
     public OptionResponse getJewelerOption() {
-        throw new UnsupportedOperationException();
+        OptionResponse response = new OptionResponse();
+        response.option = 2;
+        return response;
     }
 
     public CharacterResponse chooseCharacter(Player player, List<GameCharacter> characters) {
-        throw new UnsupportedOperationException();
+        CharacterResponse response = new CharacterResponse();
+        response.character = CharactersProvider.getRandomCharacters(ch -> true, 1).get(0);
+        return response;
     }
 
     public ConstructionSiteResponse getConstructionSiteResponse(Player player) {
-        throw new UnsupportedOperationException();
+        ConstructionSiteResponse response = new ConstructionSiteResponse();
+        response.bundles = new ArrayList<>();
+        response.bundles.add(Resources.empty().addFood(1).addFabric(1).addWood(1));
+        return response;
     }
 
-    public ToMonumentsResponse toMonument(Residence residence) {
-        throw new UnsupportedOperationException();
+    public MonumentResponse toMonument(Residence residence) {
+        MonumentResponse response = new MonumentResponse();
+        response.monument = new Mansion();
+        return response;
     }
 
     public void showResults(List<Player> players) {
