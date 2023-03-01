@@ -32,6 +32,10 @@ public class Player {
 
     public String name;
 
+    public Player(String name) {
+        this.name = name;
+    }
+
     public void plan() {
         CLI.PlayerPlanResponse response = CLI.instance().getPlayerPlan(this);
 

@@ -17,131 +17,75 @@ public class BuildingsProvider {
         BuildingsProvider.map = map;
     }
 
-    private static List<StartingBuilding> startingBuildings = new ArrayList<>();
-    private static List<YellowFlagBuilding> yellowFlagBuildings = new ArrayList<>();
-    private static List<WoodenBuilding> woodenBuildings = new ArrayList<>();
-    private static List<StoneBuilding> stoneBuildings = new ArrayList<>();
+    private static List<Building> buildings = new ArrayList<>();
+    private static List<Building> buildingsOut = new ArrayList<>();
 
     static {
         // set starting
-        startingBuildings.add(new Carpenter(map));
-        startingBuildings.add(new Toll(map));
-        startingBuildings.add(new Fairground());
-        startingBuildings.add(new Lawyer());
+        buildings.add(new Carpenter(map));
+        buildings.add(new Toll(map));
+        buildings.add(new Fairground());
+        buildings.add(new Lawyer());
         //
 
         // set yellowFlag
-        yellowFlagBuildings.add(new YellowFlagBuilding(new Farm()));
-        yellowFlagBuildings.add(new YellowFlagBuilding(new Guild3()));
-        yellowFlagBuildings.add(new YellowFlagBuilding(new Carpenter(map)));
-        yellowFlagBuildings.add(new YellowFlagBuilding(new Guild4()));
-        yellowFlagBuildings.add(new YellowFlagBuilding(new Market()));
-        yellowFlagBuildings.add(new YellowFlagBuilding(new Quarry()));
-        yellowFlagBuildings.add(new YellowFlagBuilding(new Sawmill()));
+        buildings.add(new YellowFlagBuilding(new Farm()));
+        buildings.add(new YellowFlagBuilding(new Guild3()));
+        buildings.add(new YellowFlagBuilding(new Carpenter(map)));
+        buildings.add(new YellowFlagBuilding(new Guild4()));
+        buildings.add(new YellowFlagBuilding(new Market()));
+        buildings.add(new YellowFlagBuilding(new Quarry()));
+        buildings.add(new YellowFlagBuilding(new Sawmill()));
         //
 
         // set wooden
-        woodenBuildings.add(new CoveredMarket());
-        woodenBuildings.add(new Manor());
-        woodenBuildings.add(new SpinningMill());
-        woodenBuildings.add(new Stonemason(map));
-        woodenBuildings.add(new Tailor());
-        woodenBuildings.add(new WoodenFarm());
-        woodenBuildings.add(new WoodenMarket());
-        woodenBuildings.add(new WoodenQuarry());
-        woodenBuildings.add(new WoodenSawmill());
+        buildings.add(new CoveredMarket());
+        buildings.add(new Manor());
+        buildings.add(new SpinningMill());
+        buildings.add(new Stonemason(map));
+        buildings.add(new Tailor());
+        buildings.add(new WoodenFarm());
+        buildings.add(new WoodenMarket());
+        buildings.add(new WoodenQuarry());
+        buildings.add(new WoodenSawmill());
         //
 
         // set stone
-        stoneBuildings.add(new Alchemist());
-        stoneBuildings.add(new Church());
-        stoneBuildings.add(new Foundry());
-        stoneBuildings.add(new GoldMine());
-        stoneBuildings.add(new Jeweler());
-        stoneBuildings.add(new StoneFarm());
-        stoneBuildings.add(new StoneGuild());
-        stoneBuildings.add(new StoneQuarry());
-        stoneBuildings.add(new StoneSawmill());
+        buildings.add(new Alchemist());
+        buildings.add(new Church());
+        buildings.add(new Foundry());
+        buildings.add(new GoldMine());
+        buildings.add(new Jeweler());
+        buildings.add(new StoneFarm());
+        buildings.add(new StoneGuild());
+        buildings.add(new StoneQuarry());
+        buildings.add(new StoneSawmill());
         //
     }
 
-    public static List<StartingBuilding> getStarting() {
-        return getStarting(startingBuildings.size());
+    public static List<Building> getBuildings(Predicate<Building> predicate) {
+        return getBuildings(predicate, buildings.size());
     }
 
-    public static List<StartingBuilding> getStarting(int howMany) {
-        return getBuildings(howMany, b -> true, startingBuildings);
-    }
+    public static List<Building> getBuildings(Predicate<Building> predicate, int howMany) {
+        if(howMany < 0) { throw new UnsupportedOperationException(); }
 
-    public static List<StartingBuilding> getStarting(Predicate<StartingBuilding> predicate) {
-        return getBuildings(startingBuildings.size(), predicate, startingBuildings);
-    }
-
-    public static void returnStarting(List<StartingBuilding> buildings) {
-        returnBuildings(buildings, startingBuildings);
-    }
-
-    public static List<WoodenBuilding> getWooden() {
-        return getWooden(woodenBuildings.size());
-    }
-
-    public static List<WoodenBuilding> getWooden(int howMany) {
-        return getBuildings(howMany, b -> true, woodenBuildings);
-    }
-
-    public static List<WoodenBuilding> getWooden(Predicate<WoodenBuilding> predicate) {
-        return getBuildings(woodenBuildings.size(), predicate, woodenBuildings);
-    }
-
-    public static void returnWooden(List<WoodenBuilding> buildings) {
-        returnBuildings(buildings, woodenBuildings);
-    }
-
-    public static List<StoneBuilding> getStone() {
-        return getStone(stoneBuildings.size());
-    }
-
-    public static List<StoneBuilding> getStone(int howMany) {
-        return getBuildings(howMany, b -> true, stoneBuildings);
-    }
-
-    public static List<StoneBuilding> getStone(Predicate<StoneBuilding> predicate) {
-        return getBuildings(stoneBuildings.size(), predicate, stoneBuildings);
-    }
-
-    public static void returnStone(List<StoneBuilding> buildings) {
-        returnBuildings(buildings, stoneBuildings);
-    }
-
-    public static List<YellowFlagBuilding> getYellowFlag() {
-        return getYellowFlag(yellowFlagBuildings.size());
-    }
-
-    public static List<YellowFlagBuilding> getYellowFlag(int howMany) {
-        return getBuildings(howMany, b -> true, yellowFlagBuildings);
-    }
-
-    public static List<YellowFlagBuilding> getYellowFlag(Predicate<YellowFlagBuilding> predicate) {
-        return getBuildings(yellowFlagBuildings.size(), predicate, yellowFlagBuildings);
-    }
-
-    private static <T extends Building> List<T> getBuildings(int howMany, Predicate<T> predicate, List<T> toChooseFrom) {
-        if(howMany < 0 || howMany > toChooseFrom.size()) { throw new UnsupportedOperationException(); }
-
-        List<T> result = new ArrayList<T>(toChooseFrom).stream().filter(b -> predicate.test(b)).toList();
+        List<Building> result = new ArrayList<Building>(buildings).stream().filter(b -> predicate.test(b)).toList();
         Collections.shuffle(result);
         result = result.subList(0, Math.min(result.size(), howMany));
 
-        for(T building : result) {
-            startingBuildings.remove(building);
+        for(Building building : result) {
+            buildings.remove(building);
+            buildingsOut.add(building);
         }
 
         return result;
     }
 
-    private static <T extends Building> void returnBuildings(List<T> buildings, List<T> whereToReturn) {
-        for(T building : buildings) {
-            whereToReturn.add(building);
+    public static void returnBuildings(List<Building> buildings) {
+        for(Building building : buildings) {
+            buildings.add(building);
+            buildingsOut.remove(building);
         }
     }
 }

@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.tillmann.model.BuildingsProvider;
 import dev.tillmann.model.GameCharacter;
 import dev.tillmann.model.Monument;
 import dev.tillmann.model.Player;
@@ -97,7 +98,7 @@ public final class CLI {
             if(1 <= count && count <= 5) {
                 return count;
             }
-        } finally {}
+        } catch(Exception ex) {}
 
         return null;
     }
@@ -107,7 +108,15 @@ public final class CLI {
     }
 
     public PlayersResponse getPlayers() {
-        greetPlayers();
+        PlayersResponse response = new PlayersResponse();
+        response.value = new ArrayList<>();
+        response.value.add(new Player("Alfons"));
+        response.value.add(new Player("Breta"));
+        response.value.add(new Player("Radovan"));
+        return response;
+
+        // trash kod
+/*         greetPlayers();
         String playersCountRaw;
         Integer playersCount;
         String playerName;
@@ -122,7 +131,7 @@ public final class CLI {
 
             } while((playersCount = tryGetPlayersCount(playersCountRaw)) == null);
 
-            for(int i = 0; i < playersCount; ++i) {
+            for(int i = 1; i <= playersCount; ++i) {
                 out.println("Write name for player number " + i + ".");
                 Player player = new Player();
 
@@ -136,11 +145,13 @@ public final class CLI {
         }
         catch(IOException ex) { shutdown(); }
 
-        return response;
+        return response; */
+        //
     }
 
     public CLI.PlayerPlanResponse getPlayerPlan(Player player) {
-        throw new UnsupportedOperationException();
+        PlayerPlanResponse response = new PlayerPlanResponse();
+        response.building = BuildingsProvider.getBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
     }
 
     public WoodenBuildingToBuildResponse getWoodenBuildingToBuild(Player player) {
