@@ -1,14 +1,13 @@
-package dev.tillmann.Model;
+package dev.tillmann.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Buildings.*;
-import dev.tillmann.Model.Buildings.Starting.*;
-import dev.tillmann.Model.Buildings.Wooden.Stonemason;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.buildings.*;
+import dev.tillmann.model.buildings.starting.*;
+import dev.tillmann.model.buildings.wooden.Stonemason;
 
 public class Road {
     private int provostPosition;
@@ -134,7 +133,7 @@ public class Road {
 
         for(int i = 0; i < residences.size(); ++i) {
             residence = residences.get(i);
-            CLI.ToMonumentsResponse response = CLI.toMonument(residence);
+            CLI.ToMonumentsResponse response = CLI.instance().toMonument(residence);
 
             if(response.monument != null) {
                 monument = residence.toMonument(response.monument);

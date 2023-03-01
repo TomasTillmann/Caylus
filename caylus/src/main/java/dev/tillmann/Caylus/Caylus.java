@@ -1,17 +1,14 @@
-package dev.tillmann.Caylus;
+package dev.tillmann.caylus;
 
 import java.util.Collections;
 import java.util.List;
 
-import dev.tillmann.Model.BuildingsProvider;
-import dev.tillmann.Model.GameCharacter;
-import dev.tillmann.Model.GameState;
-import dev.tillmann.Model.Board;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
-import dev.tillmann.Model.Road;
-import dev.tillmann.Model.Buildings.Building;
-import dev.tillmann.Model.Buildings.Monuments.*;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.*;
+import dev.tillmann.model.buildings.Building;
+import dev.tillmann.model.buildings.monuments.Factory;
+import dev.tillmann.model.buildings.monuments.Garden;
+import dev.tillmann.model.buildings.monuments.Granary;
 
 public class Caylus {
     private Board board;
@@ -22,7 +19,7 @@ public class Caylus {
     public Caylus(Config config) {
         this.config = config;
 
-        players = CLI.getPlayers().value;
+        players = CLI.instance().getPlayers().value;
         
         List<GameCharacter> characters = CharactersProvider.getRandom(players.size() + 3);
 
@@ -75,7 +72,7 @@ public class Caylus {
         // choose characters
         for (int i = players.size() - 1; i >= 0; --i) {
             Player player = players.get(i);
-            CLI.CharacterResponse response = CLI.chooseCharacter(player, characters);
+            CLI.CharacterResponse response = CLI.instance().chooseCharacter(player, characters);
 
             player.characters().add(response.character);
             characters.remove(response.character);
@@ -149,6 +146,6 @@ public class Caylus {
             player.awardPrestigePoints(player.resources().gold() * 2);
         }
 
-        CLI.showResults(players);
+        CLI.instance().showResults(players);
     }
 }

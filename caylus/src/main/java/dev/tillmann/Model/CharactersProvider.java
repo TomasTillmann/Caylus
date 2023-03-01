@@ -1,10 +1,8 @@
-package dev.tillmann.Caylus;
+package dev.tillmann.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import dev.tillmann.Model.GameCharacter;
 
 public class CharactersProvider {
     private static List<GameCharacter> allCharacters;

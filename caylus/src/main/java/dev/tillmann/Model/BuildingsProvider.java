@@ -1,15 +1,15 @@
-package dev.tillmann.Model;
+package dev.tillmann.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
-import dev.tillmann.Model.Buildings.Building;
-import dev.tillmann.Model.Buildings.YellowFlagBuilding;
-import dev.tillmann.Model.Buildings.Starting.*;
-import dev.tillmann.Model.Buildings.Stone.*;
-import dev.tillmann.Model.Buildings.Wooden.*;
+import dev.tillmann.model.buildings.Building;
+import dev.tillmann.model.buildings.YellowFlagBuilding;
+import dev.tillmann.model.buildings.starting.*;
+import dev.tillmann.model.buildings.stone.*;
+import dev.tillmann.model.buildings.wooden.*;
 
 public class BuildingsProvider {
     private static Board map;

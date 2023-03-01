@@ -1,13 +1,13 @@
-package dev.tillmann.Model.Buildings.Starting;
+package dev.tillmann.model.buildings.starting;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Board;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.Board;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public class GuildsBridge extends StartingBuilding {
     private List<Player> allPlayers;
@@ -52,7 +52,7 @@ public class GuildsBridge extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
-        CLI.ProvostPositionResponse response = CLI.getProvostPosition(player);
+        CLI.ProvostPositionResponse response = CLI.instance().getProvostPosition(player);
         map.road().setProvost(response.provostNewPosition);
         player.spend(resourcesCost(response.provostDifference));
     }

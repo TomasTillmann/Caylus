@@ -1,13 +1,13 @@
-package dev.tillmann.Model.Buildings.Starting;
+package dev.tillmann.model.buildings.starting;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public class Guild3 extends StartingBuilding {
     @Override
     protected void activatePlayer(Player player) {
-        CLI.ResourcesResponse response = CLI.getOneResource();
+        CLI.ResourcesResponse response = CLI.instance().getOneResource();
         player.gain(resourcesGain());
         player.spend(response.resources.addWorkers(1));
     }

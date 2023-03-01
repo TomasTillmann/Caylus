@@ -1,15 +1,15 @@
-package dev.tillmann.Model.Buildings;
+package dev.tillmann.model.buildings;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.BuildingsProvider;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
-import dev.tillmann.Model.Buildings.Starting.StartingBuilding;
-import dev.tillmann.Model.Buildings.Stone.StoneBuilding;
-import dev.tillmann.Model.Buildings.Wooden.WoodenBuilding;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.BuildingsProvider;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
+import dev.tillmann.model.buildings.starting.StartingBuilding;
+import dev.tillmann.model.buildings.stone.StoneBuilding;
+import dev.tillmann.model.buildings.wooden.WoodenBuilding;
 
 public final class ConstructionSite {
     private StartingBuilding first;
@@ -38,7 +38,7 @@ public final class ConstructionSite {
         Player bestPlayer = plannedPlayers.get(0);
 
         for(Player player : plannedPlayers) {
-            CLI.ConstructionSiteResponse response = CLI.getConstructionSiteResponse(player);
+            CLI.ConstructionSiteResponse response = CLI.instance().getConstructionSiteResponse(player);
 
             for(Resources resources : response.bundles) {
                 player.spend(resources);

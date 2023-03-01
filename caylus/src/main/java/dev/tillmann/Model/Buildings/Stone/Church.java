@@ -1,8 +1,8 @@
-package dev.tillmann.Model.Buildings.Stone;
+package dev.tillmann.model.buildings.stone;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public class Church extends StoneBuilding {
     @Override
@@ -22,7 +22,7 @@ public class Church extends StoneBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.OptionResponse response = CLI.getChurchOption();
+        CLI.OptionResponse response = CLI.instance().getChurchOption();
 
         if(response.option == 1) {
             player.spend(Resources.empty().addWorkers(2));

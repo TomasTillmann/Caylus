@@ -1,9 +1,9 @@
-package dev.tillmann.Model.Buildings.Starting;
+package dev.tillmann.model.buildings.starting;
 
-import dev.tillmann.Caylus.*;
-import dev.tillmann.Model.Board;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Buildings.Wooden.WoodenBuilding;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.Board;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.buildings.wooden.WoodenBuilding;
 
 public class Carpenter extends StartingBuilding {
     private Board map;
@@ -14,7 +14,7 @@ public class Carpenter extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
-        CLI.WoodenBuildingToBuildResponse response = CLI.getWoodenBuildingToBuild(player);
+        CLI.WoodenBuildingToBuildResponse response = CLI.instance().getWoodenBuildingToBuild(player);
         WoodenBuilding building = response.woodenBuilding;
 
         building.setOwner(player);

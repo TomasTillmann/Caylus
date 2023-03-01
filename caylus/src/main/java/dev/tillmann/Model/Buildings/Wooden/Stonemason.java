@@ -1,10 +1,10 @@
-package dev.tillmann.Model.Buildings.Wooden;
+package dev.tillmann.model.buildings.wooden;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Board;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
-import dev.tillmann.Model.Buildings.Stone.StoneBuilding;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.Board;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
+import dev.tillmann.model.buildings.stone.StoneBuilding;
 
 public class Stonemason extends WoodenBuilding {
     private Board map;
@@ -20,19 +20,19 @@ public class Stonemason extends WoodenBuilding {
 
     @Override
     public Resources toBuildCost() {
-        CLI.ResourcesResponse response = CLI.getOneResource();
+        CLI.ResourcesResponse response = CLI.instance().getOneResource();
         return Resources.empty().addWood(1).add(response.resources);
     }
 
     @Override
     public void constructionActivate(Player player) {
-        CLI.StoneBuildingToBuildResponse response = CLI.getStoneBuildingToBuild(player);
+        CLI.StoneBuildingToBuildResponse response = CLI.instance().getStoneBuildingToBuild(player);
         activate(player, response.stoneBuilding.toBuildCost(), response.stoneBuilding);
     }
 
     @Override
     public void setupActivate(Player player) {
-        CLI.StoneBuildingToBuildResponse response = CLI.getStoneBuildingToBuild(player);
+        CLI.StoneBuildingToBuildResponse response = CLI.instance().getStoneBuildingToBuild(player);
         activate(player, setupSideToBuildCost(response.stoneBuilding), response.stoneBuilding);
     }
 

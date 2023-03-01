@@ -1,4 +1,4 @@
-package dev.tillmann.Model;
+package dev.tillmann.model;
 
 public abstract class Monument {
     private Residence residence;

@@ -1,9 +1,10 @@
-package dev.tillmann.Model.Buildings;
+package dev.tillmann.model.buildings;
 
 import java.util.ArrayList;
 import java.util.List;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public abstract class Building {
     protected List<Player> plannedPlayers = new ArrayList<>();

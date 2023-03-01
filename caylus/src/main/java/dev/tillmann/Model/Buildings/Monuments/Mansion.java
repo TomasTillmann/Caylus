@@ -1,7 +1,7 @@
-package dev.tillmann.Model.Buildings.Monuments;
+package dev.tillmann.model.buildings.monuments;
 
-import dev.tillmann.Model.Monument;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.model.Monument;
+import dev.tillmann.model.Resources;
 
 public class Mansion extends Monument {
     @Override

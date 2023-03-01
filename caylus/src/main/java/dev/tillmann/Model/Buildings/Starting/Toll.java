@@ -1,8 +1,8 @@
-package dev.tillmann.Model.Buildings.Starting;
+package dev.tillmann.model.buildings.starting;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Board;
-import dev.tillmann.Model.Player;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.Board;
+import dev.tillmann.model.Player;
 
 public class Toll extends StartingBuilding {
     Board map;
@@ -13,7 +13,7 @@ public class Toll extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
-        CLI.ProvostPositionResponse response = CLI.getProvostPosition(player);
+        CLI.ProvostPositionResponse response = CLI.instance().getProvostPosition(player);
         map.road().setProvost(response.provostNewPosition);
     }
 }

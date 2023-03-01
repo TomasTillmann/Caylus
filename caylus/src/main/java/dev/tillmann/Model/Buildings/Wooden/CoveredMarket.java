@@ -1,8 +1,8 @@
-package dev.tillmann.Model.Buildings.Wooden;
+package dev.tillmann.model.buildings.wooden;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public class CoveredMarket extends WoodenBuilding {
 
@@ -13,7 +13,7 @@ public class CoveredMarket extends WoodenBuilding {
 
     @Override
     public Resources toBuildCost() {
-        CLI.ResourcesResponse response = CLI.getWoodenBuildingResources(this);
+        CLI.ResourcesResponse response = CLI.instance().getWoodenBuildingResources(this);
         return response.resources;
     }
 

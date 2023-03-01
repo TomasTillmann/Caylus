@@ -1,4 +1,4 @@
-package dev.tillmann.Model;
+package dev.tillmann.model;
 
 public final class Resources {
     private static Camp camp;

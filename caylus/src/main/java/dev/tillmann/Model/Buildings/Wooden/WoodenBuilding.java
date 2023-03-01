@@ -1,6 +1,6 @@
-package dev.tillmann.Model.Buildings.Wooden;
+package dev.tillmann.model.buildings.wooden;
 
-import dev.tillmann.Model.Buildings.BuildableBuilding;
+import dev.tillmann.model.buildings.BuildableBuilding;
 
 public abstract class WoodenBuilding extends BuildableBuilding {
 }

@@ -1,8 +1,8 @@
-package dev.tillmann.Model.Buildings;
+package dev.tillmann.model.buildings;
 
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Residence;
-import dev.tillmann.Model.Buildings.Starting.StartingBuilding;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Residence;
+import dev.tillmann.model.buildings.starting.StartingBuilding;
 
 public class YellowFlagBuilding extends StartingBuilding {
     private StartingBuilding building;

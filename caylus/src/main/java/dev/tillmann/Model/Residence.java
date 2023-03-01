@@ -1,6 +1,6 @@
-package dev.tillmann.Model;
+package dev.tillmann.model;
 
-import dev.tillmann.Model.Buildings.YellowFlagBuilding;
+import dev.tillmann.model.buildings.YellowFlagBuilding;
 
 public class Residence {
     private YellowFlagBuilding yellowFlagBuilding;

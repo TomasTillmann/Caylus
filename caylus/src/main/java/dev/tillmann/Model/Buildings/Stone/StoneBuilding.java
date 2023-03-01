@@ -1,6 +1,6 @@
-package dev.tillmann.Model.Buildings.Stone;
+package dev.tillmann.model.buildings.stone;
 
-import dev.tillmann.Model.Buildings.BuildableBuilding;
+import dev.tillmann.model.buildings.BuildableBuilding;
 
 public abstract class StoneBuilding extends BuildableBuilding {
 }

@@ -1,8 +1,8 @@
-package dev.tillmann.Model.Buildings.Wooden;
+package dev.tillmann.model.buildings.wooden;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public class Tailor extends WoodenBuilding {
     @Override
@@ -12,7 +12,7 @@ public class Tailor extends WoodenBuilding {
 
     @Override
     public Resources toBuildCost() {
-        CLI.ResourcesResponse response = CLI.getOneResource();
+        CLI.ResourcesResponse response = CLI.instance().getOneResource();
         return Resources.empty().addWood(1).add(response.resources);
     }
 
@@ -23,7 +23,7 @@ public class Tailor extends WoodenBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.OptionResponse response = CLI.getTailorResponse(player);
+        CLI.OptionResponse response = CLI.instance().getTailorResponse(player);
 
         Resources resources = Resources.empty();
         int pp;

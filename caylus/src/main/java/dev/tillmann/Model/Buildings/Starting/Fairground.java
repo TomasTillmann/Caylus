@@ -1,7 +1,7 @@
-package dev.tillmann.Model.Buildings.Starting;
+package dev.tillmann.model.buildings.starting;
 
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public class Fairground extends StartingBuilding {
     @Override

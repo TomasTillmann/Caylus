@@ -1,8 +1,8 @@
-package dev.tillmann.Model.Buildings.Stone;
+package dev.tillmann.model.buildings.stone;
 
-import dev.tillmann.Caylus.CLI;
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public class Alchemist extends StoneBuilding {
     @Override
@@ -22,17 +22,17 @@ public class Alchemist extends StoneBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.OptionResponse optionResponse = CLI.getAlchemistOption();
+        CLI.OptionResponse optionResponse = CLI.instance().getAlchemistOption();
 
         if(optionResponse.option == 1) {
-            CLI.ResourcesResponse oneResource = CLI.getOneResource();
+            CLI.ResourcesResponse oneResource = CLI.instance().getOneResource();
 
             player.spend(oneResource.resources);
             player.gain(Resources.empty().addGold(1));
         }
         else if(optionResponse.option == 2) {
-            CLI.ResourcesResponse firstResource = CLI.getOneResource();
-            CLI.ResourcesResponse secondResource = CLI.getOneResource();
+            CLI.ResourcesResponse firstResource = CLI.instance().getOneResource();
+            CLI.ResourcesResponse secondResource = CLI.instance().getOneResource();
 
             player.spend(firstResource.resources.add(secondResource.resources));
             player.gain(Resources.empty().addGold(2));

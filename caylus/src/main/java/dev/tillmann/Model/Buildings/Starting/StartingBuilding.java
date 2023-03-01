@@ -1,6 +1,6 @@
-package dev.tillmann.Model.Buildings.Starting;
+package dev.tillmann.model.buildings.starting;
 
-import dev.tillmann.Model.Buildings.Building;
+import dev.tillmann.model.buildings.Building;
 
 public abstract class StartingBuilding extends Building {
 

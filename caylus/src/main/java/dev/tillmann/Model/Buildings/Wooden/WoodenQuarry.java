@@ -1,7 +1,7 @@
-package dev.tillmann.Model.Buildings.Wooden;
+package dev.tillmann.model.buildings.wooden;
 
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public class WoodenQuarry extends WoodenBuilding {
     private WoodenFarm farm;

@@ -1,11 +1,11 @@
-package dev.tillmann.Model;
+package dev.tillmann.model;
 
 import java.util.Collections;
 import java.util.List;
 
-import dev.tillmann.Caylus.Config;
-import dev.tillmann.Model.Buildings.ConstructionSite;
-import dev.tillmann.Model.Buildings.Starting.GuildsBridge;
+import dev.tillmann.caylus.Config;
+import dev.tillmann.model.buildings.ConstructionSite;
+import dev.tillmann.model.buildings.starting.GuildsBridge;
 
 public class Board {
     private ConstructionSite constructionSite;

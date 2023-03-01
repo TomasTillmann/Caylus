@@ -1,4 +1,4 @@
-package dev.tillmann.Model;
+package dev.tillmann.model;
 
 public class Camp {
     private static final int WORKERS_TOTAL = 75;

@@ -1,10 +1,10 @@
-package dev.tillmann.Model;
+package dev.tillmann.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.tillmann.Caylus.*;
-import dev.tillmann.Model.Buildings.Building;
+import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.model.buildings.Building;
 
 public class Player {
     private GameState gameState;
@@ -30,8 +30,10 @@ public class Player {
     private List<GameCharacter> characters = new ArrayList<>();
     public List<GameCharacter> characters() { return characters; }
 
+    public String name;
+
     public void plan() {
-        CLI.PlayerPlanResponse response = CLI.getPlayerPlan(this);
+        CLI.PlayerPlanResponse response = CLI.instance().getPlayerPlan(this);
 
         if(response.passed) {
             board.guildsBridge().passed(this);
@@ -59,7 +61,7 @@ public class Player {
     }
 
     public void getFavor() {
-        { CLI.FavorResponse response = CLI.getFavor(this, gameState.round, board.constructionSite());
+        { CLI.FavorResponse response = CLI.instance().getFavor(this, gameState.round, board.constructionSite());
 
         if(response.stealCharacter) {
             characters().add(response.character);
@@ -70,7 +72,7 @@ public class Player {
         response.building.benefit(this); }
 
         if(board.remainingCharacters().size() != 0) {
-            CLI.CharacterResponse response = CLI.chooseCharacter(this, board.remainingCharacters());
+            CLI.CharacterResponse response = CLI.instance().chooseCharacter(this, board.remainingCharacters());
             characters().add(board.drawCharacter(response.character));
         }
     }

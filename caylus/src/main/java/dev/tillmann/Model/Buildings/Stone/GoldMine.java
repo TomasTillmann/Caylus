@@ -1,7 +1,7 @@
-package dev.tillmann.Model.Buildings.Stone;
+package dev.tillmann.model.buildings.stone;
 
-import dev.tillmann.Model.Player;
-import dev.tillmann.Model.Resources;
+import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 
 public class GoldMine extends StoneBuilding {
     @Override
