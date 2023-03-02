@@ -21,6 +21,9 @@ public class Caylus {
     public Caylus(Config config) {
         this.config = config;
 
+        gameState = new GameState();
+        CLI.instance().provideGameState(gameState);
+
         players = CLI.instance().getPlayers().value;
 
         Camp camp = new Camp(players.size());
@@ -31,11 +34,9 @@ public class Caylus {
 
         board = new Board(config, players, remainingCharacters, camp);
 
-        gameState = new GameState();
 
         for(Player player : players) {
             player.setBoard(board);
-            player.setGameState(gameState);
         }
 
         CLI.instance().providePlayers(players);
@@ -43,9 +44,16 @@ public class Caylus {
 
     public void start() {
         for(gameState.round = 1; gameState.round <= config.rounds; ++gameState.round) {
+            gameState.phase = RoundPhase.Planning;
             planning();
+
+            gameState.phase = RoundPhase.Activation;
             activation();
+
+            gameState.phase = RoundPhase.Delivery;
             delivery();
+
+            gameState.phase = RoundPhase.Stewardship;
             stewardship();
         }
 

@@ -43,6 +43,11 @@ public class GuildsBridge extends StartingBuilding {
     }
 
     @Override
+    public String name() {
+        return "Guilds bridge";
+    }
+
+    @Override
     public void activate() {
         // on guilds bridge, no players are ever planned, but it still has to be activated -> inherited field plannedPlayers is completely ignored
 
@@ -55,7 +60,7 @@ public class GuildsBridge extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
-        CLI.ProvostPositionResponse response = CLI.instance().getProvostPosition(player, map.road());
+        CLI.ProvostPositionResponse response = CLI.instance().getNewProvostPosition(player, map.road());
         map.road().setProvost(response.provostNewPosition);
         player.spend(resourcesCost(response.provostDifference));
     }

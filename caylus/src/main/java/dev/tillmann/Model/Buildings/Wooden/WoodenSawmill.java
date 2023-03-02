@@ -17,7 +17,7 @@ public class WoodenSawmill extends WoodenBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
+    public Resources toBuildCost(Player player) {
         return Resources.empty().addWood(1).addFood(1);
     }
 
@@ -29,5 +29,10 @@ public class WoodenSawmill extends WoodenBuilding {
     @Override
     public void setupActivate(Player player) {
         farm.activate();
+    }
+
+    @Override
+    public String name() {
+        return "Wooden sawmill";
     }
 }

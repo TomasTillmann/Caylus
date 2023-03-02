@@ -42,6 +42,7 @@ public final class ConstructionSite implements Visualizable {
         for(Player player : plannedPlayers()) {
             visualization += player.name + "\n";
         }
+        if(plannedPlayers().size() != 0) { visualization += "\n"; }
 
         return visualization;
     }

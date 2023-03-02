@@ -39,4 +39,9 @@ public class YellowFlagBuilding extends StartingBuilding {
 
         return new Residence(this);
     }
+
+    @Override
+    public String name() {
+        return "Yellow flag " + building.name();
+    }
 }

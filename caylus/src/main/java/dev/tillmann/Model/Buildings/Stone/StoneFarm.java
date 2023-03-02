@@ -9,7 +9,7 @@ public class StoneFarm extends StoneBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
+    public Resources toBuildCost(Player player) {
         return Resources.empty().addStone(1).addFood(1);
     }
 
@@ -25,5 +25,10 @@ public class StoneFarm extends StoneBuilding {
     @Override
     public void setupActivate(Player player) {
         player.gain(Resources.empty().addFood(1).addFabric(1));
+    }
+
+    @Override
+    public String name() {
+        return "Stone farm";
     }
 }

@@ -12,8 +12,8 @@ public class CharactersPile {
     private static List<GameCharacter> charactersOut = new ArrayList<>();
 
     static {
-        characters.add(new EarlyRiser());
-        characters.add(new NightWorker());
+        characters.add(new Earlyriser());
+        characters.add(new Nightworker());
         characters.add(new Journeyman());
         characters.add(new Thief());
         characters.add(new Bailiff());

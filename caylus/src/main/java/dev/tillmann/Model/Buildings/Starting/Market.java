@@ -6,9 +6,14 @@ import dev.tillmann.model.Resources;
 
 public class Market extends StartingBuilding {
     @Override
+    public String name() {
+        return "Market";
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
         player.spend(resourcesCost());
-        CLI.ResourcesResponse response = CLI.instance().getOneResource();
+        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
         player.gain(response.resources);
     }
 

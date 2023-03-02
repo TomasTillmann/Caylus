@@ -6,6 +6,11 @@ import dev.tillmann.model.Resources;
 
 public class Lawyer extends StartingBuilding {
     @Override
+    public String name() {
+        return "Lawyer";
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
         player.spend(resourcesCost());
         CLI.BuildingToOwnResponse response = CLI.instance().getBuildingToOwn(player);

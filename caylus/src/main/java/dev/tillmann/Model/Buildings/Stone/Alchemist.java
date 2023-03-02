@@ -11,7 +11,7 @@ public class Alchemist extends StoneBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
+    public Resources toBuildCost(Player player) {
         return Resources.empty().addStone(1).addWood(1);
     }
 
@@ -22,17 +22,17 @@ public class Alchemist extends StoneBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.OptionResponse optionResponse = CLI.instance().getAlchemistOption();
+        CLI.OptionResponse optionResponse = CLI.instance().getAlchemistOption(player);
 
         if(optionResponse.option == 1) {
-            CLI.ResourcesResponse oneResource = CLI.instance().getOneResource();
+            CLI.ResourcesResponse oneResource = CLI.instance().getOneResource(player);
 
             player.spend(oneResource.resources);
             player.gain(Resources.empty().addGold(1));
         }
         else if(optionResponse.option == 2) {
-            CLI.ResourcesResponse firstResource = CLI.instance().getOneResource();
-            CLI.ResourcesResponse secondResource = CLI.instance().getOneResource();
+            CLI.ResourcesResponse firstResource = CLI.instance().getOneResource(player);
+            CLI.ResourcesResponse secondResource = CLI.instance().getOneResource(player);
 
             player.spend(firstResource.resources.add(secondResource.resources));
             player.gain(Resources.empty().addGold(2));
@@ -40,5 +40,10 @@ public class Alchemist extends StoneBuilding {
         else {
             throw new UnsupportedOperationException();
         }
+    }
+
+    @Override
+    public String name() {
+        return "Alchemist";
     }
 }

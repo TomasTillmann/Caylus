@@ -11,7 +11,7 @@ public class WoodenMarket extends WoodenBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
+    public Resources toBuildCost(Player player) {
         return Resources.empty().addWood(1).addFood(1);
     }
 
@@ -22,7 +22,12 @@ public class WoodenMarket extends WoodenBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource();
+        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
         player.gain(response.resources);
+    }
+
+    @Override
+    public String name() {
+        return "Wooden market";
     }
 }

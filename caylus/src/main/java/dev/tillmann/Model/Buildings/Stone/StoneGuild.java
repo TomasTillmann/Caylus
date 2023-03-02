@@ -11,8 +11,8 @@ public class StoneGuild extends StoneBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource();
+    public Resources toBuildCost(Player player) {
+        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
         return Resources.empty().addStone(1).add(response.resources);
     }
 
@@ -23,8 +23,13 @@ public class StoneGuild extends StoneBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource();
+        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
         player.spend(response.resources);
         player.gain(Resources.empty().addWorkers(5));
+    }
+
+    @Override
+    public String name() {
+        return "Stone guild";
     }
 }

@@ -6,8 +6,13 @@ import dev.tillmann.model.Resources;
 
 public class Guild3 extends StartingBuilding {
     @Override
+    public String name() {
+        return "Guild3";
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource();
+        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
         player.gain(resourcesGain());
         player.spend(response.resources);
     }

@@ -4,6 +4,10 @@ import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
 
 public class Guild4 extends StartingBuilding {
+    @Override
+    public String name() {
+        return "Guild4";
+    }
 
     @Override
     protected void activatePlayer(Player player) {

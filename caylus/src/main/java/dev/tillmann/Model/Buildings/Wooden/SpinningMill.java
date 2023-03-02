@@ -17,7 +17,7 @@ public class SpinningMill extends WoodenBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
+    public Resources toBuildCost(Player player) {
         return Resources.empty().addWood(2);
     }
 
@@ -29,5 +29,10 @@ public class SpinningMill extends WoodenBuilding {
     @Override
     public void setupActivate(Player player) {
         farm.activate();
+    }
+
+    @Override
+    public String name() {
+        return "Spinning mill";
     }
 }

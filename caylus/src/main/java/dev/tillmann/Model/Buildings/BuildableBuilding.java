@@ -11,7 +11,7 @@ public abstract class BuildableBuilding extends Building {
     public Side side = Side.Construction;
 
     public abstract void immidiateReward(Player player);
-    public abstract Resources toBuildCost();
+    public abstract Resources toBuildCost(Player player);
     public abstract void constructionActivate(Player player);
     public abstract void setupActivate(Player player);
 

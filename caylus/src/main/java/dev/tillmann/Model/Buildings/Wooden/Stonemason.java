@@ -19,21 +19,21 @@ public class Stonemason extends WoodenBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource();
+    public Resources toBuildCost(Player player) {
+        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
         return Resources.empty().addWood(1).add(response.resources);
     }
 
     @Override
     public void constructionActivate(Player player) {
         CLI.StoneBuildingResponse response = CLI.instance().getStoneBuildingToBuild(player);
-        activate(player, response.stoneBuilding.toBuildCost(), response.stoneBuilding);
+        activate(player, response.stoneBuilding.toBuildCost(player), response.stoneBuilding);
     }
 
     @Override
     public void setupActivate(Player player) {
         CLI.StoneBuildingResponse response = CLI.instance().getStoneBuildingToBuild(player);
-        activate(player, setupSideToBuildCost(response.stoneBuilding), response.stoneBuilding);
+        activate(player, setupSideToBuildCost(player, response.stoneBuilding), response.stoneBuilding);
     }
 
     private void activate(Player player, Resources toSpend, StoneBuilding building) {
@@ -43,8 +43,13 @@ public class Stonemason extends WoodenBuilding {
         building.immidiateReward(player);
     }
 
-    private Resources setupSideToBuildCost(StoneBuilding building) {
-        Resources resources = building.toBuildCost();
+    private Resources setupSideToBuildCost(Player player, StoneBuilding building) {
+        Resources resources = building.toBuildCost(player);
         return resources.addStone(-resources.stone());
+    }
+
+    @Override
+    public String name() {
+        return "Stonemason";
     }
 }

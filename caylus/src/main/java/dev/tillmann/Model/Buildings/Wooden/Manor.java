@@ -12,7 +12,7 @@ public class Manor extends WoodenBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
+    public Resources toBuildCost(Player player) {
         return Resources.empty().addWood(1).addFabric(1);
     }
 
@@ -21,4 +21,9 @@ public class Manor extends WoodenBuilding {
 
     @Override
     public void setupActivate(Player player) { }
+
+    @Override
+    public String name() {
+        return "Manor";
+    }
 }

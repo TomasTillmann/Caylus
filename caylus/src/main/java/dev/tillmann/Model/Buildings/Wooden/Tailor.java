@@ -11,8 +11,8 @@ public class Tailor extends WoodenBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource();
+    public Resources toBuildCost(Player player) {
+        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
         return Resources.empty().addWood(1).add(response.resources);
     }
 
@@ -23,7 +23,7 @@ public class Tailor extends WoodenBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.OptionResponse response = CLI.instance().getTailorResponse(player);
+        CLI.OptionResponse response = CLI.instance().getTailorOption(player);
 
         Resources resources = Resources.empty();
         int pp;
@@ -43,5 +43,10 @@ public class Tailor extends WoodenBuilding {
 
         player.spend(resources);
         player.awardPrestigePoints(pp);
+    }
+
+    @Override
+    public String name() {
+        return "Tailor";
     }
 }

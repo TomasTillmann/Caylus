@@ -12,8 +12,13 @@ public class Toll extends StartingBuilding {
     }
 
     @Override
+    public String name() {
+        return "Toll";
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
-        CLI.ProvostPositionResponse response = CLI.instance().getProvostPosition(player, map.road());
+        CLI.ProvostPositionResponse response = CLI.instance().getNewProvostPosition(player, map.road());
         map.road().setProvost(response.provostNewPosition);
     }
 }

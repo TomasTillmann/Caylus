@@ -8,15 +8,12 @@ import dev.tillmann.model.buildings.Building;
 import dev.tillmann.model.characters.GameCharacter;
 
 public class Player implements Visualizable {
-    private GameState gameState;
-    public void setGameState(GameState gameState) { this.gameState = gameState; }
-
     private Board board;
     public void setBoard(Board board) { this.board = board; }
 
     public int prestigePoints;
 
-    private Resources resources;
+    private Resources resources = Resources.empty();
     public Resources resources() { return resources; }
     
     private List<Building> ownedBuildings = new ArrayList<>();
@@ -44,21 +41,24 @@ public class Player implements Visualizable {
 
         visualization += "Characters: \n";
         for(GameCharacter character : characters()) {
-            visualization += character; 
+            visualization += character.name(); 
         }
         visualization += "\n";
+        if(characters().size() != 0) { visualization += "\n"; }
 
         visualization += "Owned residences: \n";
         for(Residence residence : ownedResidences()) {
             visualization += residence;
         }
         visualization += "\n";
+        if(ownedResidences().size() != 0) { visualization += "\n"; }
 
         visualization += "Owned monuments: \n";
         for(Monument monument : ownedMonuments()) {
             visualization += monument;
         }
         visualization += "\n";
+        if(ownedMonuments().size() != 0) { visualization += "\n"; }
 
         visualization += "Resources: \n";
         visualization += resources().visualize();
@@ -74,7 +74,7 @@ public class Player implements Visualizable {
             return;
         }
 
-        if(response.constructionSite) {
+        if(response.deliver) {
             board.constructionSite().plan(this);
             return;
         }
@@ -87,15 +87,15 @@ public class Player implements Visualizable {
     }
 
     public void spend(Resources resources) {
-        resources = resources.sub(resources);
+        this.resources = this.resources.sub(resources);
     }
 
     public void gain(Resources resources) {
-        resources = resources.add(resources);
+        this.resources = this.resources.add(resources);
     }
 
     public void getFavor() {
-        { CLI.FavorResponse response = CLI.instance().getFavor(this, gameState.round, board.constructionSite());
+        { CLI.FavorResponse response = CLI.instance().getFavor(this);
 
         if(response.stealCharacter) {
             characters().add(response.character);

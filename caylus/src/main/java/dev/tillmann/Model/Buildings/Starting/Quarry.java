@@ -5,6 +5,11 @@ import dev.tillmann.model.Resources;
 
 public class Quarry extends StartingBuilding {
     @Override
+    public String name() {
+        return "Quarry";
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
         player.gain(resourcesGain());
     }

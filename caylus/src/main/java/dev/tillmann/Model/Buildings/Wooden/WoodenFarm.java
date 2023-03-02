@@ -10,7 +10,7 @@ public class WoodenFarm extends WoodenBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
+    public Resources toBuildCost(Player player) {
         return Resources.empty().addWood(1).addFood(1);
     }
 
@@ -23,5 +23,10 @@ public class WoodenFarm extends WoodenBuilding {
     public void setupActivate(Player player) {
         player.awardPrestigePoints(1);
         player.gain(Resources.empty().addFood(1));
+    }
+
+    @Override
+    public String name() {
+        return "Wooden farm";
     }
 }

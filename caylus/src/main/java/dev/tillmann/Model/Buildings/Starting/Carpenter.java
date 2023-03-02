@@ -13,6 +13,11 @@ public class Carpenter extends StartingBuilding {
     }
 
     @Override
+    public String name() {
+        return "Carpenter";
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
         CLI.WoodenBuildingResponse response = CLI.instance().getWoodenBuildingToBuild(player);
         WoodenBuilding building = response.woodenBuilding;
@@ -20,7 +25,7 @@ public class Carpenter extends StartingBuilding {
         building.setOwner(player);
         map.road().build(building);
 
-        player.spend(building.toBuildCost());
+        player.spend(building.toBuildCost(player));
         building.immidiateReward(player);
     }
 }

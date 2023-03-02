@@ -12,9 +12,9 @@ public class CoveredMarket extends WoodenBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
-        CLI.ResourcesResponse response = CLI.instance().getWoodenBuildingResources(this);
-        return response.resources;
+    public Resources toBuildCost(Player player) {
+        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
+        return response.resources.addWood(1);
     }
 
     @Override
@@ -26,5 +26,10 @@ public class CoveredMarket extends WoodenBuilding {
     public void setupActivate(Player player) {
         player.gain(Resources.empty().addWorkers(2));
         player.awardPrestigePoints(1);
+    }
+
+    @Override
+    public String name() {
+        return "Covered market";
     }
 }

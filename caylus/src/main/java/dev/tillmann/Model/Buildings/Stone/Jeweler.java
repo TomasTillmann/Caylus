@@ -11,7 +11,7 @@ public class Jeweler extends StoneBuilding {
     }
 
     @Override
-    public Resources toBuildCost() {
+    public Resources toBuildCost(Player player) {
         return Resources.empty().addStone(1).addWood(1);
     }
 
@@ -22,7 +22,7 @@ public class Jeweler extends StoneBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.OptionResponse response = CLI.instance().getJewelerOption();
+        CLI.OptionResponse response = CLI.instance().getJewelerOption(player);
 
         if(response.option == 1) {
             player.spend(Resources.empty().addGold(1));
@@ -35,5 +35,10 @@ public class Jeweler extends StoneBuilding {
         else {
             throw new UnsupportedOperationException();
         }
+    }
+
+    @Override
+    public String name() {
+        return "Jeweler";
     }
 }

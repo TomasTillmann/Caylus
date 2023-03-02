@@ -19,10 +19,12 @@ public abstract class Building implements Visualizable {
         player.ownedBuildings().add(this);
     }
 
+    public abstract String name();
+
     @Override
     public String visualize() {
         String visualization = "";
-        visualization += "Name: " + this.getClass() + "\n";
+        visualization += "Name: " + name() + "\n";
 
         if(hasOwner()) {
            visualization += "Owner: " + owner().visualize() + "\n";
@@ -30,7 +32,7 @@ public abstract class Building implements Visualizable {
 
         if(plannedPlayers().size() != 0) {
             visualization += "\n";
-            visualization += "Planned:";
+            visualization += "Planned:\n";
         }
 
         for(Player player : plannedPlayers()) {

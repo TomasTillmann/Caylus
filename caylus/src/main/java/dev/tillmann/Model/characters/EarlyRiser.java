@@ -1,5 +1,8 @@
 package dev.tillmann.model.characters;
 
-public class EarlyRiser extends GameCharacter {
-
+public class Earlyriser extends GameCharacter {
+    @Override
+    public String name() {
+        return "Earlyriser";
+    }
 }
