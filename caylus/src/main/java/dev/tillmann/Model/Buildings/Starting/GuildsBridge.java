@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.ProvostPositionResponse;
 import dev.tillmann.model.Board;
 import dev.tillmann.model.BuildingsPile;
 import dev.tillmann.model.Player;
@@ -26,7 +26,7 @@ public class GuildsBridge extends StartingBuilding {
         allPlayers = players;
         stillPlanningPlayers = new ArrayList<>(allPlayers);
 
-        BuildingsPile.provideBuilding(this);
+        BuildingsPile.Instance.returnBuilding(this);
     }
 
     public void passed(Player player) {
@@ -60,7 +60,7 @@ public class GuildsBridge extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
-        CLI.ProvostPositionResponse response = CLI.instance().getNewProvostPosition(player, map.road());
+        ProvostPositionResponse response = ProvostPositionResponse.parse(player, map.road());
         map.road().setProvost(response.provostNewPosition);
         player.spend(resourcesCost(response.provostDifference));
     }

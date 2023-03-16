@@ -1,6 +1,6 @@
 package dev.tillmann.model.buildings.stone;
 
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.OptionResponse;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
 
@@ -22,7 +22,7 @@ public class Jeweler extends StoneBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.OptionResponse response = CLI.instance().getJewelerOption(player);
+        OptionResponse response = OptionResponse.getJewelerOption(player);
 
         if(response.option == 1) {
             player.spend(Resources.empty().addGold(1));

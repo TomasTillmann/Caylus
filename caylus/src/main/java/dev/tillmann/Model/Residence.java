@@ -9,6 +9,10 @@ public class Residence {
         this.yellowFlagBuilding = yellowFlagBuilding;
     }
 
+    public String name() {
+        return "Residence " + yellowFlagBuilding.building().name();
+    }
+
     public Player owner() {
         return yellowFlagBuilding.owner();
     }

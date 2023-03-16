@@ -12,21 +12,9 @@ import dev.tillmann.model.buildings.stone.*;
 import dev.tillmann.model.buildings.wooden.*;
 
 public class BuildingsPile {
-    private static Board board;
-    public static void provideBoard(Board board) {
-        BuildingsPile.board = board;
-    }
+    public static BuildingsPile Instance = new BuildingsPile();
 
-    public static void provideBuilding(Building building) {
-        buildings.add(building);
-    }
-
-    private static List<Building> buildings = new ArrayList<>();
-    public static List<Building> remainingBuildings() { return Collections.unmodifiableList(buildings); }
-
-    private static List<Building> buildingsOut = new ArrayList<>();
-
-    static {
+    public void setupBuildings(Board board) {
         // set starting
         buildings.add(new Carpenter(board));
         buildings.add(new Toll(board));
@@ -71,11 +59,17 @@ public class BuildingsPile {
         //
     }
 
-    public static List<Building> getBuildings(Predicate<Building> predicate) {
+
+    private List<Building> buildings = new ArrayList<>();
+    public List<Building> remainingBuildings() { return Collections.unmodifiableList(buildings); }
+
+    private List<Building> buildingsOut = new ArrayList<>();
+
+    public List<Building> getBuildings(Predicate<Building> predicate) {
         return getRandomBuildings(predicate, buildings.size());
     }
 
-    public static List<Building> getRandomBuildings(Predicate<Building> predicate, int howMany) {
+    public List<Building> getRandomBuildings(Predicate<Building> predicate, int howMany) {
         if(howMany < 0) { throw new UnsupportedOperationException(); }
 
         List<Building> result = new ArrayList<Building>(buildings.stream().filter(b -> predicate.test(b)).toList());
@@ -90,10 +84,14 @@ public class BuildingsPile {
         return result;
     }
 
-    public static void returnBuildings(List<Building> buildingsToReturn) {
+    public void returnBuildings(List<Building> buildingsToReturn) {
         for(Building building : buildingsToReturn) {
-            buildings.add(building);
-            buildingsOut.remove(building);
+            returnBuilding(building);
         }
+    }
+
+    public void returnBuilding(Building building) {
+        buildings.add(building);
+        buildingsOut.remove(building);
     }
 }

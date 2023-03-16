@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.CharacterResponse;
+import dev.tillmann.caylus.cli.PlayersResponse;
+import dev.tillmann.caylus.cli.Response;
+import dev.tillmann.caylus.cli.Visualizer;
 import dev.tillmann.model.*;
 import dev.tillmann.model.buildings.Building;
 import dev.tillmann.model.buildings.monuments.Factory;
@@ -22,13 +25,13 @@ public class Caylus {
         this.config = config;
 
         gameState = new GameState();
-        CLI.instance().provideGameState(gameState);
+        Response.provideGameState(gameState);
 
-        players = CLI.instance().getPlayers().value;
+        players = PlayersResponse.parse().value;
 
         Camp camp = new Camp(players.size());
         
-        List<GameCharacter> characters = CharactersPile.getRandomCharacters(ch -> true, players.size() + 3);
+        List<GameCharacter> characters = CharactersPile.Instance.getRandomCharacters(ch -> true, players.size() + 3);
 
         List<GameCharacter> remainingCharacters = initPlayers(characters);
 
@@ -39,7 +42,7 @@ public class Caylus {
             player.setBoard(board);
         }
 
-        CLI.instance().providePlayers(players);
+        Response.providePlayers(players);
     }
 
     public void start() {
@@ -84,7 +87,7 @@ public class Caylus {
         // choose characters
         for (int i = players.size() - 1; i >= 0; --i) {
             Player player = players.get(i);
-            CLI.CharacterResponse response = CLI.instance().chooseCharacter(player, characters);
+            CharacterResponse response = CharacterResponse.chooseCharacter(player, characters);
 
             player.characters().add(response.character);
             characters.remove(response.character);
@@ -158,6 +161,6 @@ public class Caylus {
             player.awardPrestigePoints(player.resources().gold() * 2);
         }
 
-        CLI.instance().showResults(players);
+        Visualizer.instance().showResults(players);
     }
 }

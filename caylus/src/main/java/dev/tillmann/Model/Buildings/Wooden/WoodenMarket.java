@@ -1,6 +1,6 @@
 package dev.tillmann.model.buildings.wooden;
 
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.ResourcesResponse;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
 
@@ -22,7 +22,7 @@ public class WoodenMarket extends WoodenBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.getOneResource(player);
         player.gain(response.resources);
     }
 

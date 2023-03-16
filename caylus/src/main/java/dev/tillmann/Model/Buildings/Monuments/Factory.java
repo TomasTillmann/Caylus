@@ -6,7 +6,17 @@ import dev.tillmann.model.Resources;
 public class Factory extends Monument {
     @Override
     public void build() {
-        owner().spend(Resources.empty().addGold(1).addFabric(1));
+        owner().spend(cost());
         owner().awardPrestigePoints(5);
+    }
+
+    @Override
+    public Resources cost() {
+        return Resources.empty().addGold(1).addFabric(1);
+    }
+
+    @Override
+    public String name() {
+        return "Factory";
     }
 }

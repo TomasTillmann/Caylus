@@ -1,6 +1,7 @@
 package dev.tillmann.model.buildings.wooden;
 
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.ResourcesResponse;
+import dev.tillmann.caylus.cli.StoneBuildingResponse;
 import dev.tillmann.model.Board;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
@@ -20,19 +21,19 @@ public class Stonemason extends WoodenBuilding {
 
     @Override
     public Resources toBuildCost(Player player) {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.getOneResource(player);
         return Resources.empty().addWood(1).add(response.resources);
     }
 
     @Override
     public void constructionActivate(Player player) {
-        CLI.StoneBuildingResponse response = CLI.instance().getStoneBuildingToBuild(player);
+        StoneBuildingResponse response = StoneBuildingResponse.getStoneBuildingToBuild(player);
         activate(player, response.stoneBuilding.toBuildCost(player), response.stoneBuilding);
     }
 
     @Override
     public void setupActivate(Player player) {
-        CLI.StoneBuildingResponse response = CLI.instance().getStoneBuildingToBuild(player);
+        StoneBuildingResponse response = StoneBuildingResponse.getStoneBuildingToBuild(player);
         activate(player, setupSideToBuildCost(player, response.stoneBuilding), response.stoneBuilding);
     }
 

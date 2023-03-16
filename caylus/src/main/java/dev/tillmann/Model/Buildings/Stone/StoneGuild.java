@@ -1,6 +1,6 @@
 package dev.tillmann.model.buildings.stone;
 
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.ResourcesResponse;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
 
@@ -12,7 +12,7 @@ public class StoneGuild extends StoneBuilding {
 
     @Override
     public Resources toBuildCost(Player player) {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.getOneResource(player);
         return Resources.empty().addStone(1).add(response.resources);
     }
 
@@ -23,7 +23,7 @@ public class StoneGuild extends StoneBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        CLI.ResourcesResponse response = CLI.instance().getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.getOneResource(player);
         player.spend(response.resources);
         player.gain(Resources.empty().addWorkers(5));
     }

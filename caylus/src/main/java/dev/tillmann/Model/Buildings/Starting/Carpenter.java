@@ -1,6 +1,6 @@
 package dev.tillmann.model.buildings.starting;
 
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.WoodenBuildingResponse;
 import dev.tillmann.model.Board;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.buildings.wooden.WoodenBuilding;
@@ -19,7 +19,7 @@ public class Carpenter extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
-        CLI.WoodenBuildingResponse response = CLI.instance().getWoodenBuildingToBuild(player);
+        WoodenBuildingResponse response = WoodenBuildingResponse.parse(player);
         WoodenBuilding building = response.woodenBuilding;
 
         building.setOwner(player);

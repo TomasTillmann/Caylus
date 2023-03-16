@@ -6,6 +6,10 @@ public abstract class Monument {
 
     public abstract void build();
 
+    public abstract Resources cost();
+
+    public abstract String name();
+
     public final Player owner() {
         return residence.owner();
     }

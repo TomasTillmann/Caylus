@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import dev.tillmann.caylus.Config;
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.Response;
 import dev.tillmann.model.buildings.ConstructionSite;
 import dev.tillmann.model.buildings.starting.GuildsBridge;
 import dev.tillmann.model.characters.GameCharacter;
@@ -37,11 +37,12 @@ public class Board {
     public Board(Config config, List<Player> players, List<GameCharacter> onBoardCharacters, Camp camp) {
         this.onBoardCharacters = onBoardCharacters;
         this.camp = camp; 
+
+        BuildingsPile.Instance.setupBuildings(this);
+        Response.provideBoard(this);
+
         constructionSite = new ConstructionSite();
         guildsBridge = new GuildsBridge(this, players);
         road = new Road(guildsBridge);
-
-        BuildingsPile.provideBoard(this);
-        CLI.instance().provideBoard(this);
     }
 }

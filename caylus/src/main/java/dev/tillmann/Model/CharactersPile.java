@@ -8,10 +8,16 @@ import java.util.function.Predicate;
 import dev.tillmann.model.characters.*;
 
 public class CharactersPile {
-    private static List<GameCharacter> characters = new ArrayList<>();
-    private static List<GameCharacter> charactersOut = new ArrayList<>();
+    public static CharactersPile Instance = new CharactersPile();
 
-    static {
+    private List<GameCharacter> characters = new ArrayList<>();
+    private List<GameCharacter> charactersOut = new ArrayList<>();
+
+    public CharactersPile() {
+        setup();
+    }
+
+    public void setup() {
         characters.add(new Earlyriser());
         characters.add(new Nightworker());
         characters.add(new Journeyman());
@@ -25,11 +31,11 @@ public class CharactersPile {
         characters.add(new Daylaborer());
     }
 
-    public static List<GameCharacter> getCharacters(Predicate<GameCharacter> predicate) {
+    public List<GameCharacter> getCharacters(Predicate<GameCharacter> predicate) {
         return getRandomCharacters(predicate, characters.size());
     }
 
-    public static List<GameCharacter> getRandomCharacters(Predicate<GameCharacter> predicate, int howMany) {
+    public List<GameCharacter> getRandomCharacters(Predicate<GameCharacter> predicate, int howMany) {
         if(howMany < 0) { throw new UnsupportedOperationException(); }
 
         List<GameCharacter> result = new ArrayList<>(characters.stream().filter(ch -> predicate.test(ch)).toList());
@@ -44,10 +50,14 @@ public class CharactersPile {
         return result;
     }
 
-    public static void returnCharacters(List<GameCharacter> charactersToReturn) {
+    public void returnCharacters(List<GameCharacter> charactersToReturn) {
         for(GameCharacter character : charactersToReturn) {
-            characters.add(character);
-            charactersOut.remove(character);
+            returnCharacter(character);
         }
+    }
+
+    public void returnCharacter(GameCharacter character) {
+        characters.add(character);
+        charactersOut.remove(character);
     }
 }

@@ -3,7 +3,9 @@ package dev.tillmann.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.CharacterResponse;
+import dev.tillmann.caylus.cli.FavorResponse;
+import dev.tillmann.caylus.cli.PlayerPlanResponse;
 import dev.tillmann.model.buildings.Building;
 import dev.tillmann.model.characters.GameCharacter;
 
@@ -67,7 +69,7 @@ public class Player implements Visualizable {
     }
 
     public void plan() {
-        CLI.PlayerPlanResponse response = CLI.instance().getPlayerPlan(this);
+        PlayerPlanResponse response = PlayerPlanResponse.parse(this);
 
         if(response.passed) {
             board.guildsBridge().passed(this);
@@ -86,7 +88,16 @@ public class Player implements Visualizable {
         throw new UnsupportedOperationException();
     }
 
+    public boolean canSpend(Resources resources) {
+        Resources newResources = resources().sub(resources);
+        return newResources.food() >= 0 && newResources.wood() >= 0 && newResources.stone() >= 0 && newResources.workers() >= 0 && newResources.gold() >= 0;
+    }
+
     public void spend(Resources resources) {
+        if(!canSpend(resources)) {
+            throw new IllegalArgumentException("\nCan't spend this resources:" + resources.visualize());
+        }
+
         this.resources = this.resources.sub(resources);
     }
 
@@ -95,7 +106,7 @@ public class Player implements Visualizable {
     }
 
     public void getFavor() {
-        { CLI.FavorResponse response = CLI.instance().getFavor(this);
+        { FavorResponse response = FavorResponse.parse(this);
 
         if(response.stealCharacter) {
             characters().add(response.character);
@@ -106,7 +117,7 @@ public class Player implements Visualizable {
         response.building.benefit(this); }
 
         if(board.onBoardCharacters().size() != 0) {
-            CLI.CharacterResponse response = CLI.instance().chooseCharacter(this, board.onBoardCharacters());
+            CharacterResponse response = CharacterResponse.chooseCharacter(this, board.onBoardCharacters());
             characters().add(board.drawCharacter(response.character));
         }
     }

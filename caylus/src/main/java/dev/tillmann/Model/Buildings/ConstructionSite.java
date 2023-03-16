@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import dev.tillmann.caylus.cli.CLI;
+import dev.tillmann.caylus.cli.ConstructionSiteResponse;
 import dev.tillmann.model.BuildingsPile;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
@@ -26,9 +26,9 @@ public final class ConstructionSite implements Visualizable {
     public List<Player> plannedPlayers() { return Collections.unmodifiableList(plannedPlayers); }
 
     public ConstructionSite() {
-        first = BuildingsPile.getRandomBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
-        second = BuildingsPile.getRandomBuildings(b -> b instanceof WoodenBuilding, 1).get(0);
-        third = BuildingsPile.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0);
+        first = BuildingsPile.Instance.getRandomBuildings(b -> b instanceof YellowFlagBuilding, 1).get(0);
+        second = BuildingsPile.Instance.getRandomBuildings(b -> b instanceof WoodenBuilding, 1).get(0);
+        third = BuildingsPile.Instance.getRandomBuildings(b -> b instanceof StoneBuilding, 1).get(0);
     }
 
     @Override
@@ -56,7 +56,7 @@ public final class ConstructionSite implements Visualizable {
         Player bestPlayer = plannedPlayers.get(0);
 
         for(Player player : plannedPlayers) {
-            CLI.ConstructionSiteResponse response = CLI.instance().getConstructionSiteResponse(player);
+            ConstructionSiteResponse response = ConstructionSiteResponse.getConstructionSiteResponse(player);
 
             for(Resources resources : response.bundles) {
                 player.spend(resources);

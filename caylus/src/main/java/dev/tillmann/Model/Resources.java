@@ -113,24 +113,24 @@ public final class Resources implements Visualizable {
 
     public Resources add(Resources resources) {
         Resources newResources = Resources.empty();
-        newResources.food += resources.food;
-        newResources.wood += resources.wood;
-        newResources.stone += resources.stone;
-        newResources.fabric += resources.fabric;
-        newResources.gold += resources.gold;
-        newResources.workers += resources.workers;
+        newResources.food = this.food + resources.food;
+        newResources.wood = this.wood + resources.wood;
+        newResources.stone = this.stone + resources.stone;
+        newResources.fabric = this.fabric + resources.fabric;
+        newResources.gold = this.gold + resources.gold;
+        newResources.workers = this.workers + resources.workers;
 
         return newResources;
     }
 
     public Resources sub(Resources resources) {
         Resources newResources = Resources.empty();
-        newResources.food -= resources.food;
-        newResources.wood -= resources.wood;
-        newResources.stone -= resources.stone;
-        newResources.fabric -= resources.fabric;
-        newResources.gold -= resources.gold;
-        newResources.workers -= resources.workers;
+        newResources.food = this.food - resources.food;
+        newResources.wood = this.wood - resources.wood;
+        newResources.stone = this.stone - resources.stone;
+        newResources.fabric = this.fabric - resources.fabric;
+        newResources.gold = this.gold - resources.gold;
+        newResources.workers = this.workers - resources.workers;
 
         return newResources;
     }
