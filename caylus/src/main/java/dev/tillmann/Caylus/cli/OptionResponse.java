@@ -7,6 +7,7 @@ public class OptionResponse extends Response {
     public int option;
 
     public static OptionResponse getTailorOption(Player player) {
+        visualizer.showWhoseTurnIs(player);
         visualizer.println("Tailor activation.");
 
         OptionResponse response = new OptionResponse();
@@ -31,10 +32,12 @@ public class OptionResponse extends Response {
                 return null;
             });
 
+        visualizer.showDelimiter();
         return response;
     }
 
     public static OptionResponse getFoundryOption(Player player) {
+        visualizer.showWhoseTurnIs(player);
         visualizer.println("Foundry activation.");
 
         OptionResponse response = new OptionResponse();
@@ -59,10 +62,12 @@ public class OptionResponse extends Response {
                 return null;
             });
 
+        visualizer.showDelimiter();
         return response;
     }
 
     public static OptionResponse getAlchemistOption(Player player) {
+        visualizer.showWhoseTurnIs(player);
         visualizer.println("Alchemist activation.");
 
         OptionResponse response = new OptionResponse();
@@ -84,10 +89,12 @@ public class OptionResponse extends Response {
                 return null;
             });
 
+        visualizer.showDelimiter();
         return response;
     }
 
     public static OptionResponse getChurchOption(Player player) {
+        visualizer.showWhoseTurnIs(player);
         visualizer.println("Church activation.");
 
         OptionResponse response = new OptionResponse();
@@ -112,10 +119,12 @@ public class OptionResponse extends Response {
                 return null;
             });
 
+        visualizer.showDelimiter();
         return response;
     }
 
     public static OptionResponse getJewelerOption(Player player) {
+        visualizer.showWhoseTurnIs(player);
         visualizer.println("Jeweler activation.");
 
         OptionResponse response = new OptionResponse();
@@ -140,6 +149,7 @@ public class OptionResponse extends Response {
                 return null;
             });
 
+        visualizer.showDelimiter();
         return response;
     }
 }

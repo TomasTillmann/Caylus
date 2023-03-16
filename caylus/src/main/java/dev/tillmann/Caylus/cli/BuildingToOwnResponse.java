@@ -7,11 +7,9 @@ public class BuildingToOwnResponse extends Response {
     public Building building;
 
     public static BuildingToOwnResponse parse(Player player) {
-        visualizer.showState(gameState());
-        visualizer.showTurn(player);
-        visualizer.showDelimiter();
-
         BuildingToOwnResponse response = new BuildingToOwnResponse();
+        visualizer.showRoad(board().road());
+        visualizer.showWhoseTurnIs(player);
 
         response.building = getSanitizedInput(
             "Select the building you would like to own. You can't own empty building or building which is already owned.",
@@ -33,6 +31,7 @@ public class BuildingToOwnResponse extends Response {
                 return null;
             });
 
+        visualizer.showDelimiter();
         return response;
     }
 }

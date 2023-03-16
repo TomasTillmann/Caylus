@@ -1,5 +1,6 @@
 package dev.tillmann.caylus.cli;
 
+import java.util.List;
 import java.util.Optional;
 
 import dev.tillmann.model.Player;
@@ -17,9 +18,8 @@ public class FavorResponse extends Response {
         final int steal = 1;
         final int benefit = 2;
 
-        visualizer.showState(gameState());
-        visualizer.showTurn(player);
-        visualizer.println("You got a favor!");
+        visualizer.showWhoseTurnIs(player);
+        visualizer.println(String.format("%s got a favor!", player.name));
 
         int option = getSanitizedInput(
             "Select if you would rather:\n1.Steal character from another player\n2.Benefit from one of the buildings on construction site",
@@ -32,14 +32,14 @@ public class FavorResponse extends Response {
                     }
                 } catch(Exception ex) {}
 
+                visualizer.showDelimiter();
                 return null;
             });
         
         if(option == steal) {
-            visualizer.showPlayers(players());
-            visualizer.showDelimiter();
-            visualizer.println("You chose to steal.");
+            visualizer.println(String.format("%s chose to steal.", player.name));
 
+            visualizer.showPlayers(players());
             response.playerStolenFrom = getSanitizedInput(
                 "From which player would you like to steal?",
                 "Write the player's name to select him.",
@@ -48,6 +48,7 @@ public class FavorResponse extends Response {
                         return players().stream().filter(p -> p.name.equals(input)).findFirst().get();
                     }
 
+                    visualizer.showDelimiter();
                     return null;
             });
             
@@ -58,11 +59,12 @@ public class FavorResponse extends Response {
                 "What character would you like to steal?",
                 "Write the characters name to steal it.",
                 input -> {
-                    Optional<GameCharacter> character = board().onBoardCharacters().stream().filter(ch -> ch.name() == input).findFirst();
+                    Optional<GameCharacter> character = board().onBoardCharacters().stream().filter(ch -> ch.name().equals(input)).findFirst();
                     if(character.isPresent()) {
                         return character.get();
                     }
 
+                    visualizer.showDelimiter();
                     return null;
             });
         return response;
@@ -73,8 +75,8 @@ public class FavorResponse extends Response {
             final int secondBuilding = 2;
             final int thirdBuilding = 3;
 
-            visualizer.showDelimiter();
-            visualizer.println("You chose to benefit from one of the buildings on the construction site.");
+            visualizer.showConstructionSite(board().constructionSite());
+            visualizer.println(String.format("%s chose to benefit from one of the buildings on the construction site.", player.name));
 
             response.building = getSanitizedInput(
                 "Which building would you like to benefit from?",
@@ -83,23 +85,25 @@ public class FavorResponse extends Response {
                     try {
                         Integer n = Integer.parseInt(input);
                         if(1 <= gameState().round && gameState().round <= 3) {
-                            if (n == firstBuilding) { return board().constructionSite().first(); }
+                            if (n.equals(firstBuilding)) { return board().constructionSite().first(); }
                         }
                         else if(4 <= gameState().round && gameState().round <= 6) {
-                            if (n == firstBuilding) { return board().constructionSite().first(); }
+                            if (n.equals(firstBuilding)) { return board().constructionSite().first(); }
                             if (n == secondBuilding) { return board().constructionSite().second(); }
                         }
                         else if(7 <= gameState().round && gameState().round <= 9) {
-                            if (n == firstBuilding) { return board().constructionSite().first(); }
-                            if (n == secondBuilding) { return board().constructionSite().second(); }
-                            if (n == thirdBuilding) { return board().constructionSite().third(); }
+                            if (n.equals(firstBuilding)) { return board().constructionSite().first(); }
+                            if (n.equals(secondBuilding)) { return board().constructionSite().second(); }
+                            if (n.equals(thirdBuilding)) { return board().constructionSite().third(); }
                         }
 
                     } catch(Exception ex) {}
 
+                    visualizer.showDelimiter();
                     return null;
                 });
             
+            visualizer.showDelimiter();
             return response;
         }
 

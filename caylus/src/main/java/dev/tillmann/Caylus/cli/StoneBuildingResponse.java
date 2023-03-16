@@ -9,6 +9,7 @@ public class StoneBuildingResponse extends Response {
 
     public static StoneBuildingResponse getStoneBuildingToBuild(Player player) {
         StoneBuildingResponse response = new StoneBuildingResponse();
+        visualizer.showWhoseTurnIs(player);
 
         int option = getSanitizedInput(
             "Select which wooden building would you like to build.",
@@ -30,6 +31,7 @@ public class StoneBuildingResponse extends Response {
             // actually take it out of the pile to claim it's ownership
             BuildingsPile.Instance.getBuildings(b -> b == response.stoneBuilding);
 
+            visualizer.showDelimiter();
             return response;
     }
 }

@@ -76,7 +76,15 @@ public final class ConstructionSite implements Visualizable {
     }
 
     public void plan(Player player) {
+        if(!canPlan(player)) {
+            throw new IllegalArgumentException();
+        }
+
         plannedPlayers.add(player);
+    }
+
+    public boolean canPlan(Player player) {
+        return !plannedPlayers.contains(player);
     }
 
     private void reset() {

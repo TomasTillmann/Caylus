@@ -38,7 +38,7 @@ public final class Resources implements Visualizable {
     private int workers;
     public int workers() { return workers; }
 
-    private Resources() {}
+    private Resources() { }
 
     public static Resources empty() {
         return new Resources();
@@ -66,48 +66,53 @@ public final class Resources implements Visualizable {
         return visualization;
     }
 
-    public Resources addFood(int count) {
-        if(remainingFood < count) { throw new UnsupportedOperationException(); }
-        food += count;
-        remainingFood = remainingFood - count;
+    public boolean canTake() {
+        return wood <= remainingWood && food <= remainingFood && fabric <= remainingFabric && stone <= remainingStone && gold <= remainingGold && workers <= camp.remainingWorkers();
+    }
 
+    /*
+     * Spends the resources and returns true. Or returns false, meaning the resources can't be spended and doesn't spend the resources obviously.
+     */
+    public boolean take() {
+        if(!canTake()) {
+            return false;
+        }
+
+        remainingFood -= food;
+        remainingWood -= wood;
+        remainingStone -= stone;
+        remainingFabric -= fabric;
+        remainingGold -= gold;
+        camp.getWorkers(workers);
+        return true;
+    }
+
+    public Resources addFood(int count) {
+        food += count;
         return this;
     }
 
     public Resources addWood(int count) {
-        if(remainingWood < count) { throw new UnsupportedOperationException(); }
         wood += count;
-        remainingWood = remainingWood - count;
-
         return this;
     }
 
     public Resources addStone(int count) {
-        if(remainingStone < count) { throw new UnsupportedOperationException(); }
         stone += count;
-        remainingStone = remainingStone - count;
-
         return this;
     }
 
     public Resources addFabric(int count) {
-        if(remainingFabric < count) { throw new UnsupportedOperationException(); }
         fabric += count;
-        remainingFabric = remainingFabric - count;
-
         return this;
     }
 
     public Resources addGold(int count) {
-        if(remainingGold < count) { throw new UnsupportedOperationException(); }
         gold += count;
-        remainingGold = remainingGold - count;
-
         return this;
     }
 
     public Resources addWorkers(int count) {
-        workers += camp.getWorkers(count);
         return this;
     }
 

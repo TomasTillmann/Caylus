@@ -8,8 +8,7 @@ public class ProvostPositionResponse extends Response {
     public int provostDifference;
 
     public static ProvostPositionResponse parse(Player player, Road road) {
-        visualizer.showState(gameState());
-        visualizer.showTurn(player);
+        visualizer.showWhoseTurnIs(player);
 
         ProvostPositionResponse response = new ProvostPositionResponse();
         response.provostNewPosition = getSanitizedInput(
@@ -32,6 +31,7 @@ public class ProvostPositionResponse extends Response {
                 return null;
             });
 
+        visualizer.showDelimiter();
         return response;
     }
 }

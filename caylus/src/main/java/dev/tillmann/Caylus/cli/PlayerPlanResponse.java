@@ -14,16 +14,21 @@ public class PlayerPlanResponse extends Response {
         final int deliver = 3;
 
         PlayerPlanResponse response = new PlayerPlanResponse();
+        visualizer.showWhoseTurnIs(player);
 
         // get player's decision
         int option = getSanitizedInput(
             "Choose what would you like to do:\npass(1)\nplan(2)\ndeliver(3)",
-            "You can choose only one of these options. For example, to pass, write 1.",
+            "You can choose only one of these options. For example, to pass, write 1. Note that you can't deliver multiple times.",
             input -> {
                 try {
                     Integer n = Integer.parseInt(input);
-                    if(n == pass || n == plan || n == deliver) {
+                    if(n == pass || n == plan) {
                         return n;
+                    }
+
+                    if(n == deliver) {
+                        return board().constructionSite().canPlan(player) ? n : null;
                     }
                 } catch(Exception ex) { }
                 return null;
@@ -31,13 +36,17 @@ public class PlayerPlanResponse extends Response {
         
         if(option == pass) {
             response.passed = true;
+            visualizer.showDelimiter();
             return response;
         }
 
         if(option == deliver) {
             response.deliver = true;
+            visualizer.showDelimiter();
             return response;
         }
+
+        visualizer.showRoad(board().road());
 
         // resolve if he would like to plan
         int buildingIndex = getSanitizedInput(
@@ -59,6 +68,8 @@ public class PlayerPlanResponse extends Response {
             });
         
         response.building = board().road().building(buildingIndex);
+
+        visualizer.showDelimiter();
         return response;
     }
 }

@@ -46,8 +46,8 @@ public class PlayersResponse extends Response {
             usedNames.add(name);
             response.value.add(new Player(name));
         }
+        
         visualizer.println();
-
         return response;
     }
 }

@@ -9,12 +9,8 @@ public class WoodenBuildingResponse extends Response {
 
     public static WoodenBuildingResponse parse(Player player) {
         WoodenBuildingResponse response = new WoodenBuildingResponse();
-        visualizer.showState(gameState());
-
-        visualizer.showTurn(player);
-
         visualizer.showRemainingWoodenBuildings();
-        visualizer.showDelimiter();
+        visualizer.showWhoseTurnIs(player);
 
         int option = getSanitizedInput(
             "Select which wooden building would you like to build.",
@@ -36,6 +32,7 @@ public class WoodenBuildingResponse extends Response {
             // actually take it out of the pile to claim it's ownership
             BuildingsPile.Instance.getBuildings(b -> b == response.woodenBuilding);
 
+            visualizer.showDelimiter();
             return response;
     }
 }

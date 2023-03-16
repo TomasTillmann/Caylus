@@ -25,18 +25,11 @@ public abstract class Building implements Visualizable {
     public String visualize() {
         String visualization = "";
         visualization += "Name: " + name() + "\n";
-
-        if(hasOwner()) {
-           visualization += "Owner: " + owner().visualize() + "\n";
-        }
-
-        if(plannedPlayers().size() != 0) {
-            visualization += "\n";
-            visualization += "Planned:\n";
-        }
+        visualization += "Owner: " + (hasOwner() ? "\n" + owner().visualize() : "") + "\n";
+        visualization += "Planned:" + (plannedPlayers().size() == 0 ? "\n" : "");
 
         for(Player player : plannedPlayers()) {
-            visualization += player.visualize() + "\n";
+            visualization += " " + player.visualize();
         }
 
         return visualization;

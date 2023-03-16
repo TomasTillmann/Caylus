@@ -14,6 +14,9 @@ public class ConstructionSiteResponse extends Response {
         ConstructionSiteResponse response = new ConstructionSiteResponse();
         response.bundles = new ArrayList<>();
 
+        visualizer.showConstructionSite(board().constructionSite());
+        visualizer.showWhoseTurnIs(player);
+
         while(getSanitizedInput("Would you like to deliver a bundle? (yes / no)", "Write yes or no.", 
         input -> {
             if(input.equals("yes")) {
@@ -100,6 +103,7 @@ public class ConstructionSiteResponse extends Response {
             }
         }
 
+        visualizer.showDelimiter();
         return response;
     }
 }

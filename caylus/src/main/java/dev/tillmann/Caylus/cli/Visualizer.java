@@ -23,13 +23,6 @@ public class Visualizer {
         out.println();
     }
 
-    void showBigDelimiter() {
-        out.println();
-        out.println("=======================================================================");
-        out.println("=======================================================================");
-        out.println();
-    }
-
     void showPlayers(List<Player> players) {
         out.println("Players:");
         for(Player player : players) {
@@ -52,9 +45,13 @@ public class Visualizer {
     void showRoad(Road road) {
         out.println("Road:");
         int i = 1;
+        int j = 0;
         for(Building building : road.buildings(b -> true)) {
             if(building == null) {
                 out.println("(X)" + "\n" + "Empty");
+            }
+            else if(j == road.provost()) {
+                out.println("(X)" + "\n" + "PROVOST");
             }
             else {
                 out.print("(" + i + ")" + "\n" + building.visualize());
@@ -63,6 +60,7 @@ public class Visualizer {
             out.println();
 
             // todo: print some info what does this building do
+            j++;
         }
         out.println();
     }
@@ -88,8 +86,9 @@ public class Visualizer {
 
     void showRemainingMonuments() {
         out.println("Remaining monuments:");
+        int i = 1;
         for(Monument monument : MonumentsPile.Instance.remainingMonuments()) {
-            out.print(monument.name());
+            out.println(String.format("(%s) %s", i++, monument.name()));
         }
         out.println();
     }
@@ -108,7 +107,7 @@ public class Visualizer {
         int i = 1;
         for(Building building : toShow) {
             out.println("(" + i++ + ")");
-            out.print(building.visualize());
+            out.println(building.visualize());
         }
         out.println();
     }
@@ -117,11 +116,6 @@ public class Visualizer {
         out.println("Game State:");
         out.println("Round: " + state.round);
         out.println("Phase: " + state.phase);
-        out.println();
-    }
-
-    void showTurn(Player player) {
-        out.println("It's " + player.name + "'s turn.");
         out.println();
     }
 
@@ -139,5 +133,17 @@ public class Visualizer {
 
     public void showResults(List<Player> players) {
         throw new UnsupportedOperationException();
+    }
+
+    public void showWhoseTurnIs(Player player) {
+        out.println(String.format("It's %s's turn!", player.name));
+        out.println();
+    }
+
+    public void showCharacters(List<GameCharacter> characters) {
+        for(int i = 0; i < characters.size(); ++i) {
+            out.println(String.format("(%s) %s", i+1, characters.get(i).name()));
+        }
+        out.println();
     }
 }

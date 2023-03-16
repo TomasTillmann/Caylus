@@ -14,7 +14,9 @@ public class MonumentResponse extends Response {
         response.monument = null;
 
         visualizer.println(residence.name());
-        boolean yes = getSanitizedInput("Would you like to turn this residence to monument? (yes/no)", "Write yes or no",
+        visualizer.showWhoseTurnIs(residence.owner());
+
+        boolean yes = getSanitizedInput(String.format("Would %s like to turn this residence to monument? (yes/no)", residence.owner()), "Write yes or no",
         input -> {
             if(input.equals("yes")) {
                 return true;
@@ -27,7 +29,6 @@ public class MonumentResponse extends Response {
         });
 
         if(yes) {
-            visualizer.showRemainingMonuments();
             response.monument = getSanitizedInput("Select to which monument.", "Write monuments name.",
             input -> {
                 Optional<Monument> mon = MonumentsPile.Instance.remainingMonuments().stream().filter(m -> m.name().equals(input)).findFirst();
@@ -41,6 +42,7 @@ public class MonumentResponse extends Response {
             });
         }
 
+        visualizer.showDelimiter();
         return response;
     }
 }

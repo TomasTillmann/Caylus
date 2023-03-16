@@ -9,6 +9,7 @@ public class ResourcesResponse extends Response {
     // todo: exclude gold and workers - change name than - only allow wood, stone, fabric, food
     public static ResourcesResponse getOneResource(Player player) {
         ResourcesResponse response = new ResourcesResponse();
+        visualizer.showWhoseTurnIs(player);
 
         response.resources = getSanitizedInput(
             "Which resource would you like?\n1.Food\n2.Wood\n3.Stone\n4.Fabric.",
@@ -34,6 +35,7 @@ public class ResourcesResponse extends Response {
 
             });
 
+        visualizer.showDelimiter();
         return response;
     }
 }

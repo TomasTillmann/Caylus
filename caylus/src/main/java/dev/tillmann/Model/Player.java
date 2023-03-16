@@ -43,21 +43,21 @@ public class Player implements Visualizable {
 
         visualization += "Characters: \n";
         for(GameCharacter character : characters()) {
-            visualization += character.name(); 
+            visualization += character.name() + "\n"; 
         }
         visualization += "\n";
         if(characters().size() != 0) { visualization += "\n"; }
 
         visualization += "Owned residences: \n";
         for(Residence residence : ownedResidences()) {
-            visualization += residence;
+            visualization += residence.name() + "\n";
         }
         visualization += "\n";
         if(ownedResidences().size() != 0) { visualization += "\n"; }
 
         visualization += "Owned monuments: \n";
         for(Monument monument : ownedMonuments()) {
-            visualization += monument;
+            visualization += monument.name() + "\n";
         }
         visualization += "\n";
         if(ownedMonuments().size() != 0) { visualization += "\n"; }
@@ -99,10 +99,12 @@ public class Player implements Visualizable {
         }
 
         this.resources = this.resources.sub(resources);
+        Resources.returnBack(this.resources);
     }
 
     public void gain(Resources resources) {
         this.resources = this.resources.add(resources);
+        if(resources.take() != true) { throw new UnsupportedOperationException(); }
     }
 
     public void getFavor() {
