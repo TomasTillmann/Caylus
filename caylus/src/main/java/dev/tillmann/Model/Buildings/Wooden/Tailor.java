@@ -23,6 +23,11 @@ public class Tailor extends WoodenBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s worker and spend one fabric or two fabrics to gain 4PP or 6PP respectively.", workersCost()); 
+    }
+
+    @Override
     public void setupActivate(Player player) {
         OptionResponse response = OptionResponse.getTailorOption(player);
 

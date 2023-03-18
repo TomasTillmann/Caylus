@@ -10,6 +10,11 @@ public class Farm extends StartingBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s workers to get one food.", workersCost()); 
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
         player.gain(resourcesGain());
     }

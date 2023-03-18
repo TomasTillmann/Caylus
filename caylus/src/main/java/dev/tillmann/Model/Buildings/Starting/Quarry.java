@@ -10,6 +10,11 @@ public class Quarry extends StartingBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s workers to get one stone.", workersCost()); 
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
         player.gain(resourcesGain());
     }

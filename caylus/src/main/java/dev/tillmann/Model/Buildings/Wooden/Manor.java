@@ -17,6 +17,18 @@ public class Manor extends WoodenBuilding {
     }
 
     @Override
+    public String description() {
+        switch(side) {
+            case Construction:
+                return String.format("Place %s worker and gain one favor.", workersCost()); 
+            case Setup:
+                return String.format("Place %s worker and gain 2PP.", workersCost()); 
+            default:
+                throw new UnsupportedOperationException();
+        }
+    }
+
+    @Override
     public void constructionActivate(Player player) { }
 
     @Override

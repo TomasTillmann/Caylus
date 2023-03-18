@@ -16,6 +16,11 @@ public class Church extends StoneBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s workers and spend additional two workers or four workers to gain 4PP or 6PP respectively.", workersCost()); 
+    }
+
+    @Override
     public void constructionActivate(Player player) {
         setupActivate(player);
     }

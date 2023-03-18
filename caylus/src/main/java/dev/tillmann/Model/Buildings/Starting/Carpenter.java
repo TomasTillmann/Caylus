@@ -18,6 +18,11 @@ public class Carpenter extends StartingBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s workers and build a wooden building.", workersCost()); 
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
         WoodenBuildingResponse response = WoodenBuildingResponse.parse(player);
         WoodenBuilding building = response.woodenBuilding;

@@ -11,6 +11,11 @@ public class Guild3 extends StartingBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s workers and get one food, wood ,stone or fabric to get three workers.", workersCost()); 
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
         ResourcesResponse response = ResourcesResponse.getOneResource(player);
         player.gain(resourcesGain());

@@ -17,6 +17,11 @@ public class Alchemist extends StoneBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s workers and spend either food, wood, stone, or fabric or two of such resources and gain one gold or two golds respectively.", workersCost()); 
+    }
+
+    @Override
     public void constructionActivate(Player player) {
         setupActivate(player);
     }

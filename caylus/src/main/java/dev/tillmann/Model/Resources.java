@@ -113,6 +113,7 @@ public final class Resources implements Visualizable {
     }
 
     public Resources addWorkers(int count) {
+        workers += count;
         return this;
     }
 

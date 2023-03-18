@@ -17,6 +17,18 @@ public class WoodenSawmill extends WoodenBuilding {
     }
 
     @Override
+    public String description() {
+        switch(side) {
+            case Construction:
+                return String.format("Place %s worker and get two woods.", workersCost()); 
+            case Setup:
+                return farm.description();
+            default:
+                throw new UnsupportedOperationException();
+        }
+    }
+
+    @Override
     public Resources toBuildCost(Player player) {
         return Resources.empty().addWood(1).addFood(1);
     }

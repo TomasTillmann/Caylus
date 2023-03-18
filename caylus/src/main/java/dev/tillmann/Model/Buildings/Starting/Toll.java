@@ -17,6 +17,11 @@ public class Toll extends StartingBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s workers to be able to move the provost by 0, 1, or 2 steps either forward or backward.", workersCost()); 
+    }
+
+    @Override
     protected void activatePlayer(Player player) {
         ProvostPositionResponse response = ProvostPositionResponse.parse(player, map.road());
         map.road().setProvost(response.provostNewPosition);

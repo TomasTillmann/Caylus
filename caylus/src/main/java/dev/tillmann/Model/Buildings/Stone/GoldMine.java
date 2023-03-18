@@ -15,6 +15,11 @@ public class GoldMine extends StoneBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s workers to get one gold.", workersCost()); 
+    }
+
+    @Override
     public void constructionActivate(Player player) {
         setupActivate(player);
     }

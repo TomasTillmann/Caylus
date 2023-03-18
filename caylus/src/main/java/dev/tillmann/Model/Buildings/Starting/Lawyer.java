@@ -17,6 +17,11 @@ public class Lawyer extends StartingBuilding {
         response.building.setOwner(player);
     }
 
+    @Override
+    public String description() {
+        return String.format("Place %s workers and one fabric to claim ownership of any building on the road provided that it has a yellow flag. This building will be transformed into a residence during the stwewardship phase.", workersCost()); 
+    }
+
     private Resources resourcesCost() {
         return Resources.empty().addFabric(1);
     }

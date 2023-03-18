@@ -29,6 +29,11 @@ public class GuildsBridge extends StartingBuilding {
         BuildingsPile.Instance.returnBuilding(this);
     }
 
+    @Override
+    public String description() {
+        return String.format("You can move the provost here by max 3 places back or forward. Each move costs you one worker.", workersCost()); 
+    }
+
     public void passed(Player player) {
         passedPlayers.add(player);
         stillPlanningPlayers.remove(player);

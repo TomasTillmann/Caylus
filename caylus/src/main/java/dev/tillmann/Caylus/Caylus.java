@@ -109,21 +109,10 @@ public class Caylus {
     }
 
     private void activation() {
-        int workers = 0;
-
         // before provost
         for(Building building : board.road().buildings(Road.START, board.road().provost())) {
             building.activate();
-            workers += building.spendWorkers();
         }
-
-        // after provost
-        for(Building building : board.road().buildings(board.road().provost(), Road.ROAD_SIZE)) {
-            workers += building.spendWorkers();
-        }
-
-        // return spent workers back to camp
-        board.camp().returnWorkers(workers);
     }
 
     private void delivery() {

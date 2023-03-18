@@ -18,6 +18,18 @@ public class CoveredMarket extends WoodenBuilding {
     }
 
     @Override
+    public String description() {
+        switch(side) {
+            case Construction:
+                return String.format("Place %s worker and take three workers.", workersCost()); 
+            case Setup:
+                return String.format("Place %s worker and take two workers and gain 1PP.", workersCost()); 
+            default:
+                throw new UnsupportedOperationException();
+        }
+    }
+
+    @Override
     public void constructionActivate(Player player) {
         player.gain(Resources.empty().addWorkers(3));
     }

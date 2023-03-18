@@ -17,6 +17,11 @@ public class Market extends StartingBuilding {
         player.gain(response.resources);
     }
 
+    @Override
+    public String description() {
+        return String.format("Place %s workers to get one food.", workersCost()); 
+    }
+
     private Resources resourcesCost() {
         return Resources.empty().addWorkers(1);
     }

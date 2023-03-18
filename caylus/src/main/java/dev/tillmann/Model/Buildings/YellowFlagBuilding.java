@@ -20,6 +20,11 @@ public class YellowFlagBuilding extends StartingBuilding {
     }
 
     @Override
+    public String description() {
+        return building.description();
+    }
+
+    @Override
     public List<Player> plannedPlayers() { return building.plannedPlayers(); }
 
     @Override

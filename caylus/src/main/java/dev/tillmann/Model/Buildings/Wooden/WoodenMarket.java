@@ -16,6 +16,11 @@ public class WoodenMarket extends WoodenBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s worker and get food, wood, stone or fabric.", workersCost()); 
+    }
+
+    @Override
     public void constructionActivate(Player player) {
         setupActivate(player);
     }

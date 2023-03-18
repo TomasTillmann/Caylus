@@ -24,14 +24,16 @@ public class Visualizer {
     }
 
     void showPlayers(List<Player> players) {
+        showDelimiter();
         out.println("Players:");
         for(Player player : players) {
             out.println(player.visualize());
         }
-        out.println();
+        showDelimiter();
     }
 
     void showRemainingResources() {
+        showDelimiter();
         out.println("Remaining resources:");
         out.println("Wood: " + Resources.remainingWood());
         out.println("Food: " + Resources.remainingFood());
@@ -40,9 +42,11 @@ public class Visualizer {
         out.println("Gold: " + Resources.remainingGold());
         out.println("Workers: " + Resources.remainingWorkers());
         out.println();
+        showDelimiter();
     }
 
     void showRoad(Road road) {
+        showDelimiter();
         out.println("Road:");
         int i = 1;
         int j = 0;
@@ -62,16 +66,18 @@ public class Visualizer {
             // todo: print some info what does this building do
             j++;
         }
-        out.println();
+        showDelimiter();
     }
 
     void showConstructionSite(ConstructionSite site) {
+        showDelimiter();
         out.println("Construction site:");
         out.println(site.visualize());
-        out.println();
+        showDelimiter();
     }
 
     void showOnBoardCharacters(Board board) {
+        showDelimiter();
         if(board.onBoardCharacters().size() == 0) {
             out.println("No characters remaining.");
             return;
@@ -81,29 +87,34 @@ public class Visualizer {
         for(GameCharacter character : board.onBoardCharacters()) {
             out.println(character.name());
         }
-        out.println();
+        showDelimiter();
     }
 
     void showRemainingMonuments() {
+        showDelimiter();
         out.println("Remaining monuments:");
         int i = 1;
         for(Monument monument : MonumentsPile.Instance.remainingMonuments()) {
             out.println(String.format("(%s) %s", i++, monument.name()));
         }
-        out.println();
+        showDelimiter();
     }
 
     void showRemainingWoodenBuildings() {
+        showDelimiter();
         out.println("Remaining wooden buildings:");
         showBuildings(BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof WoodenBuilding).toList());
+        showDelimiter();
     }
 
     void showRemainingStoneBuildings() {
+        showDelimiter();
         out.println("Remaining stone buildings:");
         showBuildings(BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof StoneBuilding).toList());
+        showDelimiter();
     }
 
-    void showBuildings(List<Building> toShow) {
+    private void showBuildings(List<Building> toShow) {
         int i = 1;
         for(Building building : toShow) {
             out.println("(" + i++ + ")");
@@ -113,21 +124,22 @@ public class Visualizer {
     }
 
     void showState(GameState state) {
+        showDelimiter();
         out.println("Game State:");
         out.println("Round: " + state.round);
         out.println("Phase: " + state.phase);
-        out.println();
+        showDelimiter();
     }
 
     void showShutdownMessage() {
         out.println("Oh, something went wrong!");
     }
 
-    void println(String message) {
+    public void println(String message) {
         out.println(message);
     }
 
-    void println() {
+    public void println() {
         out.println();
     }
 
@@ -135,15 +147,16 @@ public class Visualizer {
         throw new UnsupportedOperationException();
     }
 
-    public void showWhoseTurnIs(Player player) {
+    void showWhoseTurnIs(Player player) {
         out.println(String.format("It's %s's turn!", player.name));
         out.println();
     }
 
-    public void showCharacters(List<GameCharacter> characters) {
+    void showCharacters(List<GameCharacter> characters) {
+        showDelimiter();
         for(int i = 0; i < characters.size(); ++i) {
             out.println(String.format("(%s) %s", i+1, characters.get(i).name()));
         }
-        out.println();
+        showDelimiter();
     }
 }

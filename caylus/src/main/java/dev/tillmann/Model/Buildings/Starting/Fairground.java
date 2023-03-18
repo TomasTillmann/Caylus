@@ -18,4 +18,9 @@ public class Fairground extends StartingBuilding {
     private Resources resourcesCost() {
         return Resources.empty().addWood(1);
     }
+
+    @Override
+    public String description() {
+        return String.format("Place %s workers and spend one wood to gain a favor.", workersCost()); 
+    }
 }

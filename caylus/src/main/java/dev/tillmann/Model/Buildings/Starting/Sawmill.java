@@ -14,6 +14,11 @@ public class Sawmill extends StartingBuilding {
         player.gain(resourcesGain());
     }
 
+    @Override
+    public String description() {
+        return String.format("Place %s workers to get one wood.", workersCost()); 
+    }
+
     private Resources resourcesGain() {
         return Resources.empty().addWood(1);
     }

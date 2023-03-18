@@ -15,6 +15,11 @@ public class Guild4 extends StartingBuilding {
         player.spend(resourcesCost());
     }
 
+    @Override
+    public String description() {
+        return String.format("Place %s workers and one stone to get four workers.", workersCost()); 
+    }
+
     private Resources resourcesGain() {
         return Resources.empty().addWorkers(3);
     }

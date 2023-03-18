@@ -17,6 +17,11 @@ public class StoneGuild extends StoneBuilding {
     }
 
     @Override
+    public String description() {
+        return String.format("Place %s workers and spend one food, wood, stone or fabric to get five workers.", workersCost()); 
+    }
+
+    @Override
     public void constructionActivate(Player player) {
         setupActivate(player);
     }

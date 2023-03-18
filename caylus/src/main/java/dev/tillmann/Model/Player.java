@@ -45,21 +45,18 @@ public class Player implements Visualizable {
         for(GameCharacter character : characters()) {
             visualization += character.name() + "\n"; 
         }
-        visualization += "\n";
         if(characters().size() != 0) { visualization += "\n"; }
 
         visualization += "Owned residences: \n";
         for(Residence residence : ownedResidences()) {
             visualization += residence.name() + "\n";
         }
-        visualization += "\n";
         if(ownedResidences().size() != 0) { visualization += "\n"; }
 
         visualization += "Owned monuments: \n";
         for(Monument monument : ownedMonuments()) {
             visualization += monument.name() + "\n";
         }
-        visualization += "\n";
         if(ownedMonuments().size() != 0) { visualization += "\n"; }
 
         visualization += "Resources: \n";
@@ -80,6 +77,10 @@ public class Player implements Visualizable {
             board.constructionSite().plan(this);
             return;
         }
+
+        Resources workers = Resources.empty().addWorkers(response.building.workersCost());
+        spend(workers);
+        board.camp().returnWorkers(response.building.workersCost());
 
         response.building.plan(this);
     }
