@@ -54,8 +54,7 @@ public class GuildsBridge extends StartingBuilding {
 
     @Override
     public void activate() {
-        // on guilds bridge, no players are ever planned, but it still has to be activated -> inherited field plannedPlayers is completely ignored
-
+        // on guilds bridge, no players are ever planned
         for(Player player : passedPlayers) {
             activatePlayer(player);
         }
@@ -65,9 +64,10 @@ public class GuildsBridge extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
+        int oldProvostPosition = map.road().provost();
         ProvostPositionResponse response = ProvostPositionResponse.parse(player, map.road());
         map.road().setProvost(response.provostNewPosition);
-        player.spend(resourcesCost(response.provostDifference));
+        player.spend(resourcesCost(Math.abs(oldProvostPosition - response.provostNewPosition)));
     }
 
     @Override

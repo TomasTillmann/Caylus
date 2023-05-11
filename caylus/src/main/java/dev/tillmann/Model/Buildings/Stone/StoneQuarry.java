@@ -16,7 +16,7 @@ public class StoneQuarry extends StoneBuilding {
 
     @Override
     public String description() {
-        return String.format("Place %s workers and two stones and one fabric to get one food and one stone. If someone else than the owner activates this building, the owner gets one stone.", workersCost()); 
+        return String.format("Place %s workers and two stones and one fabric to get one food and one stone. If someone else than the owner activates this building, the owner gets one stone.\nCost:stone, food.", workersCost()); 
     }
 
     @Override

@@ -36,6 +36,9 @@ public class MonumentResponse extends Response {
                     if(mon.get().owner().canSpend(mon.get().cost())) {
                         return mon.get();
                     }
+                    else {
+                        visualizer.println("You don't have enough resources to build this monument.");
+                    }
                 }
 
                 return null;

@@ -20,7 +20,7 @@ public class WoodenSawmill extends WoodenBuilding {
     public String description() {
         switch(side) {
             case Construction:
-                return String.format("Place %s worker and get two woods.", workersCost()); 
+                return String.format("Place %s worker and get two woods.\nCost: wood, food.", workersCost()); 
             case Setup:
                 return farm.description();
             default:

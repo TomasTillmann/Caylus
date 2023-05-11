@@ -19,8 +19,7 @@ public class Visualizer {
     private Visualizer() { }
 
     void showDelimiter() {
-        out.println("=======================================================================");
-        out.println();
+        out.println("#######################################################################");
     }
 
     void showPlayers(List<Player> players) {
@@ -51,20 +50,19 @@ public class Visualizer {
         int i = 1;
         int j = 0;
         for(Building building : road.buildings(b -> true)) {
-            if(building == null) {
-                out.println("(X)" + "\n" + "Empty");
-            }
-            else if(j == road.provost()) {
+            if(j == road.provost()) {
+
                 out.println("(X)" + "\n" + "PROVOST");
+            }
+            else if(building == null) {
+                out.println("(X)" + "\n" + "Empty");
             }
             else {
                 out.print("(" + i + ")" + "\n" + building.visualize());
             }
             i++;
-            out.println();
-
-            // todo: print some info what does this building do
             j++;
+            out.println();
         }
         showDelimiter();
     }

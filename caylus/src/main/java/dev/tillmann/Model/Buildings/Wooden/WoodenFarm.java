@@ -18,7 +18,7 @@ public class WoodenFarm extends WoodenBuilding {
     public String description() {
         switch(side) {
             case Construction:
-                return String.format("Place %s worker and get two food.", workersCost()); 
+                return String.format("Place %s worker and get two food.\nCost: wood, food.", workersCost()); 
             case Setup:
                 return String.format("Place %s worker and get one food and 1PP.", workersCost()); 
             default:

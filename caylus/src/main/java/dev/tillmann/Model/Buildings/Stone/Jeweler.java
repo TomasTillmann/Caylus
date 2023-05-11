@@ -17,7 +17,7 @@ public class Jeweler extends StoneBuilding {
 
     @Override
     public String description() {
-        return String.format("Place %s workers and one or two golds to gain 5PP or 9PP respectively.", workersCost()); 
+        return String.format("Place %s workers and one or two golds to gain 5PP or 9PP respectively.\nCost: stone, wood.", workersCost()); 
     }
 
     @Override

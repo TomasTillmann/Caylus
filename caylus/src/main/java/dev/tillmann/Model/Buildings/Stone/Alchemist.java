@@ -18,7 +18,7 @@ public class Alchemist extends StoneBuilding {
 
     @Override
     public String description() {
-        return String.format("Place %s workers and spend either food, wood, stone, or fabric or two of such resources and gain one gold or two golds respectively.", workersCost()); 
+        return String.format("Place %s workers and spend either food, wood, stone, or fabric or two of such resources and gain one gold or two golds respectively.\nCost: stone, wood.", workersCost()); 
     }
 
     @Override
@@ -31,14 +31,14 @@ public class Alchemist extends StoneBuilding {
         OptionResponse optionResponse = OptionResponse.getAlchemistOption(player);
 
         if(optionResponse.option == 1) {
-            ResourcesResponse oneResource = ResourcesResponse.getOneResource(player);
+            ResourcesResponse oneResource = ResourcesResponse.spendOneResource(player);
 
             player.spend(oneResource.resources);
             player.gain(Resources.empty().addGold(1));
         }
         else if(optionResponse.option == 2) {
-            ResourcesResponse firstResource = ResourcesResponse.getOneResource(player);
-            ResourcesResponse secondResource = ResourcesResponse.getOneResource(player);
+            ResourcesResponse firstResource = ResourcesResponse.spendOneResource(player);
+            ResourcesResponse secondResource = ResourcesResponse.spendOneResource(player);
 
             player.spend(firstResource.resources.add(secondResource.resources));
             player.gain(Resources.empty().addGold(2));

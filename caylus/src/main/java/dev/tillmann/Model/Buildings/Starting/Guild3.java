@@ -17,7 +17,7 @@ public class Guild3 extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
-        ResourcesResponse response = ResourcesResponse.getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.spendOneResource(player);
         player.gain(resourcesGain());
         player.spend(response.resources);
     }

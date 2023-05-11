@@ -13,7 +13,7 @@ public class CoveredMarket extends WoodenBuilding {
 
     @Override
     public Resources toBuildCost(Player player) {
-        ResourcesResponse response = ResourcesResponse.getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.spendOneResource(player);
         return response.resources.addWood(1);
     }
 
@@ -21,7 +21,7 @@ public class CoveredMarket extends WoodenBuilding {
     public String description() {
         switch(side) {
             case Construction:
-                return String.format("Place %s worker and take three workers.", workersCost()); 
+                return String.format("Place %s worker and take three workers.\nCost: wood, wood/stone/fabric/food.", workersCost()); 
             case Setup:
                 return String.format("Place %s worker and take two workers and gain 1PP.", workersCost()); 
             default:

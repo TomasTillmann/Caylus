@@ -66,24 +66,27 @@ public final class Resources implements Visualizable {
         return visualization;
     }
 
+    /*
+     * Check if the resources can be taken.
+     */
     public boolean canTake() {
         return wood <= remainingWood && food <= remainingFood && fabric <= remainingFabric && stone <= remainingStone && gold <= remainingGold && workers <= camp.remainingWorkers();
     }
 
     /*
-     * Spends the resources and returns true. Or returns false, meaning the resources can't be spended and doesn't spend the resources obviously.
+     * Takes the resources and returns true. Or returns false, meaning the resources can't be taken and doesn't spend the resources obviously.
      */
-    public boolean take() {
-        if(!canTake()) {
+    public static boolean take(Resources resources) {
+        if(!resources.canTake()) {
             return false;
         }
 
-        remainingFood -= food;
-        remainingWood -= wood;
-        remainingStone -= stone;
-        remainingFabric -= fabric;
-        remainingGold -= gold;
-        camp.getWorkers(workers);
+        remainingFood -= resources.food();
+        remainingWood -= resources.wood();
+        remainingStone -= resources.stone();
+        remainingFabric -= resources.fabric();
+        remainingGold -= resources.gold();
+        camp.getWorkers(resources.workers());
         return true;
     }
 

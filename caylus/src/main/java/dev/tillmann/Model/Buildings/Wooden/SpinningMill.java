@@ -20,7 +20,7 @@ public class SpinningMill extends WoodenBuilding {
     public String description() {
         switch(side) {
             case Construction:
-                return String.format("Place %s worker and two fabric to get two woods.", workersCost()); 
+                return String.format("Place %s worker and two fabric to get two woods.\nCost: 2 woods.", workersCost()); 
             case Setup:
                 return farm.description();
             default:

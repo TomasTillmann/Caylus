@@ -20,7 +20,7 @@ public class Manor extends WoodenBuilding {
     public String description() {
         switch(side) {
             case Construction:
-                return String.format("Place %s worker and gain one favor.", workersCost()); 
+                return String.format("Place %s worker and gain one favor.\nCost: wood, fabric.", workersCost()); 
             case Setup:
                 return String.format("Place %s worker and gain 2PP.", workersCost()); 
             default:

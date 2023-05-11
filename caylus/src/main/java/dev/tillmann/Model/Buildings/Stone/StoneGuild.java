@@ -12,13 +12,13 @@ public class StoneGuild extends StoneBuilding {
 
     @Override
     public Resources toBuildCost(Player player) {
-        ResourcesResponse response = ResourcesResponse.getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.spendOneResource(player);
         return Resources.empty().addStone(1).add(response.resources);
     }
 
     @Override
     public String description() {
-        return String.format("Place %s workers and spend one food, wood, stone or fabric to get five workers.", workersCost()); 
+        return String.format("Place %s workers and spend one food, wood, stone or fabric to get five workers.\nCost: stone, wood/stone/fabric/food.", workersCost()); 
     }
 
     @Override
@@ -28,7 +28,7 @@ public class StoneGuild extends StoneBuilding {
 
     @Override
     public void setupActivate(Player player) {
-        ResourcesResponse response = ResourcesResponse.getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.spendOneResource(player);
         player.spend(response.resources);
         player.gain(Resources.empty().addWorkers(5));
     }

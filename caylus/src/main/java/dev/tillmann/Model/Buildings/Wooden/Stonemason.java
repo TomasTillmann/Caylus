@@ -23,7 +23,7 @@ public class Stonemason extends WoodenBuilding {
     public String description() {
         switch(side) {
             case Construction:
-                return String.format("Place %s worker and spend one wood, food, wood, stone and fabric to build a stone building.", workersCost()); 
+                return String.format("Place %s worker and spend one wood, food, wood, stone and fabric to build a stone building.\nCost: wood, wood/stone/fabric/food.", workersCost()); 
             case Setup:
                 return String.format("Place %s worker and spend one wood, food and fabric to build a stone building.", workersCost()); 
             default:
@@ -33,7 +33,7 @@ public class Stonemason extends WoodenBuilding {
 
     @Override
     public Resources toBuildCost(Player player) {
-        ResourcesResponse response = ResourcesResponse.getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.spendOneResource(player);
         return Resources.empty().addWood(1).add(response.resources);
     }
 

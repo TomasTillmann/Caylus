@@ -11,6 +11,10 @@ public class Fairground extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
+        if(!player.canSpend(resourcesCost())) {
+            return;
+        }
+
         player.spend(resourcesCost());
         player.getFavor();
     }

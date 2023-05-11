@@ -95,7 +95,12 @@ public class ConstructionSiteResponse extends Response {
             });
 
             if(bundle.isPresent()) {
-                response.bundles.add(bundle.get());
+                if(player.canSpend(bundle.get())) {
+                    response.bundles.add(bundle.get());
+                }
+                else {
+                    visualizer.println(String.format("You don't have enough resources to deliver this bundle:\n %s.", bundle.get().visualize()));
+                }
             }
             else {
                 // user realised he can't deliver a bundle and written stop

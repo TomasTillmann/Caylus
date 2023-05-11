@@ -16,7 +16,7 @@ public class StoneSawmill extends StoneBuilding {
 
     @Override
     public String description() {
-        return String.format("Place %s worker and two woods and one fabric to get one food and one stone. If someone else than the owner activates this building, the owner gets one wood.", workersCost()); 
+        return String.format("Place %s worker and two woods and one fabric to get one food and one stone. If someone else than the owner activates this building, the owner gets one wood.\nCost: stone, food.", workersCost()); 
     }
 
     @Override

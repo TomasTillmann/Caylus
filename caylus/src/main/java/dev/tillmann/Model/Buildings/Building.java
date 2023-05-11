@@ -26,7 +26,7 @@ public abstract class Building implements Visualizable {
     public String visualize() {
         String visualization = "";
         visualization += "Name: " + name() + "\n";
-        visualization += "Owner: " + (hasOwner() ? "\n" + owner().visualize() : "") + "\n";
+        visualization += "Owner:" + (hasOwner() ? " " + owner().name : "") + "\n";
         visualization += "Planned:";
         for(Player player : plannedPlayers()) {
             visualization += " " + player.name;
@@ -40,6 +40,10 @@ public abstract class Building implements Visualizable {
 
     public final boolean hasOwner() {
         return owner == null ? false : true;
+    }
+
+    public boolean canPlan(Player player) {
+        return player.canSpend(Resources.empty().addWorkers(workersCost())) && !plannedPlayers.contains(player);
     }
 
     public final void plan(Player player) {

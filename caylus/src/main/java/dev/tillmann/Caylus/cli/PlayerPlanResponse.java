@@ -1,6 +1,7 @@
 package dev.tillmann.caylus.cli;
 
 import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 import dev.tillmann.model.buildings.Building;
 
 public class PlayerPlanResponse extends Response {
@@ -48,8 +49,7 @@ public class PlayerPlanResponse extends Response {
 
         visualizer.showRoad(board().road());
 
-        // resolve if he would like to plan
-        int buildingIndex = getSanitizedInput(
+        response.building = getSanitizedInput(
             "Select the building you would like to plan on. You can't select empty building.",
             "To select the building, type the number above it. For example, write 1.",
             input -> {
@@ -58,17 +58,19 @@ public class PlayerPlanResponse extends Response {
                     try {
                         Building building = board().road().building(n);
                         if(building != null) {
-                            return n;
+                            if(building.canPlan(player)) {
+                                return board().road().building(n);
+                            }
+                            else {
+                                visualizer.println(String.format("You don't have enough workers to plan on %s or you have already plan on %s during this turn.", building.name()));
+                            }
                         }
-
                     } catch(IllegalArgumentException ex) {}
                 } catch(Exception ex) {}
 
                 return null;
             });
         
-        response.building = board().road().building(buildingIndex);
-
         visualizer.showDelimiter();
         return response;
     }

@@ -40,63 +40,58 @@ public abstract class Response {
     }
 
     private static void command(String input) {
-        if(input.length() > 2 && input.charAt(0) == '-' && input.charAt(1) == '-') {
-            switch(input) {
-                case "--road": {
-                    visualizer.println();
-                    visualizer.showRoad(board().road());
-                    break;
-                }
+        try {
+            if(input.length() > 2 && input.charAt(0) == '-' && input.charAt(1) == '-') {
+                visualizer.println();
+                switch(input) {
+                    case "--road": {
+                        visualizer.showRoad(board().road());
+                        break;
+                    }
 
-                case "--monumentsLeft": {
-                    visualizer.println();
-                    visualizer.showRemainingMonuments();
-                    break;
-                }
+                    case "--monumentsLeft": {
+                        visualizer.showRemainingMonuments();
+                        break;
+                    }
 
-                case "--charactersLeft": {
-                    visualizer.println();
-                    visualizer.showOnBoardCharacters(board);
-                    break;
-                }
+                    case "--charactersLeft": {
+                        visualizer.showOnBoardCharacters(board);
+                        break;
+                    }
 
-                case "--players": {
-                    visualizer.println();
-                    visualizer.showPlayers(players);
-                    break;
-                }
+                    case "--players": {
+                        visualizer.showPlayers(players);
+                        break;
+                    }
 
-                case "--state": {
-                    visualizer.println();
-                    visualizer.showState(gameState);
-                    break;
-                }
+                    case "--state": {
+                        visualizer.showState(gameState);
+                        break;
+                    }
 
-                case "--constructionSite": {
-                    visualizer.println();
-                    visualizer.showConstructionSite(board().constructionSite());
-                    break;
-                }
+                    case "--constructionSite": {
+                        visualizer.showConstructionSite(board().constructionSite());
+                        break;
+                    }
 
-                case "--resourcesLeft": {
-                    visualizer.println();
-                    visualizer.showRemainingResources();
-                    break;
-                }
+                    case "--resourcesLeft": {
+                        visualizer.showRemainingResources();
+                        break;
+                    }
 
-                case "--woodenLeft": {
-                    visualizer.println();
-                    visualizer.showRemainingWoodenBuildings();
-                    break;
-                }
+                    case "--woodenLeft": {
+                        visualizer.showRemainingWoodenBuildings();
+                        break;
+                    }
 
-                case "--stoneLeft": {
-                    visualizer.println();
-                    visualizer.showRemainingStoneBuildings();
-                    break;
+                    case "--stoneLeft": {
+                        visualizer.showRemainingStoneBuildings();
+                        break;
+                    }
                 }
             }
         }
+        catch(Exception e) { visualizer.println("You can't use commands at this stage of the game."); }
     }
 
     protected static <T> T getSanitizedInput(String message, String errorMessage, Function<String, T> convert) {

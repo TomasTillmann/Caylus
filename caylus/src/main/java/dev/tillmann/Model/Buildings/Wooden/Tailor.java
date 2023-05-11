@@ -13,7 +13,7 @@ public class Tailor extends WoodenBuilding {
 
     @Override
     public Resources toBuildCost(Player player) {
-        ResourcesResponse response = ResourcesResponse.getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.spendOneResource(player);
         return Resources.empty().addWood(1).add(response.resources);
     }
 
@@ -24,7 +24,7 @@ public class Tailor extends WoodenBuilding {
 
     @Override
     public String description() {
-        return String.format("Place %s worker and spend one fabric or two fabrics to gain 4PP or 6PP respectively.", workersCost()); 
+        return String.format("Place %s worker and spend one fabric or two fabrics to gain 4PP or 6PP respectively.\nCost: wood, wood/stone/fabric/food.", workersCost()); 
     }
 
     @Override

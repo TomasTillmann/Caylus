@@ -17,7 +17,7 @@ public class Foundry extends StoneBuilding {
 
     @Override
     public String description() {
-        return String.format("Place %s workers and one or three additional workers to gain one gold or three golds respectively.", workersCost()); 
+        return String.format("Place %s workers and one or three additional workers to gain one gold or three golds respectively.\nCost: stone, wood.", workersCost()); 
     }
 
     @Override

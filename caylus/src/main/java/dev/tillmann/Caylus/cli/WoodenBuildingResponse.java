@@ -2,34 +2,40 @@ package dev.tillmann.caylus.cli;
 
 import dev.tillmann.model.BuildingsPile;
 import dev.tillmann.model.Player;
+import dev.tillmann.model.Resources;
 import dev.tillmann.model.buildings.wooden.WoodenBuilding;
 
 public class WoodenBuildingResponse extends Response {
     public WoodenBuilding woodenBuilding;
+    public Resources toBuildCost;
 
     public static WoodenBuildingResponse parse(Player player) {
         WoodenBuildingResponse response = new WoodenBuildingResponse();
         visualizer.showRemainingWoodenBuildings();
         visualizer.showWhoseTurnIs(player);
 
-        int option = getSanitizedInput(
+        response.woodenBuilding = getSanitizedInput(
             "Select which wooden building would you like to build.",
             "Select by writing the number associated with the building. For example, write 1.",
             input -> {
                 try {
                     Integer n = Integer.parseInt(input) - 1;
                     try {
-                        BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof WoodenBuilding).toList().get(n);
-                        return n;
+                        WoodenBuilding woodenBuilding = (WoodenBuilding)BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof WoodenBuilding).toList().get(n);
+                        response.toBuildCost = woodenBuilding.toBuildCost(player);
+                        if(player.canSpend(response.toBuildCost)) {
+                            return woodenBuilding;
+                        }
+                        else {
+                            visualizer.println(String.format("You don't have enough resources to build %s", woodenBuilding.name()));
+                        }
                     } catch(Exception ex) {}
                 } catch(Exception ex) { }
 
                 return null;
             });
 
-            response.woodenBuilding = (WoodenBuilding)BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof WoodenBuilding).toList().get(option);
-
-            // actually take it out of the pile to claim it's ownership
+            // actually take it out of the pile to claim it's ownership and build it on the road
             BuildingsPile.Instance.getBuildings(b -> b == response.woodenBuilding);
 
             visualizer.showDelimiter();

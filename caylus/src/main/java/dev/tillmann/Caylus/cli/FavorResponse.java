@@ -1,5 +1,6 @@
 package dev.tillmann.caylus.cli;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +39,11 @@ public class FavorResponse extends Response {
         
         if(option == steal) {
             visualizer.println(String.format("%s chose to steal.", player.name));
+            response.stealCharacter = true;
 
-            visualizer.showPlayers(players());
+            List<Player> playersToStealFrom = new ArrayList<Player>(players());
+            playersToStealFrom.remove(player);
+            visualizer.showPlayers(playersToStealFrom);
             response.playerStolenFrom = getSanitizedInput(
                 "From which player would you like to steal?",
                 "Write the player's name to select him.",
@@ -52,19 +56,18 @@ public class FavorResponse extends Response {
                     return null;
             });
             
-            visualizer.showOnBoardCharacters(board());
+            visualizer.showCharacters(response.playerStolenFrom.characters());
             visualizer.showDelimiter();
 
             response.character = getSanitizedInput(
                 "What character would you like to steal?",
                 "Write the characters name to steal it.",
                 input -> {
-                    Optional<GameCharacter> character = board().onBoardCharacters().stream().filter(ch -> ch.name().equals(input)).findFirst();
+                    Optional<GameCharacter> character = response.playerStolenFrom.characters().stream().filter(ch -> ch.name().equals(input)).findFirst();
                     if(character.isPresent()) {
                         return character.get();
                     }
 
-                    visualizer.showDelimiter();
                     return null;
             });
         return response;

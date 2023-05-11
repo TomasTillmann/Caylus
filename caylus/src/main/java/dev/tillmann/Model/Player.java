@@ -80,7 +80,6 @@ public class Player implements Visualizable {
 
         Resources workers = Resources.empty().addWorkers(response.building.workersCost());
         spend(workers);
-        board.camp().returnWorkers(response.building.workersCost());
 
         response.building.plan(this);
     }
@@ -91,7 +90,7 @@ public class Player implements Visualizable {
 
     public boolean canSpend(Resources resources) {
         Resources newResources = resources().sub(resources);
-        return newResources.food() >= 0 && newResources.wood() >= 0 && newResources.stone() >= 0 && newResources.workers() >= 0 && newResources.gold() >= 0;
+        return newResources.food() >= 0 && newResources.wood() >= 0 && newResources.stone() >= 0 && newResources.fabric() >= 0 && newResources.workers() >= 0 && newResources.gold() >= 0;
     }
 
     public void spend(Resources resources) {
@@ -104,8 +103,9 @@ public class Player implements Visualizable {
     }
 
     public void gain(Resources resources) {
-        this.resources = this.resources.add(resources);
-        if(resources.take() != true) { throw new UnsupportedOperationException(); }
+        if(Resources.take(resources) == true) {
+            this.resources = this.resources.add(resources);
+        }
     }
 
     public void getFavor() {

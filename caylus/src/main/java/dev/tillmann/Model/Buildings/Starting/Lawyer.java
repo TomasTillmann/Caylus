@@ -12,6 +12,10 @@ public class Lawyer extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
+        if(!player.canSpend(resourcesCost())) {
+            return;
+        }
+
         player.spend(resourcesCost());
         BuildingToOwnResponse response = BuildingToOwnResponse.parse(player);
         response.building.setOwner(player);

@@ -30,7 +30,7 @@ public class Carpenter extends StartingBuilding {
         building.setOwner(player);
         map.road().build(building);
 
-        player.spend(building.toBuildCost(player));
+        player.spend(response.toBuildCost);
         building.immidiateReward(player);
     }
 }

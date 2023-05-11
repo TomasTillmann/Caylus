@@ -12,8 +12,12 @@ public class Market extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
+        if(!player.canSpend(resourcesCost())) {
+            return;
+        }
+
         player.spend(resourcesCost());
-        ResourcesResponse response = ResourcesResponse.getOneResource(player);
+        ResourcesResponse response = ResourcesResponse.gainOneResource(player);
         player.gain(response.resources);
     }
 

@@ -11,6 +11,10 @@ public class Guild4 extends StartingBuilding {
 
     @Override
     protected void activatePlayer(Player player) {
+        if(!player.canSpend(resourcesCost())) {
+            return;
+        }
+
         player.gain(resourcesGain());
         player.spend(resourcesCost());
     }

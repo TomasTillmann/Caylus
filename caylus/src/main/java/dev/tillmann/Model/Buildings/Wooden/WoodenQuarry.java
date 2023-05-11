@@ -20,7 +20,7 @@ public class WoodenQuarry extends WoodenBuilding {
     public String description() {
         switch(side) {
             case Construction:
-                return String.format("Place %s worker and get two stones.", workersCost()); 
+                return String.format("Place %s worker and get two stones.\nCost: wood, food.", workersCost()); 
             case Setup:
                 return farm.description();
             default:
