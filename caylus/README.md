@@ -1,0 +1,63 @@
+# User Guide
+Welcome to Caylus 1301 on command line!
+This program implements Caylus 1301 game, using only command line interface.
+All rules from the official [Caylus rules manual]() are implemented.
+Currently, only support for game characters is missing.
+
+## Installation
+You need to have Java and Maven installed.
+1. Navigate to root folder and run `mvn clean compile`
+2. After successful compile, run `java -cp .\target\classes\ dev.tillmann.App`
+
+## Usage
+Communication with the game is done using command line only.
+The Caylus game will prompt you with what input should you provide.
+It exactly follows how the game is played originally, so for players who have experience playing Caylus already, there should be no surprises.
+
+At first, you specify number of players and their names.
+Then the game begins.
+The game will not accept your input if it's syntactically invalid (e.g. you specified name of building but should have only specified its number), or if it's logically invalid (e.g. you want to spend resources which you don't have).
+
+After the game is over, ranking of the players is showed and the game is terminated.
+
+## Additional commands
+Everytime, the program directs you what should your input look like.
+But you also have another option, and that is to use commands.
+These commands are available for you all the time, and can be very useful to get some information of the game state, to help you better decide, what would you like to do on your current move.
+
+Here are all commands which are available all the time:
+1. `--road`
+   * Shows the road.
+   * Shows all built buildings, with their owners.
+   * Shows current position of the provost.
+   * Shows where are players currently planned in this round.
+
+1. `--monumentsLeft`
+   * Shows which monuments can still be build from residences.
+
+1. `--charactersLeft`
+   * Shows which characters are left on the board.
+
+1. `--players`
+   * Shows players and their resources.
+
+1. `--state`
+   * Shows the current state of the game.
+   * The current round and in which game phase the game currently is.
+
+1. `--constructionSite`
+   * Shows the state of the construction site.
+
+1. `--resourcesLeft`
+   * Shows what resources are left.
+
+1. `--woodenLeft`
+   * Shows which wooden buildings can be build.
+   * Useful when for example deciding whether to plan on carpenter or not.
+
+1. `--stoneLeft`
+   * Shows which stone buildings can be build.
+
+1. `--exit`
+   * Exits the game.
+   * Beware, that all progress and all game information is lost!
