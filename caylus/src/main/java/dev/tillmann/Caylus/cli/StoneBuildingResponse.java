@@ -5,9 +5,16 @@ import dev.tillmann.model.Player;
 import dev.tillmann.model.buildings.Building;
 import dev.tillmann.model.buildings.stone.StoneBuilding;
 
+import java.util.stream.Collectors;
+
 public class StoneBuildingResponse extends Response {
     public StoneBuilding stoneBuilding;
 
+    /**
+     * Gets the stone building to build.
+     * @param player
+     * @return
+     */
     public static StoneBuildingResponse getStoneBuildingToBuild(Player player) {
         StoneBuildingResponse response = new StoneBuildingResponse();
         visualizer.showWhoseTurnIs(player);
@@ -19,7 +26,7 @@ public class StoneBuildingResponse extends Response {
                 try {
                     Integer n = Integer.parseInt(input) - 1;
                     try {
-                        StoneBuilding building = (StoneBuilding)BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof StoneBuilding).toList().get(n);
+                        StoneBuilding building = (StoneBuilding)BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof StoneBuilding).collect(Collectors.toList()).get(n);
                         if(player.canSpend(building.toBuildCost(player))) {
                             return building;
                         }

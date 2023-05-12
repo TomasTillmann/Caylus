@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import dev.tillmann.model.buildings.Building;
 import dev.tillmann.model.buildings.YellowFlagBuilding;
@@ -11,6 +12,9 @@ import dev.tillmann.model.buildings.starting.*;
 import dev.tillmann.model.buildings.stone.*;
 import dev.tillmann.model.buildings.wooden.*;
 
+/**
+All building that can be build are on this pile.
+ */
 public class BuildingsPile {
     public static BuildingsPile Instance = new BuildingsPile();
 
@@ -65,14 +69,22 @@ public class BuildingsPile {
 
     private List<Building> buildingsOut = new ArrayList<>();
 
+    /**
+    Draws all buildings which satisfy given condition.
+     */
     public List<Building> getBuildings(Predicate<Building> predicate) {
         return getRandomBuildings(predicate, buildings.size());
     }
 
+    /**
+    Returns {@code howMany} random buildings which satisfy given condition
+     @param howMany how many buildings to draw
+     @param predicate predicate the drawn buildings must hold
+     */
     public List<Building> getRandomBuildings(Predicate<Building> predicate, int howMany) {
         if(howMany < 0) { throw new UnsupportedOperationException(); }
 
-        List<Building> result = new ArrayList<Building>(buildings.stream().filter(b -> predicate.test(b)).toList());
+        List<Building> result = new ArrayList<Building>(buildings.stream().filter(b -> predicate.test(b)).collect(Collectors.toList()));
         Collections.shuffle(result);
         result = result.subList(0, Math.min(result.size(), howMany));
 

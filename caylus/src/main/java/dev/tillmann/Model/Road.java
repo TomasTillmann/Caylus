@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import dev.tillmann.caylus.cli.MonumentResponse;
@@ -46,7 +47,7 @@ public class Road {
     public Road(GuildsBridge guildsBridge) {
         buildings = new Building[ROAD_SIZE];
         buildings[GUILDS_BRIDGE_POS] = guildsBridge;
-        provostPosition = PROVOST_POSITION; 
+        provostPosition = PROVOST_POSITION;
 
         setupStartingBuildings();
         setupYellowFlagBuildings();
@@ -76,7 +77,7 @@ public class Road {
     }
 
     public List<Building> buildings(Predicate<Building> predicate) {
-        return Stream.of(buildings).filter(b -> predicate.test(b)).toList();
+        return Stream.of(buildings).filter(b -> predicate.test(b)).collect(Collectors.toList());
     }
 
     public void build(Building building) {
@@ -119,7 +120,7 @@ public class Road {
     }
 
     public void yellowFlagToResidences() {
-        YellowFlagBuilding building; 
+        YellowFlagBuilding building;
         Residence residence;
 
         for(int i = Road.YELLOW_FLAG_BUILDINGS_START; i < Road.YELLOW_FLAG_BUILDINGS_END; ++i) {

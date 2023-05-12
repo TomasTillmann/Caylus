@@ -9,6 +9,11 @@ public class PlayerPlanResponse extends Response {
     public Building building;
     public boolean deliver;
 
+    /**
+     * {@code player} decides what would he like to do on his turn.
+     * @param player
+     * @return
+     */
     public static PlayerPlanResponse parse(Player player) {
         final int pass = 1;
         final int plan = 2;
@@ -34,7 +39,7 @@ public class PlayerPlanResponse extends Response {
                 } catch(Exception ex) { }
                 return null;
             });
-        
+
         if(option == pass) {
             response.passed = true;
             visualizer.showDelimiter();
@@ -70,7 +75,7 @@ public class PlayerPlanResponse extends Response {
 
                 return null;
             });
-        
+
         visualizer.showDelimiter();
         return response;
     }

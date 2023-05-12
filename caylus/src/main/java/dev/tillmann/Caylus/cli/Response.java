@@ -11,7 +11,7 @@ import dev.tillmann.model.GameState;
 import dev.tillmann.model.Player;
 
 public abstract class Response {
-    protected static Visualizer visualizer = Visualizer.instance(); 
+    protected static Visualizer visualizer = Visualizer.instance();
     protected static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
     private static Board board;
@@ -34,11 +34,18 @@ public abstract class Response {
 
     protected Response() { }
 
+    /**
+     * Is called when error occurs.
+     */
     private static void shutdown() {
         visualizer.showShutdownMessage();
         System.exit(1);
     }
 
+    /**
+     * Additional commands which can the user prompt everytime, instead of just providing response to CLI request.
+     * @param input
+     */
     private static void command(String input) {
         try {
             if(input.length() > 2 && input.charAt(0) == '-' && input.charAt(1) == '-') {
@@ -88,12 +95,26 @@ public abstract class Response {
                         visualizer.showRemainingStoneBuildings();
                         break;
                     }
+
+                    case "--exit": {
+                        System.exit(0);
+                        break;
+                    }
                 }
             }
         }
         catch(Exception e) { visualizer.println("You can't use commands at this stage of the game."); }
     }
 
+    /**
+     * Main logic how to get input from the user.
+     * The method is blocking, meaning, it will block the game until user finally provides correct input.
+     * @param message message to show the user the first time
+     * @param errorMessage message to show the user when he provides incorrect input
+     * @param convert conversion from user input to internal data structure
+     * @return
+     * @param <T> type of the internal data structure
+     */
     protected static <T> T getSanitizedInput(String message, String errorMessage, Function<String, T> convert) {
         String input;
         T value;
@@ -111,6 +132,6 @@ public abstract class Response {
         }
         catch(IOException ex) { shutdown(); return null; }
 
-        return value; 
+        return value;
     }
 }

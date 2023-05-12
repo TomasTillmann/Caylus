@@ -1,7 +1,10 @@
 package dev.tillmann.caylus.cli;
 
 import java.io.PrintStream;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import dev.tillmann.model.*;
 import dev.tillmann.model.buildings.Building;
@@ -10,6 +13,10 @@ import dev.tillmann.model.buildings.stone.StoneBuilding;
 import dev.tillmann.model.buildings.wooden.WoodenBuilding;
 import dev.tillmann.model.characters.GameCharacter;
 
+/**
+ * Is responsible for showing the internal state of the Caylus game.
+ * Visualizes the game state to CL.
+ */
 public class Visualizer {
     private static PrintStream out = System.out;
 
@@ -101,14 +108,14 @@ public class Visualizer {
     void showRemainingWoodenBuildings() {
         showDelimiter();
         out.println("Remaining wooden buildings:");
-        showBuildings(BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof WoodenBuilding).toList());
+        showBuildings(BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof WoodenBuilding).collect(Collectors.toList()));
         showDelimiter();
     }
 
     void showRemainingStoneBuildings() {
         showDelimiter();
         out.println("Remaining stone buildings:");
-        showBuildings(BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof StoneBuilding).toList());
+        showBuildings(BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof StoneBuilding).collect(Collectors.toList()));
         showDelimiter();
     }
 
@@ -142,7 +149,16 @@ public class Visualizer {
     }
 
     public void showResults(List<Player> players) {
-        throw new UnsupportedOperationException();
+        Collections.sort(players, (p1, p2) -> Integer.compare(p1.prestigePoints(), p2.prestigePoints()));
+
+        out.println("Results: ");
+        int rank = 1;
+        for(Player player : players) {
+            out.println(rank + ") " + player.name + ", with " + player.prestigePoints() + " prestige points.");
+        }
+
+        out.println();
+        out.println("ggs");
     }
 
     void showWhoseTurnIs(Player player) {

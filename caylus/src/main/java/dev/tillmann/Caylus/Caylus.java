@@ -15,12 +15,20 @@ import dev.tillmann.model.buildings.monuments.Garden;
 import dev.tillmann.model.buildings.monuments.Granary;
 import dev.tillmann.model.characters.GameCharacter;
 
+/**
+ * The main game logic.
+ */
 public class Caylus {
     private Board board;
     private GameState gameState;
     private List<Player> players;
     private Config config;
 
+    /**
+     * Constructs the Caylus game object.
+     * Prompts the user for players count and their names.
+     * @param config
+     */
     public Caylus(Config config) {
         this.config = config;
 
@@ -30,7 +38,7 @@ public class Caylus {
         players = PlayersResponse.parse().value;
 
         Camp camp = new Camp(players.size());
-        
+
         List<GameCharacter> characters = CharactersPile.Instance.getRandomCharacters(ch -> true, players.size() + 3);
 
         List<GameCharacter> remainingCharacters = initPlayers(characters);
@@ -45,6 +53,9 @@ public class Caylus {
         Response.providePlayers(players);
     }
 
+    /**
+     * Starts the Caylus game.
+     */
     public void start() {
         for(gameState.round = 1; gameState.round <= config.rounds; ++gameState.round) {
             gameState.phase = RoundPhase.Planning;
@@ -66,7 +77,7 @@ public class Caylus {
     private List<GameCharacter> initPlayers(List<GameCharacter> characters) {
         Collections.shuffle(players);
         int workersPerPlayer;
-        
+
         // calculate resources
         if(players.size() == 2  || players.size() == 5) {
             workersPerPlayer = 10;
@@ -83,7 +94,7 @@ public class Caylus {
         for(Player player : players) {
             player.gain(startingResources);
         }
-         
+
         // choose characters
         for (int i = players.size() - 1; i >= 0; --i) {
             Player player = players.get(i);

@@ -6,6 +6,12 @@ import dev.tillmann.model.buildings.Building;
 public class BuildingToOwnResponse extends Response {
     public Building building;
 
+    /**
+     * Promts the user to provide which building he would like to own.
+     * Selected buiding will have the player as it's owner.
+     * @param player
+     * @return
+     */
     public static BuildingToOwnResponse parse(Player player) {
         BuildingToOwnResponse response = new BuildingToOwnResponse();
         visualizer.showRoad(board().road());

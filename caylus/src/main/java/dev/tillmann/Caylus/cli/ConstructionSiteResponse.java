@@ -10,6 +10,11 @@ import dev.tillmann.model.Resources;
 public class ConstructionSiteResponse extends Response {
     public List<Resources> bundles;
 
+    /**
+     * Allows the user to deliver bundles to construction site.
+     * @param player
+     * @return
+     */
     public static ConstructionSiteResponse getConstructionSiteResponse(Player player) {
         ConstructionSiteResponse response = new ConstructionSiteResponse();
         response.bundles = new ArrayList<>();
@@ -17,7 +22,7 @@ public class ConstructionSiteResponse extends Response {
         visualizer.showConstructionSite(board().constructionSite());
         visualizer.showWhoseTurnIs(player);
 
-        while(getSanitizedInput("Would you like to deliver a bundle? (yes / no)", "Write yes or no.", 
+        while(getSanitizedInput("Would you like to deliver a bundle? (yes / no)", "Write yes or no.",
         input -> {
             if(input.equals("yes")) {
                 return true;
@@ -33,7 +38,7 @@ public class ConstructionSiteResponse extends Response {
             bundle = getSanitizedInput("Choose a bundle. (food, wood, stone, fabric, gold)", "Write the names of the resources seperated by space. For example, writing: food fabric gold, you delivered just that. Beware you can deliver only what you have in resources. If you have realised, you can't deliver a bundle, type stop.",
             input -> {
                 String[] tokens = input.trim().split(" ");
-                if(tokens.length == 1){ 
+                if(tokens.length == 1){
                     if(tokens[0].equals("stop")) {
                         return Optional.empty();
                     }

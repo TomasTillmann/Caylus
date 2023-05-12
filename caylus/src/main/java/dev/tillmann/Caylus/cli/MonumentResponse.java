@@ -9,7 +9,12 @@ import dev.tillmann.model.Residence;
 public class MonumentResponse extends Response {
     public Monument monument;
 
-    public static MonumentResponse parse(Residence residence) { 
+    /**
+     * The owner of {@code residence} will decide whether he would like to turn it into monument or not.
+     * @param residence
+     * @return
+     */
+    public static MonumentResponse parse(Residence residence) {
         MonumentResponse response = new MonumentResponse();
         response.monument = null;
 

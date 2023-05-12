@@ -70,10 +70,14 @@ public abstract class Building implements Visualizable {
 
     public abstract String description();
 
+    /**
+     * Activates the building for all players, who planned on it.
+     */
     public void activate() {
         for(Player player : plannedPlayers()) {
             Visualizer.instance().println(String.format("Building %s is being activated by player %s.", name(), player.name));
             Visualizer.instance().println(String.format("Description: %s.", description()));
+            Visualizer.instance().println();
             activatePlayer(player);
         }
 

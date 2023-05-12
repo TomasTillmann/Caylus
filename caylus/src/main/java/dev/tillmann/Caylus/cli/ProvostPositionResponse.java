@@ -6,6 +6,12 @@ import dev.tillmann.model.Road;
 public class ProvostPositionResponse extends Response {
     public int provostNewPosition;
 
+    /**
+     * Parses, how {@code player} decided to move the provost.
+     * @param player
+     * @param road
+     * @return
+     */
     public static ProvostPositionResponse parse(Player player, Road road) {
         visualizer.showWhoseTurnIs(player);
 

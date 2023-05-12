@@ -3,6 +3,9 @@ package dev.tillmann.model.buildings;
 import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
 
+/**
+ * Buildable building has two sides - construction or setup side. Each side concludes cost and reward for the player who would like to build it.
+ */
 public abstract class BuildableBuilding extends Building {
     public enum Side {
         Construction,

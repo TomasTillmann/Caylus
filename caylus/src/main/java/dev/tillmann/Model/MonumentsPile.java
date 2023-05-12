@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import dev.tillmann.model.buildings.monuments.*;
 
@@ -36,7 +37,7 @@ public class MonumentsPile {
     public List<Monument> getRandomMonuments(Predicate<Monument> predicate, int howMany) {
         if(howMany < 0) { throw new UnsupportedOperationException(); }
 
-        List<Monument> result = new ArrayList<>(monuments.stream().filter(ch -> predicate.test(ch)).toList());
+        List<Monument> result = new ArrayList<>(monuments.stream().filter(ch -> predicate.test(ch)).collect(Collectors.toList()));
         Collections.shuffle(result);
         result = result.subList(0, Math.min(howMany, result.size()));
 

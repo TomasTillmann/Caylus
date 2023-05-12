@@ -5,10 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 
 import dev.tillmann.model.Player;
-
 public class PlayersResponse extends Response {
     public List<Player> value;
 
+    /**
+     * First message the players will see.
+     * Here, the players decide how many players will play the game and their names.
+     * @return
+     */
     public static PlayersResponse parse() {
         PlayersResponse response = new PlayersResponse();
         response.value = new ArrayList<>();
@@ -36,17 +40,17 @@ public class PlayersResponse extends Response {
                 "Get name for player number " + i + ".",
                 "The name can't be already in use, empty or longer than 30 characters.",
                 input -> {
-                    if(usedNames.contains(input) || input.isBlank() || input.length() > 30) {
+                    if(usedNames.contains(input) || input.isEmpty() || input.length() > 30) {
                         return null;
                     }
 
                     return input;
                 });
-            
+
             usedNames.add(name);
             response.value.add(new Player(name));
         }
-        
+
         visualizer.println();
         return response;
     }

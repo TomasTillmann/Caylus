@@ -6,6 +6,11 @@ import dev.tillmann.model.Resources;
 public class OptionResponse extends Response {
     public int option;
 
+    /**
+     * {@code player} decides what would he like to do at tailor, after he has been planned on it.
+     * @param player
+     * @return
+     */
     public static OptionResponse getTailorOption(Player player) {
         visualizer.showWhoseTurnIs(player);
         visualizer.println("Tailor activation.");

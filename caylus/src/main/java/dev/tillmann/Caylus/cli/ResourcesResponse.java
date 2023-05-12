@@ -6,6 +6,11 @@ import dev.tillmann.model.Resources;
 public class ResourcesResponse extends Response {
     public Resources resources;
 
+    /**
+     * {@code player} chooses which one resource will he would like to gain.
+     * @param player
+     * @return
+     */
     public static ResourcesResponse gainOneResource(Player player) {
         ResourcesResponse response = new ResourcesResponse();
         visualizer.showWhoseTurnIs(player);

@@ -14,6 +14,11 @@ public class FavorResponse extends Response {
     public Player playerStolenFrom;
     public Building building;
 
+    /**
+     * {@code player} can decide what king of favor he would like to get.
+     * @param player
+     * @return
+     */
     public static FavorResponse parse(Player player) {
         FavorResponse response = new FavorResponse();
         final int steal = 1;
@@ -36,7 +41,7 @@ public class FavorResponse extends Response {
                 visualizer.showDelimiter();
                 return null;
             });
-        
+
         if(option == steal) {
             visualizer.println(String.format("%s chose to steal.", player.name));
             response.stealCharacter = true;
@@ -55,7 +60,7 @@ public class FavorResponse extends Response {
                     visualizer.showDelimiter();
                     return null;
             });
-            
+
             visualizer.showCharacters(response.playerStolenFrom.characters());
             visualizer.showDelimiter();
 
@@ -105,7 +110,7 @@ public class FavorResponse extends Response {
                     visualizer.showDelimiter();
                     return null;
                 });
-            
+
             visualizer.showDelimiter();
             return response;
         }

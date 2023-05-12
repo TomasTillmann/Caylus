@@ -8,6 +8,12 @@ import dev.tillmann.model.characters.GameCharacter;
 public class CharacterResponse extends Response {
     public GameCharacter character;
 
+    /**
+     * Which character would the player like to choose.
+     * @param player
+     * @param characters
+     * @return
+     */
     public static CharacterResponse chooseCharacter(Player player, List<GameCharacter> characters) {
         CharacterResponse response = new CharacterResponse();
         visualizer.showCharacters(characters);

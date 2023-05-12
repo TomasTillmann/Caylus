@@ -47,6 +47,9 @@ public final class ConstructionSite implements Visualizable {
         return visualization;
     }
 
+    /**
+     * All players who planned to deliver bundles are resolved to deliver the bundles here.
+     */
     public void deliver() {
         if(plannedPlayers.size() == 0) {
             return;

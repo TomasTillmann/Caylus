@@ -5,10 +5,17 @@ import dev.tillmann.model.Player;
 import dev.tillmann.model.Resources;
 import dev.tillmann.model.buildings.wooden.WoodenBuilding;
 
+import java.util.stream.Collectors;
+
 public class WoodenBuildingResponse extends Response {
     public WoodenBuilding woodenBuilding;
     public Resources toBuildCost;
 
+    /**
+     * Which wooden building would like the {@code player} build.
+     * @param player
+     * @return
+     */
     public static WoodenBuildingResponse parse(Player player) {
         WoodenBuildingResponse response = new WoodenBuildingResponse();
         visualizer.showRemainingWoodenBuildings();
@@ -21,7 +28,7 @@ public class WoodenBuildingResponse extends Response {
                 try {
                     Integer n = Integer.parseInt(input) - 1;
                     try {
-                        WoodenBuilding woodenBuilding = (WoodenBuilding)BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof WoodenBuilding).toList().get(n);
+                        WoodenBuilding woodenBuilding = (WoodenBuilding)BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof WoodenBuilding).collect(Collectors.toList()).get(n);
                         response.toBuildCost = woodenBuilding.toBuildCost(player);
                         if(player.canSpend(response.toBuildCost)) {
                             return woodenBuilding;
