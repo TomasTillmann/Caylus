@@ -1,44 +1,91 @@
 package dev.tillmann.model;
 
 public final class Resources implements Visualizable {
+    static {
+        reset();
+    }
+
+    public static void reset() {
+        remainingFood = 20;
+        remainingWood = 20;
+        remainingStone = 20;
+        remainingFabric = 15;
+        remainingGold = 15;
+    }
     private static Camp camp;
 
-    private static int remainingFood = 20;
-    public static int remainingFood() { return remainingFood; } 
+    private static int remainingFood;
 
-    private static int remainingWood = 20;
-    public static int remainingWood() { return remainingWood; }
+    public static int remainingFood() {
+        return remainingFood;
+    }
 
-    private static int remainingStone = 20;
-    public static int remainingStone() { return remainingStone; }
+    private static int remainingWood;
 
-    private static int remainingFabric = 15;
-    public static int remainingFabric() { return remainingFabric; }
+    public static int remainingWood() {
+        return remainingWood;
+    }
 
-    private static int remainingGold = 15;
-    public static int remainingGold() { return remainingGold; }
+    private static int remainingStone;
 
-    public static int remainingWorkers() { return camp.remainingWorkers(); }
+    public static int remainingStone() {
+        return remainingStone;
+    }
+
+    private static int remainingFabric;
+
+    public static int remainingFabric() {
+        return remainingFabric;
+    }
+
+    private static int remainingGold;
+
+    public static int remainingGold() {
+        return remainingGold;
+    }
+
+    public static int remainingWorkers() {
+        return camp.remainingWorkers();
+    }
 
     private int food;
-    public int food() { return food; }
+
+    public int food() {
+        return food;
+    }
 
     private int wood;
-    public int wood() { return wood; }
+
+    public int wood() {
+        return wood;
+    }
 
     private int stone;
-    public int stone() { return stone; }
+
+    public int stone() {
+        return stone;
+    }
 
     private int fabric;
-    public int fabric() { return fabric; }
+
+    public int fabric() {
+        return fabric;
+    }
 
     private int gold;
-    public int gold() { return gold; }
+
+    public int gold() {
+        return gold;
+    }
 
     private int workers;
-    public int workers() { return workers; }
 
-    private Resources() { }
+    public int workers() {
+        return workers;
+    }
+
+    private Resources() {
+    }
 
     public static Resources empty() {
         return new Resources();
@@ -70,14 +117,16 @@ public final class Resources implements Visualizable {
      * Check if the resources can be taken.
      */
     public boolean canTake() {
-        return wood <= remainingWood && food <= remainingFood && fabric <= remainingFabric && stone <= remainingStone && gold <= remainingGold && workers <= camp.remainingWorkers();
+        return wood <= remainingWood && food <= remainingFood && fabric <= remainingFabric && stone <= remainingStone
+                && gold <= remainingGold && workers <= camp.remainingWorkers();
     }
 
     /*
-     * Takes the resources and returns true. Or returns false, meaning the resources can't be taken and doesn't spend the resources obviously.
+     * Takes the resources and returns true. Or returns false, meaning the resources
+     * can't be taken and doesn't spend the resources obviously.
      */
-    public static boolean take(Resources resources) {
-        if(!resources.canTake()) {
+    public static boolean tryTake(Resources resources) {
+        if (!resources.canTake()) {
             return false;
         }
 

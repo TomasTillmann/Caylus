@@ -13,11 +13,12 @@ public class Player implements Visualizable {
     private Board board;
     public void setBoard(Board board) { this.board = board; }
 
-    public int prestigePoints;
+    private int prestigePoints;
+    public int prestigePoints() { return prestigePoints; }
 
     private Resources resources = Resources.empty();
     public Resources resources() { return resources; }
-    
+
     private List<Building> ownedBuildings = new ArrayList<>();
     public List<Building> ownedBuildings() { return ownedBuildings; }
 
@@ -43,7 +44,7 @@ public class Player implements Visualizable {
 
         visualization += "Characters: \n";
         for(GameCharacter character : characters()) {
-            visualization += character.name() + "\n"; 
+            visualization += character.name() + "\n";
         }
         if(characters().size() != 0) { visualization += "\n"; }
 
@@ -103,7 +104,7 @@ public class Player implements Visualizable {
     }
 
     public void gain(Resources resources) {
-        if(Resources.take(resources) == true) {
+        if(Resources.tryTake(resources) == true) {
             this.resources = this.resources.add(resources);
         }
     }
