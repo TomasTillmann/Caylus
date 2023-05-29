@@ -10,6 +10,7 @@ public class CharacterResponse extends Response {
 
     /**
      * Which character would the player like to choose.
+     * 
      * @param player
      * @param characters
      * @return
@@ -20,18 +21,19 @@ public class CharacterResponse extends Response {
         visualizer.showWhoseTurnIs(player);
 
         response.character = getSanitizedInput(
-            "Choose one of these characters.",
-            "Choose by wrting the number, e.g 1.",
-            input -> {
-                try {
-                    Integer n = Integer.parseInt(input) - 1;
-                    if(0 <= n && n < characters.size()) {
-                        return characters.get(n);
+                "Choose one of these characters.",
+                "Choose by wrting the number, e.g 1.",
+                input -> {
+                    try {
+                        Integer n = Integer.parseInt(input) - 1;
+                        if (0 <= n && n < characters.size()) {
+                            return characters.get(n);
+                        }
+                    } catch (NumberFormatException ex) {
                     }
-                } catch(Exception ex) {}
 
-                return null;
-            });
+                    return null;
+                });
 
         visualizer.showDelimiter();
         return response;

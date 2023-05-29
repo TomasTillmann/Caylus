@@ -9,6 +9,7 @@ public class BuildingToOwnResponse extends Response {
     /**
      * Promts the user to provide which building he would like to own.
      * Selected buiding will have the player as it's owner.
+     * 
      * @param player
      * @return
      */
@@ -18,24 +19,26 @@ public class BuildingToOwnResponse extends Response {
         visualizer.showWhoseTurnIs(player);
 
         response.building = getSanitizedInput(
-            "Select the building you would like to own. You can't own empty building or building which is already owned.",
-            "To select the building, type the number above it. For example, write 1. Beware, you can't own empty building or building which is already owned.",
-            input -> {
-                try {
-                    Integer n = Integer.parseInt(input) - 1;
+                "Select the building you would like to own. You can't own empty building or building which is already owned.",
+                "To select the building, type the number above it. For example, write 1. Beware, you can't own empty building or building which is already owned.",
+                input -> {
                     try {
-                        Building building = board().road().building(n);
-                        if(building != null) {
-                            if(!building.hasOwner()) {
-                                return building;
+                        Integer n = Integer.parseInt(input) - 1;
+                        try {
+                            Building building = board().road().building(n);
+                            if (building != null) {
+                                if (!building.hasOwner()) {
+                                    return building;
+                                }
                             }
+
+                        } catch (IllegalArgumentException ex) {
                         }
+                    } catch (NumberFormatException ex) {
+                    }
 
-                    } catch(IllegalArgumentException ex) {}
-                } catch(Exception ex) {}
-
-                return null;
-            });
+                    return null;
+                });
 
         visualizer.showDelimiter();
         return response;

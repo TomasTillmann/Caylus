@@ -13,6 +13,7 @@ public class WoodenBuildingResponse extends Response {
 
     /**
      * Which wooden building would like the {@code player} build.
+     * 
      * @param player
      * @return
      */
@@ -22,30 +23,35 @@ public class WoodenBuildingResponse extends Response {
         visualizer.showWhoseTurnIs(player);
 
         response.woodenBuilding = getSanitizedInput(
-            "Select which wooden building would you like to build.",
-            "Select by writing the number associated with the building. For example, write 1.",
-            input -> {
-                try {
-                    Integer n = Integer.parseInt(input) - 1;
+                "Select which wooden building would you like to build.",
+                "Select by writing the number associated with the building. For example, write 1.",
+                input -> {
                     try {
-                        WoodenBuilding woodenBuilding = (WoodenBuilding)BuildingsPile.Instance.remainingBuildings().stream().filter(b -> b instanceof WoodenBuilding).collect(Collectors.toList()).get(n);
-                        response.toBuildCost = woodenBuilding.toBuildCost(player);
-                        if(player.canSpend(response.toBuildCost)) {
-                            return woodenBuilding;
+                        Integer n = Integer.parseInt(input) - 1;
+                        try {
+                            WoodenBuilding woodenBuilding = (WoodenBuilding) BuildingsPile.Instance.remainingBuildings()
+                                    .stream().filter(b -> b instanceof WoodenBuilding).collect(Collectors.toList())
+                                    .get(n);
+                            response.toBuildCost = woodenBuilding.toBuildCost(player);
+                            if (player.canSpend(response.toBuildCost)) {
+                                return woodenBuilding;
+                            } else {
+                                visualizer.println(String.format("You don't have enough resources to build %s",
+                                        woodenBuilding.name()));
+                            }
+                        } catch (ClassCastException ex) {
                         }
-                        else {
-                            visualizer.println(String.format("You don't have enough resources to build %s", woodenBuilding.name()));
-                        }
-                    } catch(Exception ex) {}
-                } catch(Exception ex) { }
+                    } catch (NumberFormatException ex) {
+                    }
 
-                return null;
-            });
+                    return null;
+                });
 
-            // actually take it out of the pile to claim it's ownership and build it on the road
-            BuildingsPile.Instance.getBuildings(b -> b == response.woodenBuilding);
+        // actually take it out of the pile to claim it's ownership and build it on the
+        // road
+        BuildingsPile.Instance.getBuildings(b -> b == response.woodenBuilding);
 
-            visualizer.showDelimiter();
-            return response;
+        visualizer.showDelimiter();
+        return response;
     }
 }

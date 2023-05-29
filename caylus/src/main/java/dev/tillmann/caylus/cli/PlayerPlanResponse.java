@@ -11,6 +11,7 @@ public class PlayerPlanResponse extends Response {
 
     /**
      * {@code player} decides what would he like to do on his turn.
+     * 
      * @param player
      * @return
      */
@@ -24,29 +25,30 @@ public class PlayerPlanResponse extends Response {
 
         // get player's decision
         int option = getSanitizedInput(
-            "Choose what would you like to do:\npass(1)\nplan(2)\ndeliver(3)",
-            "You can choose only one of these options. For example, to pass, write 1. Note that you can't deliver multiple times.",
-            input -> {
-                try {
-                    Integer n = Integer.parseInt(input);
-                    if(n == pass || n == plan) {
-                        return n;
-                    }
+                "Choose what would you like to do:\npass(1)\nplan(2)\ndeliver(3)",
+                "You can choose only one of these options. For example, to pass, write 1. Note that you can't deliver multiple times.",
+                input -> {
+                    try {
+                        Integer n = Integer.parseInt(input);
+                        if (n == pass || n == plan) {
+                            return n;
+                        }
 
-                    if(n == deliver) {
-                        return board().constructionSite().canPlan(player) ? n : null;
+                        if (n == deliver) {
+                            return board().constructionSite().canPlan(player) ? n : null;
+                        }
+                    } catch (NumberFormatException ex) {
                     }
-                } catch(Exception ex) { }
-                return null;
-            });
+                    return null;
+                });
 
-        if(option == pass) {
+        if (option == pass) {
             response.passed = true;
             visualizer.showDelimiter();
             return response;
         }
 
-        if(option == deliver) {
+        if (option == deliver) {
             response.deliver = true;
             visualizer.showDelimiter();
             return response;
@@ -55,26 +57,29 @@ public class PlayerPlanResponse extends Response {
         visualizer.showRoad(board().road());
 
         response.building = getSanitizedInput(
-            "Select the building you would like to plan on. You can't select empty building.",
-            "To select the building, type the number above it. For example, write 1.",
-            input -> {
-                try {
-                    Integer n = Integer.parseInt(input) - 1;
+                "Select the building you would like to plan on. You can't select empty building.",
+                "To select the building, type the number above it. For example, write 1.",
+                input -> {
                     try {
-                        Building building = board().road().building(n);
-                        if(building != null) {
-                            if(building.canPlan(player)) {
-                                return board().road().building(n);
+                        Integer n = Integer.parseInt(input) - 1;
+                        try {
+                            Building building = board().road().building(n);
+                            if (building != null) {
+                                if (building.canPlan(player)) {
+                                    return board().road().building(n);
+                                } else {
+                                    visualizer.println(String.format(
+                                            "You don't have enough workers to plan on %s or you have already plan on %s during this turn.",
+                                            building.name()));
+                                }
                             }
-                            else {
-                                visualizer.println(String.format("You don't have enough workers to plan on %s or you have already plan on %s during this turn.", building.name()));
-                            }
+                        } catch (IllegalArgumentException ex) {
                         }
-                    } catch(IllegalArgumentException ex) {}
-                } catch(Exception ex) {}
+                    } catch (NumberFormatException ex) {
+                    }
 
-                return null;
-            });
+                    return null;
+                });
 
         visualizer.showDelimiter();
         return response;

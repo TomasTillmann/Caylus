@@ -16,6 +16,7 @@ public class FavorResponse extends Response {
 
     /**
      * {@code player} can decide what king of favor he would like to get.
+     * 
      * @param player
      * @return
      */
@@ -28,21 +29,22 @@ public class FavorResponse extends Response {
         visualizer.println(String.format("%s got a favor!", player.name));
 
         int option = getSanitizedInput(
-            "Select if you would rather:\n1.Steal character from another player\n2.Benefit from one of the buildings on construction site",
-            "To choose steal, write 1. To choose benefit, write 2.",
-            input -> {
-                try {
-                    Integer n = Integer.parseInt(input);
-                    if(n == steal || n == benefit) {
-                        return n;
+                "Select if you would rather:\n1.Steal character from another player\n2.Benefit from one of the buildings on construction site",
+                "To choose steal, write 1. To choose benefit, write 2.",
+                input -> {
+                    try {
+                        Integer n = Integer.parseInt(input);
+                        if (n == steal || n == benefit) {
+                            return n;
+                        }
+                    } catch (NumberFormatException ex) {
                     }
-                } catch(Exception ex) {}
 
-                visualizer.showDelimiter();
-                return null;
-            });
+                    visualizer.showDelimiter();
+                    return null;
+                });
 
-        if(option == steal) {
+        if (option == steal) {
             visualizer.println(String.format("%s chose to steal.", player.name));
             response.stealCharacter = true;
 
@@ -50,66 +52,80 @@ public class FavorResponse extends Response {
             playersToStealFrom.remove(player);
             visualizer.showPlayers(playersToStealFrom);
             response.playerStolenFrom = getSanitizedInput(
-                "From which player would you like to steal?",
-                "Write the player's name to select him.",
-                input -> {
-                    if(players().stream().anyMatch(p -> p.name.equals(input))) {
-                        return players().stream().filter(p -> p.name.equals(input)).findFirst().get();
-                    }
+                    "From which player would you like to steal?",
+                    "Write the player's name to select him.",
+                    input -> {
+                        if (players().stream().anyMatch(p -> p.name.equals(input))) {
+                            return players().stream().filter(p -> p.name.equals(input)).findFirst().get();
+                        }
 
-                    visualizer.showDelimiter();
-                    return null;
-            });
+                        visualizer.showDelimiter();
+                        return null;
+                    });
 
             visualizer.showCharacters(response.playerStolenFrom.characters());
             visualizer.showDelimiter();
 
             response.character = getSanitizedInput(
-                "What character would you like to steal?",
-                "Write the characters name to steal it.",
-                input -> {
-                    Optional<GameCharacter> character = response.playerStolenFrom.characters().stream().filter(ch -> ch.name().equals(input)).findFirst();
-                    if(character.isPresent()) {
-                        return character.get();
-                    }
+                    "What character would you like to steal?",
+                    "Write the characters name to steal it.",
+                    input -> {
+                        Optional<GameCharacter> character = response.playerStolenFrom.characters().stream()
+                                .filter(ch -> ch.name().equals(input)).findFirst();
+                        if (character.isPresent()) {
+                            return character.get();
+                        }
 
-                    return null;
-            });
-        return response;
+                        return null;
+                    });
+            return response;
         }
 
-        if(option == benefit) {
+        if (option == benefit) {
             final int firstBuilding = 1;
             final int secondBuilding = 2;
             final int thirdBuilding = 3;
 
             visualizer.showConstructionSite(board().constructionSite());
-            visualizer.println(String.format("%s chose to benefit from one of the buildings on the construction site.", player.name));
+            visualizer.println(String.format("%s chose to benefit from one of the buildings on the construction site.",
+                    player.name));
 
             response.building = getSanitizedInput(
-                "Which building would you like to benefit from?",
-                "Choose from 1 - 3. Beware, that you can benefit from certain buildings based on what is the current round. The current round now is: " + gameState().round + ".",
-                input -> {
-                    try {
-                        Integer n = Integer.parseInt(input);
-                        if(1 <= gameState().round && gameState().round <= 3) {
-                            if (n.equals(firstBuilding)) { return board().constructionSite().first(); }
-                        }
-                        else if(4 <= gameState().round && gameState().round <= 6) {
-                            if (n.equals(firstBuilding)) { return board().constructionSite().first(); }
-                            if (n == secondBuilding) { return board().constructionSite().second(); }
-                        }
-                        else if(7 <= gameState().round && gameState().round <= 9) {
-                            if (n.equals(firstBuilding)) { return board().constructionSite().first(); }
-                            if (n.equals(secondBuilding)) { return board().constructionSite().second(); }
-                            if (n.equals(thirdBuilding)) { return board().constructionSite().third(); }
+                    "Which building would you like to benefit from?",
+                    "Choose from 1 - 3. Beware, that you can benefit from certain buildings based on what is the current round. The current round now is: "
+                            + gameState().round + ".",
+                    input -> {
+                        try {
+                            Integer n = Integer.parseInt(input);
+                            if (1 <= gameState().round && gameState().round <= 3) {
+                                if (n.equals(firstBuilding)) {
+                                    return board().constructionSite().first();
+                                }
+                            } else if (4 <= gameState().round && gameState().round <= 6) {
+                                if (n.equals(firstBuilding)) {
+                                    return board().constructionSite().first();
+                                }
+                                if (n == secondBuilding) {
+                                    return board().constructionSite().second();
+                                }
+                            } else if (7 <= gameState().round && gameState().round <= 9) {
+                                if (n.equals(firstBuilding)) {
+                                    return board().constructionSite().first();
+                                }
+                                if (n.equals(secondBuilding)) {
+                                    return board().constructionSite().second();
+                                }
+                                if (n.equals(thirdBuilding)) {
+                                    return board().constructionSite().third();
+                                }
+                            }
+
+                        } catch (Exception ex) {
                         }
 
-                    } catch(Exception ex) {}
-
-                    visualizer.showDelimiter();
-                    return null;
-                });
+                        visualizer.showDelimiter();
+                        return null;
+                    });
 
             visualizer.showDelimiter();
             return response;
