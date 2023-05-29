@@ -1,4 +1,4 @@
 .idea/*
 .vscode/*
 .editorconfig
-caylus/target/*
+target/*
